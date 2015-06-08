@@ -11,12 +11,10 @@ app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
 // Routes
 app.use('/', require('./routes/index'));
+app.use('/search', require('./routes/search'));
 
 var server = app.listen(process.env.PORT, process.env.IP, function () {
-
   var host = server.address().address;
   var port = server.address().port;
-
   console.log('listening at http://%s:%s', host, port);
-
 });

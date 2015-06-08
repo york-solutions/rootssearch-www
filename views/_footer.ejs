@@ -1,0 +1,30 @@
+    <footer>
+      <div class="container">
+        <p class="pull-right"><a id="contact-link" href="mailto:contact@rootssearch.io">Contact & Support</a></p>
+        <p>&copy; 2015 <a href="http://yorksolutions.io">York Solutions, LLC</a></p>
+      </div>
+    </footer>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script type="text/javascript">
+      window.doorbellOptions = {
+        appKey: 'ZiPzIm5FHeb9bFHwVomlSi7ilIHvE0X1amLKSoIizZWaOmTCRmJjs3UTjbS4HBFp',
+        hideButton: true,
+        strings: {
+          title: 'Contact and Support'
+        }
+      };
+      (function(d, t) {
+        var g = d.createElement(t);g.id = 'doorbellScript';g.type = 'text/javascript';g.async = true;g.src = 'https://embed.doorbell.io/button/1422?t='+(new Date().getTime());(d.getElementsByTagName('head')[0]||d.getElementsByTagName('body')[0]).appendChild(g);
+      }(document, 'script'));
+    </script>
+    <script>
+      $(function(){
+        $('#contact-link').click(function(){
+          event.preventDefault();
+          doorbell.show();
+        });
+      })
+    </script>
+  </body>
+</html>
