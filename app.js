@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
 var path = require('path');
+var bodyParser = require('body-parser');
 var favicon = require('serve-favicon');
 
 app.set('views', path.join(__dirname, 'views'));
@@ -8,6 +9,7 @@ app.set('view engine', 'ejs');
 
 app.use(favicon(__dirname + '/assets/favicon.ico'));
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(require('./middleware/locals'));
 
 // Routes
