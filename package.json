@@ -1,0 +1,20 @@
+{
+  "name": "rootssearch-www",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/york-solutions/rootssearch-www.git"
+  },
+  "homepage": "https://github.com/york-solutions/rootssearch-www",
+  "dependencies": {
+    "ejs": "2.3.1",
+    "express": "4.12.4",
+    "serve-favicon": "^2.2.1"
+  }
+}

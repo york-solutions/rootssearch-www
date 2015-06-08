@@ -1,0 +1,47 @@
+body {
+  font-family: Allerta, Arial, sans-serif;
+  font-size: 18px;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+header {
+  background-color: #49AFCD;
+  color: #f9f9f9;
+  padding: 64px;
+  text-align: center;
+}
+
+
+header h1 {
+  font-size: 65px;
+}
+
+#main {
+  flex: 1;
+}
+
+#main > div {
+  margin: 64px 0;
+}
+
+#intro {
+  font-size: 30px;
+  text-align: center;
+}
+
+footer {
+  background-color: #49AFCD;
+  color: #f9f9f9;
+  padding: 32px;
+}
+
+footer a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+footer a:hover {
+  color: #000;
+}
