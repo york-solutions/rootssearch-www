@@ -8,6 +8,7 @@ app.set('view engine', 'ejs');
 
 app.use(favicon(__dirname + '/assets/favicon.ico'));
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
+app.use(require('./middleware/locals'));
 
 // Routes
 app.use('/', require('./routes/index'));
