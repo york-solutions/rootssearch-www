@@ -16,6 +16,8 @@ router.post('/', function(req, res){
   res.render('search', {
     data: data
   });
+  
+  // TODO: log referring url from body.url
 });
 
 module.exports = router;
