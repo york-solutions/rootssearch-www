@@ -9,3 +9,12 @@
 #search-form label {
   font-weight: normal;
 }
+
+.site-col {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.site-col button {
+  width: 100%;
+}

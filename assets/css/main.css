@@ -4,6 +4,7 @@ body {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
+  background-color: #fafafa;
 }
 
 header {
@@ -50,4 +51,28 @@ footer a {
 
 footer a:hover {
   color: #000;
+}
+
+.form-control {
+  border-radius: 0;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+}
+
+.btn {
+  border-radius: 0;
+}
+
+.btn-rs {
+  background-color: #49AFCD;
+  color: #fff;
+}
+
+.btn-rs:hover {
+  background-color: #3D8FA8;
+  color: #fff;
+}
+
+.btn-rs:focus {
+  color: #fff;
 }

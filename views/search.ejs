@@ -1,7 +1,7 @@
 <%
   var pageTitle = 'Search',
       css = ['search'],
-      js = ['search'];
+      js = ['search','gensearch.2.2.0','gensites.0.1.0'];
       
   var fields = [
     {
@@ -78,6 +78,10 @@
       </div>
     <% } %>
   </div>
+  
+  <h2>Search A Specific Site</h2>
+  
+  <div class="row" id="sites-list"></div>
 
 </div>
 <script>
