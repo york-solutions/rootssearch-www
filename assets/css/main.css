@@ -14,23 +14,13 @@ header {
   line-height: 1;
 }
 
-header h1 {
-  margin: 0;
-}
-
 .header-large {
   padding: 64px;
-}
-
-.header-large h1 {
   font-size: 65px;
 }
 
 .header-small {
   padding: 8px;
-}
-
-.header-small h1 {
   font-size: 24px;
 }
 
