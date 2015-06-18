@@ -16,6 +16,11 @@ app.use(require('./middleware/locals'));
 app.use('/', require('./routes/index'));
 app.use('/search', require('./routes/search'));
 
+// Catch 404s
+app.use(function(req, res, next) {
+  res.status(404).render('404');
+});
+
 var server = app.listen(process.env.PORT, process.env.IP, function () {
   var host = server.address().address;
   var port = server.address().port;
