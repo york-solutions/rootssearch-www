@@ -1,4 +1,5 @@
-var siteTemplate = '';
+var topSites = ['ancestry', 'familysearch'],
+    siteTemplate = '';
 
 $(function(){
   siteTemplate = Handlebars.compile($('#sites-template').html());
@@ -7,8 +8,16 @@ $(function(){
     $('#data_' + prop).val(personData[prop]);
   }
 
+  // Add top sites first
+  for(var i = 0; i < topSites.length; i++){
+    addSiteButton(topSites[i]);
+  }
+
+  // Add all other sites
   for(var siteKey in gensearch.sites){
-    addSiteButton(siteKey);
+    if(topSites.indexOf(siteKey) === -1){
+      addSiteButton(siteKey);
+    }
   }
 });
 
