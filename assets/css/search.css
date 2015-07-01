@@ -10,12 +10,24 @@
   font-weight: normal;
 }
 
-.site-col {
-  margin-top: 15px;
-  margin-bottom: 15px;
+.site {
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
-.site-col button {
-  width: 100%;
-  padding: 20px;
+.site:hover {
+  background-color: #fff;
+}
+
+.site-name {
+  font-size: 22px;
+  margin-bottom: 8px;
+}
+
+.site-description {
+  font-size: 16px;
+}
+
+.site-search-col {
+  text-align: center;
 }

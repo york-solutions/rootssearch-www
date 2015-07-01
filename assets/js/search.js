@@ -1,8 +1,12 @@
+var siteTemplate = '';
+
 $(function(){
+  siteTemplate = Handlebars.compile($('#sites-template').html());
+  
   for(var prop in personData){
     $('#data_' + prop).val(personData[prop]);
   }
-  
+
   for(var siteKey in gensearch.sites){
     addSiteButton(siteKey);
   }
@@ -17,13 +21,10 @@ function addSiteButton(siteKey){
       name: siteKey
     };
   }
-  $('#sites-list').append(
-    $('<div class="site-col col-md-3 col-sm-4 col-xs-6">').append(
-      $('<button class="btn btn-rs btn-lg">').text(site.name).click(function(){
-        search(siteKey);
-      })
-    )
-  );
+  $site = $(siteTemplate(site)).appendTo('#sites-list');
+  $site.find('.site-search-btn').click(function(){
+    search(siteKey);
+  });
 }
 
 function search(siteKey){
