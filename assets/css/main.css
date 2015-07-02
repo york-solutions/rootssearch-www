@@ -19,9 +19,17 @@ header {
   font-size: 65px;
 }
 
+.header-large .logo {
+  margin-right: 32px;
+}
+
 .header-small {
-  padding: 8px;
+  padding: 16px;
   font-size: 24px;
+}
+
+.header-small .logo {
+  margin-right: 16px;
 }
 
 #main {
