@@ -15,8 +15,8 @@
   padding-bottom: 20px;
 }
 
-.site:hover {
-  background-color: #fff;
+.site:not(:first-child) {
+  border-top: 1px solid #ddd;
 }
 
 .site-name {
@@ -30,4 +30,8 @@
 
 .site-search-col {
   text-align: center;
+}
+
+.site-search-btn {
+  margin-top: 12px;
 }

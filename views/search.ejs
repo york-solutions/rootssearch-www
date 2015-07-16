@@ -85,13 +85,11 @@
 
 <script id="sites-template" type="text/x-handlebars-template">
   <div class="site row">
-    <div class="site-name col-md-12">{{name}}</div>
-    <div class="col-md-12">
-      <div class="row">
-        <div class="site-description col-md-10"><p class="text-muted">{{description.en}}</p></div>
-        <div class="site-search-col col-md-2"><button class="site-search-btn btn btn-lg btn-rs">Search</div>
-      </div>
+    <div class="site-description col-md-10">
+      <div class="site-name">{{name}}</div>
+      <p class="text-muted">{{description.en}}</p>
     </div>
+    <div class="site-search-col col-md-2"><button class="site-search-btn btn btn-lg btn-rs">Search</div>
   </div>
 </script>
 
