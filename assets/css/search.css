@@ -18,6 +18,10 @@ hr {
   display: none;
 }
 
+.site.disabled.editing {
+  display: block;
+}
+
 .site-name {
   font-size: 22px;
   margin-bottom: 8px;
@@ -31,6 +35,20 @@ hr {
   text-align: right;
 }
 
+.site.editing .site-search-col {
+  display: none;
+}
+
+.site-settings-col {
+  text-align: right;
+  display: none;
+  padding-top: 12px;
+}
+
+.site.editing .site-settings-col {
+  display: block;
+}
+
 .site-search-btn {
   margin-top: 12px;
 }
@@ -38,4 +56,26 @@ hr {
 #site-settings-toggle {
   font-size: 15px;
   cursor: pointer;
+}
+
+.btn-toggle .btn.active {
+  box-shadow: none;
+}
+
+.btn-toggle .btn.active:hover {
+  background-color: #49AFCD;
+}
+
+.btn-toggle .btn:not(.active) {
+  box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
+  background-color: #fff;
+  border: 1px solid #ccc;
+  color: #333;
+}
+
+.btn-toggle .btn:not(.active):hover {
+  box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
+  background-color: #e6e6e6;
+  border: 1px solid #adadad;
+  color: #333;
 }

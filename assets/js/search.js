@@ -19,6 +19,10 @@ $(function(){
     }
     sitesList.addSite(searchSite);
   }
+  
+  $('#site-settings-toggle').click(function(){
+    sitesList.beginEditing();
+  });
 });
 
 function search(siteKey){
@@ -61,6 +65,11 @@ SearchSite.prototype.disable = function(){
   this.$dom.addClass('disabled');
 };
 
+SearchSite.prototype.enableEditing = function(){
+  this.editing = true;
+  this.$dom.addClass('editing');
+};
+
 /**
  * Manage the display of the list of site
  */
@@ -72,4 +81,10 @@ var SitesList = function(selector){
 SitesList.prototype.addSite = function(site){
   this.sites.push(site);
   this.$container.append(site.getDOM());
+};
+
+SitesList.prototype.beginEditing = function(){
+  for(var i = 0; i < this.sites.length; i++){
+    this.sites[i].enableEditing();
+  }
 };

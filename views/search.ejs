@@ -96,7 +96,17 @@
       <div class="site-name">{{name}}</div>
       <p class="text-muted">{{description.en}}</p>
     </div>
-    <div class="site-search-col col-md-2"><button class="site-search-btn btn btn-lg btn-rs">Search</div>
+    <div class="site-search-col col-md-2"><button class="site-search-btn btn btn-lg btn-rs">Search</button></div>
+    <div class="site-settings-col col-md-2">
+      <div class="btn-group btn-toggle" data-toggle="buttons">
+        <label class="btn btn-rs active">
+          <input type="radio" name="enabled" autocomplete="off" checked> Enabled
+        </label>
+        <label class="btn btn-rs">
+          <input type="radio" name="enabled" autocomplete="off"> Disabled
+        </label>
+      </div>
+    </div>
     <div class="col-xs-12"><hr></div>
   </div>
 </script>
