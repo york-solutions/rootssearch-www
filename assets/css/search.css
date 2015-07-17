@@ -10,13 +10,18 @@
   font-weight: normal;
 }
 
+hr {
+  margin: 0;
+  border-color: #e5e5e5;
+}
+
+hr:last-child {
+  display: none;
+}
+
 .site {
   padding-top: 20px;
   padding-bottom: 20px;
-}
-
-.site:not(:first-child) {
-  border-top: 1px solid #ddd;
 }
 
 .site-name {
@@ -29,7 +34,7 @@
 }
 
 .site-search-col {
-  text-align: center;
+  text-align: right;
 }
 
 .site-search-btn {
