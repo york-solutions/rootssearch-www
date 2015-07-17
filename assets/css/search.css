@@ -53,11 +53,6 @@ hr {
   margin-top: 12px;
 }
 
-#site-settings-toggle {
-  font-size: 15px;
-  cursor: pointer;
-}
-
 .btn-toggle .btn.active {
   box-shadow: none;
 }
@@ -78,4 +73,17 @@ hr {
   background-color: #e6e6e6;
   border: 1px solid #adadad;
   color: #333;
+}
+
+#site-settings-toggle {
+  font-size: 15px;
+  cursor: pointer;
+}
+
+#site-settings-toggle.closed .close-editing {
+  display: none;
+}
+
+#site-settings-toggle.open .open-editing {
+  display: none;
 }

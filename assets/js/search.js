@@ -4,6 +4,7 @@ var defaultSites = ['ancestry', 'familysearch', 'findmypast.co.uk', 'mocavo', 'm
 $(function(){
   SearchSite.template = Handlebars.compile($('#sites-template').html());
   sitesList = new SitesList('#sites-list');
+  new SettingsToggle('#site-settings-toggle');
   
   for(var prop in personData){
     $('#data_' + prop).val(personData[prop]);
@@ -19,10 +20,7 @@ $(function(){
     }
     sitesList.addSite(searchSite);
   }
-  
-  $('#site-settings-toggle').click(function(){
-    sitesList.beginEditing();
-  });
+
 });
 
 function search(siteKey){
@@ -61,13 +59,15 @@ SearchSite.prototype.getDOM = function(){
 };
 
 SearchSite.prototype.disable = function(){
-  this.disabled = true;
   this.$dom.addClass('disabled');
 };
 
 SearchSite.prototype.enableEditing = function(){
-  this.editing = true;
   this.$dom.addClass('editing');
+};
+
+SearchSite.prototype.disableEditing = function(){
+  this.$dom.removeClass('editing');
 };
 
 /**
@@ -83,8 +83,30 @@ SitesList.prototype.addSite = function(site){
   this.$container.append(site.getDOM());
 };
 
-SitesList.prototype.beginEditing = function(){
+SitesList.prototype.openEditing = function(){
   for(var i = 0; i < this.sites.length; i++){
     this.sites[i].enableEditing();
   }
+};
+
+SitesList.prototype.closeEditing = function(){
+  for(var i = 0; i < this.sites.length; i++){
+    this.sites[i].disableEditing();
+  }
+};
+
+/**
+ * Settings mode toggle
+ */
+var SettingsToggle = function(selector){
+  var self = this;
+  self.$container = $(selector).addClass('closed');
+  self.$container.find('.open-editing').click(function(){
+    self.$container.removeClass('closed').addClass('open');
+    sitesList.openEditing();
+  });
+  self.$container.find('.close-editing').click(function(){
+    self.$container.removeClass('open').addClass('closed');
+    sitesList.closeEditing();
+  });
 };
