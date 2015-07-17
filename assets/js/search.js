@@ -1,4 +1,4 @@
-var topSites = ['ancestry', 'familysearch'],
+var defaultSites = ['ancestry', 'familysearch', 'findmypast.co.uk', 'mocavo', 'myheritage'],
     siteTemplate = '';
 
 $(function(){
@@ -8,16 +8,9 @@ $(function(){
     $('#data_' + prop).val(personData[prop]);
   }
 
-  // Add top sites first
-  for(var i = 0; i < topSites.length; i++){
-    addSiteButton(topSites[i]);
-  }
-
-  // Add all other sites
-  for(var siteKey in gensearch.sites){
-    if(topSites.indexOf(siteKey) === -1){
-      addSiteButton(siteKey);
-    }
+  // Add sites
+  for(var i = 0; i < defaultSites.length; i++){
+    addSiteButton(defaultSites[i]);
   }
 });
 
