@@ -11,17 +11,11 @@
 }
 
 hr {
-  margin: 0;
   border-color: #e5e5e5;
 }
 
-hr:last-child {
+.site.disabled {
   display: none;
-}
-
-.site {
-  padding-top: 20px;
-  padding-bottom: 20px;
 }
 
 .site-name {
@@ -39,4 +33,9 @@ hr:last-child {
 
 .site-search-btn {
   margin-top: 12px;
+}
+
+#site-settings-toggle {
+  font-size: 15px;
+  cursor: pointer;
 }

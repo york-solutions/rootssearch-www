@@ -1,33 +1,25 @@
 var defaultSites = ['ancestry', 'familysearch', 'findmypast.co.uk', 'mocavo', 'myheritage'],
-    siteTemplate = '';
+    sitesList;
 
 $(function(){
-  siteTemplate = Handlebars.compile($('#sites-template').html());
+  SearchSite.template = Handlebars.compile($('#sites-template').html());
+  sitesList = new SitesList('#sites-list');
   
   for(var prop in personData){
     $('#data_' + prop).val(personData[prop]);
   }
 
   // Add sites
-  for(var i = 0; i < defaultSites.length; i++){
-    addSiteButton(defaultSites[i]);
+  var availableSites = gensites.sites();
+  for(var i = 0; i < availableSites.length; i++){
+    var gensite = availableSites[i],
+        searchSite = new SearchSite(gensite);
+    if(defaultSites.indexOf(gensite.id) === -1){
+      searchSite.disable();
+    }
+    sitesList.addSite(searchSite);
   }
 });
-
-function addSiteButton(siteKey){
-  var site = gensites.site(siteKey);
-  if(!site){
-    console.error('gensites is missing site', siteKey);
-    site = {
-      id: siteKey,
-      name: siteKey
-    };
-  }
-  $site = $(siteTemplate(site)).appendTo('#sites-list');
-  $site.find('.site-search-btn').click(function(){
-    search(siteKey);
-  });
-}
 
 function search(siteKey){
   var data = getPersonFormData(),
@@ -43,3 +35,41 @@ function getPersonFormData(){
   });
   return data;
 }
+
+/**
+ * Manage a site's display and settings
+ */
+var SearchSite = function(site){
+  this._site = site;
+  this.render();
+};
+
+SearchSite.prototype.render = function(){
+  var self = this;
+  self.$dom = $(SearchSite.template(self._site));
+  self.$dom.find('.site-search-btn').click(function(){
+    search(self._site.id);
+  });
+};
+
+SearchSite.prototype.getDOM = function(){
+  return this.$dom;
+};
+
+SearchSite.prototype.disable = function(){
+  this.disabled = true;
+  this.$dom.addClass('disabled');
+};
+
+/**
+ * Manage the display of the list of site
+ */
+var SitesList = function(selector){
+  this.$container = $(selector);
+  this.sites = [];
+};
+
+SitesList.prototype.addSite = function(site){
+  this.sites.push(site);
+  this.$container.append(site.getDOM());
+};
