@@ -1,7 +1,8 @@
-var defaultSites = ['ancestry', 'familysearch', 'findmypast.co.uk', 'mocavo', 'myheritage'],
-    sitesList;
+var sitesList;
 
 $(function(){
+  Settings.load();
+  
   SearchSite.template = Handlebars.compile($('#sites-template').html());
   sitesList = new SitesList('#sites-list');
   new SettingsToggle('#site-settings-toggle');
@@ -11,12 +12,13 @@ $(function(){
   }
 
   // Add sites
-  var availableSites = gensites.sites();
+  var availableSites = gensites.sites(),
+      enabledSites = Settings.get('sites');
   for(var i = 0; i < availableSites.length; i++){
     var gensite = availableSites[i],
         searchSite = new SearchSite(gensite);
-    if(defaultSites.indexOf(gensite.id) === -1){
-      searchSite.disable();
+    if(enabledSites.indexOf(gensite.id) !== -1){
+      searchSite.enable();
     }
     sitesList.addSite(searchSite);
   }
@@ -44,6 +46,7 @@ function getPersonFormData(){
 var SearchSite = function(site){
   this._site = site;
   this.render();
+  this.disable();
 };
 
 SearchSite.prototype.render = function(){
@@ -58,12 +61,22 @@ SearchSite.prototype.getDOM = function(){
   return this.$dom;
 };
 
+SearchSite.prototype.isEnabled = function(){
+  return !this.$dom.hasClass('disabled');
+};
+
 SearchSite.prototype.disable = function(){
   this.$dom.addClass('disabled');
 };
 
+SearchSite.prototype.enable = function(){
+  this.$dom.removeClass('disabled');
+};
+
 SearchSite.prototype.enableEditing = function(){
   this.$dom.addClass('editing');
+  var val = this.isEnabled() ? 'enabled' : 'disabled';
+  this.$dom.find('.' + val + '-btn').click();
 };
 
 SearchSite.prototype.disableEditing = function(){
@@ -109,4 +122,27 @@ var SettingsToggle = function(selector){
     self.$container.removeClass('open').addClass('closed');
     sitesList.closeEditing();
   });
+};
+
+/**
+ * Settings
+ */
+var Settings = {
+  _settings: {},
+  _defaults: {
+    sites: ['ancestry', 'familysearch', 'findmypast.co.uk', 'mocavo', 'myheritage']
+  },
+  load: function(){
+    var cookie = cookies.getItem('settings'),
+        parsed = {};
+    if(cookie){
+      try {
+        parsed = JSON.parse(cookie);
+      } catch(e){}
+    }
+    _.defaultsDeep(this._settings, parsed, this._defaults);
+  },
+  get: function(key){
+    return this._settings[key];
+  }
 };

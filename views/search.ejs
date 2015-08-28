@@ -63,7 +63,7 @@
   ];
 %>
 <%- 
-  include('_header_small');
+  include('partials/header_small');
 %>
 
 <div id="main" class="container">
@@ -100,11 +100,11 @@
     <div class="site-search-col col-md-2"><button class="site-search-btn btn btn-lg btn-rs">Search</button></div>
     <div class="site-settings-col col-md-2">
       <div class="btn-group btn-toggle" data-toggle="buttons">
-        <label class="btn btn-rs active">
-          <input type="radio" name="enabled" autocomplete="off" checked> Enabled
+        <label class="btn btn-rs enabled-btn active">
+          <input type="radio" name="enabled" autocomplete="off" value="enabled"> Enabled
         </label>
-        <label class="btn btn-rs">
-          <input type="radio" name="enabled" autocomplete="off"> Disabled
+        <label class="btn btn-rs disabled-btn">
+          <input type="radio" name="enabled" autocomplete="off" value="disabled"> Disabled
         </label>
       </div>
     </div>
@@ -116,4 +116,4 @@
   var personData = <%- JSON.stringify(data) %>;
 </script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.3/handlebars.min.js"></script>
-<%- include('_footer'); %>
+<%- include('partials/footer'); %>
