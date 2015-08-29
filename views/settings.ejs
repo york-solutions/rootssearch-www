@@ -16,16 +16,16 @@
 <script id="sites-template" type="text/x-handlebars-template">
   <div class="site row">
     <div class="site-description col-md-10">
-      <div class="site-name">{{name}}</div>
-      <p class="text-muted">{{description.en}}</p>
+      <div class="site-name">{{site.name}}</div>
+      <p class="text-muted">{{site.description.en}}</p>
     </div>
     <div class="site-settings-col col-md-2">
       <div class="btn-group btn-toggle" data-toggle="buttons">
-        <label class="btn btn-rs enabled-btn active">
-          <input type="radio" name="enabled" autocomplete="off" value="enabled"> Enabled
+        <label class="btn btn-rs enabled-btn{{#enabled}} active{{/enabled}}">
+          <input type="radio" name="enabled" autocomplete="off" value="enabled"{{#enabled}} checked{{/enabled}}> Enabled
         </label>
-        <label class="btn btn-rs disabled-btn">
-          <input type="radio" name="enabled" autocomplete="off" value="disabled"> Disabled
+        <label class="btn btn-rs disabled-btn{{^enabled}} active{{/enabled}}">
+          <input type="radio" name="enabled" autocomplete="off" value="disabled"{{^enabled}} checked{{/enabled}}> Disabled
         </label>
       </div>
     </div>
