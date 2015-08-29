@@ -15,6 +15,7 @@ app.use(require('./middleware/locals'));
 // Routes
 app.use('/', require('./routes/index'));
 app.use('/search', require('./routes/search'));
+app.use('/settings', require('./routes/settings'));
 
 // Catch 404s
 app.use(function(req, res, next) {

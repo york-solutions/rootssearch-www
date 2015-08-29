@@ -1,0 +1,38 @@
+<%
+  var pageTitle = 'Search',
+      css = ['settings'],
+      js = ['settings','gensites.0.1.0'];
+%>
+<%- include('partials/header_large'); %>
+
+<div id="main" class="container">
+  
+  <h1>Settings</h1>
+  
+  <div id="sites-list"></div>
+  
+</div>
+  
+<script id="sites-template" type="text/x-handlebars-template">
+  <div class="site row">
+    <div class="site-description col-md-10">
+      <div class="site-name">{{name}}</div>
+      <p class="text-muted">{{description.en}}</p>
+    </div>
+    <div class="site-settings-col col-md-2">
+      <div class="btn-group btn-toggle" data-toggle="buttons">
+        <label class="btn btn-rs enabled-btn active">
+          <input type="radio" name="enabled" autocomplete="off" value="enabled"> Enabled
+        </label>
+        <label class="btn btn-rs disabled-btn">
+          <input type="radio" name="enabled" autocomplete="off" value="disabled"> Disabled
+        </label>
+      </div>
+    </div>
+    <div class="col-xs-12"><hr></div>
+  </div>
+</script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.3/handlebars.min.js"></script>
+
+<%- include('partials/footer'); %>

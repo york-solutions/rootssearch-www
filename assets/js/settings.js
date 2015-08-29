@@ -1,42 +1,22 @@
-var sitesList;
-
 $(function(){
+  
   Settings.load();
-  
   SearchSite.template = Handlebars.compile($('#sites-template').html());
-  sitesList = new SitesList('#sites-list');
   
-  for(var prop in personData){
-    $('#data_' + prop).val(personData[prop]);
-  }
-
-  // Add sites
   var availableSites = gensites.sites(),
-      enabledSites = Settings.get('sites');
+      enabledSites = Settings.get('sites'),
+      $sitesList = $('#sites-list');
   for(var i = 0; i < availableSites.length; i++){
     var gensite = availableSites[i],
         searchSite = new SearchSite(gensite);
+    $sitesList.append(searchSite.getDOM());
     if(enabledSites.indexOf(gensite.id) !== -1){
-      sitesList.addSite(searchSite);
+      searchSite.enable();
+    } else {
+      searchSite.disable();
     }
   }
-
 });
-
-function search(siteKey){
-  var data = getPersonFormData(),
-      url = gensearch(siteKey, data);
-  window.open(url, '_blank');
-}
-
-function getPersonFormData(){
-  var data = {};
-  $('#search-form input').each(function(){
-    var prop = $(this).attr('id').split('_')[1];
-    data[prop] = $(this).val();
-  });
-  return data;
-}
 
 /**
  * Manage a site's display and settings
@@ -49,26 +29,29 @@ var SearchSite = function(site){
 SearchSite.prototype.render = function(){
   var self = this;
   self.$dom = $(SearchSite.template(self._site));
-  self.$dom.find('.site-search-btn').click(function(){
-    search(self._site.id);
-  });
 };
 
 SearchSite.prototype.getDOM = function(){
   return this.$dom;
 };
 
-/**
- * Manage the display of the list of site
- */
-var SitesList = function(selector){
-  this.$container = $(selector);
-  this.sites = [];
+SearchSite.prototype.isEnabled = function(){
+  return !this.$dom.hasClass('disabled');
 };
 
-SitesList.prototype.addSite = function(site){
-  this.sites.push(site);
-  this.$container.append(site.getDOM());
+SearchSite.prototype.disable = function(){
+  this.$dom.addClass('disabled');
+  this.update();
+};
+
+SearchSite.prototype.enable = function(){
+  this.$dom.removeClass('disabled');
+  this.update();
+};
+
+SearchSite.prototype.update = function(){
+  var val = this.isEnabled() ? 'enabled' : 'disabled';
+  this.$dom.find('.' + val + '-btn').click();
 };
 
 /**
