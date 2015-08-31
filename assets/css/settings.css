@@ -1,3 +1,9 @@
+#sites-list {
+  margin: 20px 0;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+}
+
 hr {
   border-color: #e5e5e5;
 }
