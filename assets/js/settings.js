@@ -98,7 +98,6 @@ SitesList.prototype.updateSettings = function(){
       enabledSites.push(this.sites[i].site.id);
     }
   }
-  console.log(enabledSites);
   Settings.set('sites', enabledSites);
   Settings.save();
 };

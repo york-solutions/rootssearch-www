@@ -10,8 +10,13 @@ router.get('/', function(req, res){
 
 router.post('/', function(req, res){
   var data = {};
-  if(req.body && req.body.data){
-    data = req.body.data;
+  if(req.body) {
+    if(req.body.data){
+      data = req.body.data;
+    }
+    if(req.body._sites){
+      res.cookie('settings', JSON.stringify({sites: req.body._sites.split(',')}));
+    }
   }
   res.render('search', {
     data: data
