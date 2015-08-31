@@ -9,20 +9,27 @@ body {
 
 header {
   background-color: #49AFCD;
-  color: #f9f9f9;
-  text-align: center;
+  color: #fff;
   line-height: 1;
 }
 
-header a,
-header a:hover {
+header a {
   color: inherit;
+}
+
+header a:hover {
+  color: #000;
   text-decoration: none;
+}
+
+.branding a:hover {
+  color: inherit;
 }
 
 .header-large {
   padding: 64px;
   font-size: 65px;
+  text-align: center;
 }
 
 .header-large .logo {
@@ -31,7 +38,17 @@ header a:hover {
 
 .header-small {
   padding: 16px;
+  overflow: auto;
+}
+
+.header-small .branding {
   font-size: 24px;
+  float: left;
+}
+
+.header-small .nav {
+  float: right;
+  margin-top: 8px;
 }
 
 .header-small .logo {
