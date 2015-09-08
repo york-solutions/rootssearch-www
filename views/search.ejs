@@ -79,7 +79,12 @@
     <% } %>
   </div>
 
-  <div id="sites-list"></div>
+  <h2>Sites</h2>
+
+  <div class="row">
+    <div id="sites-list"></div>
+  </div>
+  
   <div class="row">
     <div class="col-xs-12">
       <div class="text-muted pull-right" id="site-settings-toggle">
@@ -91,13 +96,11 @@
 </div>
 
 <script id="sites-template" type="text/x-handlebars-template">
-  <div class="site row">
-    <div class="site-description col-md-10">
+  <div class="col-xs-12 col-md-6 col-lg-4">
+    <button class="site btn btn-lg btn-default">
       <div class="site-name">{{name}}</div>
-      <p class="text-muted">{{description.en}}</p>
+      <div class="site-search-btn"><span class="glyphicon glyphicon-search"></span></div>
     </div>
-    <div class="site-search-col col-md-2"><button class="site-search-btn btn btn-lg btn-rs">Search</button></div>
-    <div class="col-xs-12"><hr></div>
   </div>
 </script>
 

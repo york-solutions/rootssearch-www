@@ -1,34 +1,31 @@
 #main {
-  padding: 32px 0;
-}
-
-#search-form {
-  padding: 32px 0;
+  padding-bottom: 32px;
 }
 
 #search-form label {
   font-weight: normal;
 }
 
-hr {
-  border-color: #e5e5e5;
+.site {
+  border: 1px solid #ddd;
+  background: #fff;
+  overflow: auto;
+  margin-bottom: 30px;
+  width: 100%;
+}
+
+.site:hover {
+  background-color: #3D8FA8;
+  color: #fff;
+  border: 1px solid #3D8FA8;
 }
 
 .site-name {
-  font-size: 22px;
-  margin-bottom: 8px;
-}
-
-.site-description {
-  font-size: 16px;
-}
-
-.site-search-col {
-  text-align: right;
+  float: left;
 }
 
 .site-search-btn {
-  margin-top: 12px;
+  float: right;
 }
 
 #site-settings-toggle {

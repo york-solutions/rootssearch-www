@@ -49,7 +49,7 @@ var SearchSite = function(site){
 SearchSite.prototype.render = function(){
   var self = this;
   self.$dom = $(SearchSite.template(self._site));
-  self.$dom.find('.site-search-btn').click(function(){
+  self.$dom.click(function(){
     search(self._site.id);
   });
 };
