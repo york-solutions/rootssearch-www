@@ -6,8 +6,16 @@ $(function(){
   SearchSite.template = Handlebars.compile($('#sites-template').html());
   sitesList = new SitesList('#sites-list');
   
+  var isData = false;
   for(var prop in personData){
     $('#data_' + prop).val(personData[prop]);
+    isData = true;
+  }
+  
+  if(isData){
+    ga('send', 'event', 'search', 'dataLoaded');
+  } else {
+    ga('send', 'event', 'search', 'noData');
   }
 
   // Add sites
@@ -27,6 +35,7 @@ function search(siteKey){
   var data = getPersonFormData(),
       url = gensearch(siteKey, data);
   window.open(url, '_blank');
+  ga('send', 'event', 'search', 'site', siteKey);
 }
 
 function getPersonFormData(){

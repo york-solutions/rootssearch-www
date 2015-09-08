@@ -42,6 +42,7 @@ SearchSite.prototype.disable = function(){
   if(this.enabled){
     this.enabled = false;
     this.changed();
+    ga('send', 'event', 'settings', 'disableSite', this.site.id);
   }
   return this;
 };
@@ -50,6 +51,7 @@ SearchSite.prototype.enable = function(){
   if(!this.enabled){
     this.enabled = true;
     this.changed();
+    ga('send', 'event', 'settings', 'enableSite', this.site.id);
   }
   return this;
 };
