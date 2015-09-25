@@ -26,6 +26,10 @@ header a:hover {
   text-decoration: none;
 }
 
+header .nav a {
+  margin-left: 12px;
+}
+
 .branding a:hover {
   color: inherit;
 }
@@ -76,6 +80,10 @@ footer a {
 
 footer a:hover {
   color: #000;
+}
+
+footer .social {
+  margin-right: 8px;
 }
 
 .form-control {
