@@ -123,7 +123,7 @@ var Settings = {
     _.defaultsDeep(this._settings, parsed, this._defaults);
   },
   save: function(){
-    cookies.setItem('settings', JSON.stringify(this._settings));
+    cookies.setItem('settings', JSON.stringify(this._settings), Infinity);
   },
   get: function(key){
     return this._settings[key];
