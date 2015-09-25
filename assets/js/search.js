@@ -86,7 +86,7 @@ SitesList.prototype.addSite = function(site){
 var Settings = {
   _settings: {},
   _defaults: {
-    sites: ['ancestry', 'familysearch', 'findmypast.co.uk', 'mocavo', 'myheritage']
+    sites: ['ancestry', 'familysearch', 'findmypast.co.uk', 'findagrave', 'mocavo', 'myheritage']
   },
   load: function(){
     var cookie = cookies.getItem('settings'),
