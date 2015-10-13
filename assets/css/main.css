@@ -110,3 +110,9 @@ footer .social {
 .btn-rs:focus {
   color: #fff;
 }
+
+.btn-xl {
+  padding: 10px 16px;
+  font-size: 24px;
+  line-height: 1.3333333;
+}
