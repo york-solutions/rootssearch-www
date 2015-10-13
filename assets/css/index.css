@@ -3,7 +3,7 @@
 }
 
 h1 {
-  font-size: 40px;
+  font-size: 48px;
 }
 
 .marketing .row {
@@ -17,4 +17,11 @@ h1 {
 
 .marketing-text {
   font-size: 32px;
+  margin-top: 32px;
+}
+
+@media (max-width: 991px) {
+  .marketing-text {
+    text-align: center;
+  }
 }
