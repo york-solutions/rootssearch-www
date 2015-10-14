@@ -27,7 +27,7 @@ header a:hover {
 }
 
 header .nav a {
-  margin-left: 12px;
+  margin-left: 18px;
 }
 
 .branding a:hover {
@@ -83,7 +83,7 @@ footer a:hover {
 }
 
 footer .social {
-  margin-right: 8px;
+  margin-right: 18px;
 }
 
 .form-control {
