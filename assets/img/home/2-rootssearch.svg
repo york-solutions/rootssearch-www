@@ -9,8 +9,8 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="296.43753"
-   height="245.40938"
+   width="294.43753"
+   height="243.40828"
    id="svg3982"
    version="1.1"
    inkscape:version="0.48.4 r9939"
@@ -41,14 +41,14 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.979899"
-     inkscape:cx="280.63554"
-     inkscape:cy="181.94786"
+     inkscape:cx="279.63553"
+     inkscape:cy="180.94786"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1920"
      inkscape:window-height="1013"
-     inkscape:window-x="1911"
+     inkscape:window-x="-9"
      inkscape:window-y="-9"
      inkscape:window-maximized="1"
      fit-margin-top="0"
@@ -63,7 +63,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -71,7 +71,7 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-108.21872,-376.09062)">
+     transform="translate(-109.21873,-377.09171)">
     <rect
        style="fill:none;stroke:#b3b3b3;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
        id="rect2985"
@@ -83,15 +83,15 @@
        sodipodi:linespacing="125%"
        id="text4034"
        y="415.56134"
-       x="126.35073"
+       x="130.35074"
        style="font-size:20px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#b3b3b3;fill-opacity:1;stroke:none;font-family:Lato;-inkscape-font-specification:Lato"
        xml:space="preserve"><tspan
          y="415.56134"
-         x="126.35073"
+         x="130.35074"
          id="tspan4036"
          sodipodi:role="line">Name</tspan></text>
     <g
-       transform="translate(-1.0101525,-8.5862967)"
+       transform="translate(2.9898475,-8.5862967)"
        id="g4587">
       <rect
          y="437.17929"
@@ -116,16 +116,16 @@
        sodipodi:linespacing="125%"
        id="text4034-1"
        y="489.62024"
-       x="125.34058"
+       x="129.34058"
        style="font-size:27.45130157px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#b3b3b3;fill-opacity:1;stroke:none;font-family:Lato;-inkscape-font-specification:Lato"
        xml:space="preserve"><tspan
          y="489.62024"
-         x="125.34058"
+         x="129.34058"
          id="tspan4036-4"
          sodipodi:role="line"
          style="font-size:20px">Birth</tspan></text>
     <g
-       transform="translate(-2.0203075,64.967533)"
+       transform="translate(1.9796925,64.967533)"
        id="g4587-2">
       <rect
          y="437.17929"
@@ -147,22 +147,22 @@
            sodipodi:role="line">1830</tspan></text>
     </g>
     <rect
-       style="fill:#49afcd;fill-opacity:1;fill-rule:evenodd;stroke:#4ab0cd;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       style="fill:#49afcd;fill-opacity:1;fill-rule:evenodd;stroke:#4ab0cd;stroke-width:3.65246272;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
        id="rect4638"
-       width="162.63457"
-       height="42.426407"
-       x="168.69548"
-       y="554.86206" />
+       width="244.83453"
+       height="41.773945"
+       x="132.65622"
+       y="555.18829" />
     <text
        xml:space="preserve"
-       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Lato;-inkscape-font-specification:Lato"
-       x="191.92899"
-       y="589.20728"
+       style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Lato;-inkscape-font-specification:Lato"
+       x="201.92899"
+       y="587.20728"
        id="text4640"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan4642"
-         x="191.92899"
-         y="589.20728">Search</tspan></text>
+         x="201.92899"
+         y="587.20728">Search</tspan></text>
   </g>
 </svg>
