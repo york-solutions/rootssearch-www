@@ -8,7 +8,7 @@
 
 .site {
   border: 1px solid #ddd;
-  background: #fff;
+  background-color: #fff;
   overflow: auto;
   margin-bottom: 30px;
   width: 100%;
