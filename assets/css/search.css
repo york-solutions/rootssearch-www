@@ -32,3 +32,8 @@
   font-size: 15px;
   cursor: pointer;
 }
+
+.form-control {
+  font-size: 16px;
+  height: 36px;
+}
