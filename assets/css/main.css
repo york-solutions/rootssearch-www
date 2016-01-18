@@ -79,14 +79,14 @@ footer {
 
 footer a {
   color: inherit;
-  text-decoration: underline;
 }
 
 footer a:hover {
   color: #000;
+  text-decoration: none;
 }
 
-footer .social {
+footer a:not(:last-child) {
   margin-right: 18px;
 }
 
