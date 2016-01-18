@@ -1,0 +1,42 @@
+<%
+  var pageTitle = 'Help',
+      css = ['help'];
+%>
+<%- 
+  include('partials/header_small'); 
+%>
+
+<div id="main">
+
+  <div class="container">
+    
+    <h2>Search</h2>
+    
+    <p>Start by filling in the search form. None of the fields are required though it's recommended that you at least include a name.</p>
+    
+    <blockquote><span class="label label-rs">Protip</span> Use the <a href="https://chrome.google.com/webstore/detail/rootssearch/aolcffalbhpnojekmimmelebjchjmmgn?hl=en">RootsSearch Google Chrome Extension</a> to automatically fill out the search form and quickly search between websites.</blockquote>
+    
+    <p>Below the search form is a list of buttons for genealogy websites. Click a website's button to search that website.</p>
+    
+    <blockquote><span class="label label-rs">Protip</span> Click the "More sites" link to view the complete list of supported sites and enable other websites you use.</blockquote>
+    
+    <h2>Chrome Extension</h2>
+    
+    <p>The <a href="https://chrome.google.com/webstore/detail/rootssearch/aolcffalbhpnojekmimmelebjchjmmgn?hl=en">RootsSearch Google Chrome Extension</a> makes it easier to use RootsSearch by automatically filling in the search form.
+    When viewing ancestor profiles or records on genealogy websites, the Chrome Extension will detect the person's information.
+    Then, if you click on the RootsSearch icon in the icon bar, the search page will be loaded with the person's details
+    automatically filled in.</p>
+    
+    <p>When the Chrome Extension has detected information it will show a number 1 in the lower-right corner of the icon. If you click
+    the icon when the number is not showing it will still open the search page but there won't be any information filled in.</p>
+    
+    <p>In just two clicks you can search FamilySearch for records about someone in your Ancestry family tree
+    or search Mocavo for records about someone in your MyHeritage tree.</p>
+    
+    <blockquote><span class="label label-rs">Protip</span> Tell us if your favorite genealogy website is not supported.</blockquote>
+    
+  </div>
+
+</div>
+
+<%- include('partials/footer'); %>
