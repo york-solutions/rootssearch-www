@@ -66,31 +66,33 @@
   include('partials/header_small');
 %>
 
-<div id="main" class="container">
+<div id="main">
 
-  <h1>Search</h1>
+  <div class="container">
+
+    <div class="row" id="search-form">
+      <% for(var i = 0; i < fields.length; i++){ %>
+        <div class="col-md-6 form-group">
+          <label for="data_<%- fields[i].property %>"><%- fields[i].display %></label>
+          <input type="text" class="form-control" id="data_<%- fields[i].property %>">
+        </div>
+      <% } %>
+    </div>
   
-  <div class="row" id="search-form">
-    <% for(var i = 0; i < fields.length; i++){ %>
-      <div class="col-md-6 form-group">
-        <label for="data_<%- fields[i].property %>"><%- fields[i].display %></label>
-        <input type="text" class="form-control" id="data_<%- fields[i].property %>">
-      </div>
-    <% } %>
-  </div>
-
-  <h2>Sites</h2>
-
-  <div class="row">
-    <div id="sites-list"></div>
-  </div>
+    <h1>Search</h1>
   
-  <div class="row">
-    <div class="col-xs-12">
-      <div class="text-muted pull-right" id="site-settings-toggle">
-        <a href="/settings"><span class="glyphicon glyphicon-cog"></span> More sites</a>
+    <div class="row">
+      <div id="sites-list"></div>
+    </div>
+    
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="text-muted pull-right" id="site-settings-toggle">
+          <a href="/settings"><span class="glyphicon glyphicon-cog"></span> More sites</a>
+        </div>
       </div>
     </div>
+  
   </div>
 
 </div>
