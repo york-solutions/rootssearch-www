@@ -7,6 +7,10 @@ body {
   background-color: #fafafa;
 }
 
+p {
+  margin-bottom: 1em;
+}
+
 a {
   color: #37879E;
 }
