@@ -19,13 +19,11 @@ $(function(){
   }
 
   // Add sites
-  var availableSites = gensites.sites(),
-      enabledSites = Settings.get('sites');
-  for(var i = 0; i < availableSites.length; i++){
-    var gensite = availableSites[i],
-        searchSite = new SearchSite(gensite);
-    if(enabledSites.indexOf(gensite.id) !== -1){
-      sitesList.addSite(searchSite);
+  var enabledSites = Settings.get('sites');
+  for(var i = 0; i < enabledSites.length; i++){
+    var gensite = gensites.site(enabledSites[i]);
+    if(gensite && gensearch.sites[enabledSites[i]]){
+      sitesList.addSite(new SearchSite(gensite));
     }
   }
 
