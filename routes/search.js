@@ -28,7 +28,11 @@ router.post('/', function(req, res){
     
     else if(req.body.gedcomx){
       debug('gedcomx');
-      data = gedx.convertToGensearch(JSON.parse(req.body.gedcomx));
+      try {
+        data = gedx.convertToGensearch(JSON.parse(req.body.gedcomx));
+      } catch(error) {
+        console.error(error.stack);
+      }
     }
     
     // Before the rootssearch.io website was created, the extension handled
