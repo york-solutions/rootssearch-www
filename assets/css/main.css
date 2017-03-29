@@ -17,6 +17,7 @@ a {
 
 header {
   background-color: #49AFCD;
+  border-bottom: 2px solid #4193ab;
   color: #fff;
   line-height: 1;
 }
@@ -72,6 +73,7 @@ header .nav a {
 }
 
 footer {
+  border-top: 2px solid #4193ab;
   background-color: #49AFCD;
   color: #f9f9f9;
   padding: 16px;
