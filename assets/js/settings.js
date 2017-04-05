@@ -1,6 +1,6 @@
 var sitesList;
 
-$(function(){
+document.addEventListener("DOMContentLoaded", function(){
   Settings.load();
   SearchSite.template = Handlebars.compile($('#sites-template').html());
   sitesList = new SitesList('#sites-list');

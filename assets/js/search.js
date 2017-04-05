@@ -1,6 +1,6 @@
 var sitesList;
 
-$(function(){
+document.addEventListener("DOMContentLoaded", function(){
   Settings.load();
   
   SearchSite.template = Handlebars.compile($('#sites-template').html());
@@ -26,7 +26,6 @@ $(function(){
       sitesList.addSite(new SearchSite(gensite));
     }
   }
-
 });
 
 function search(siteKey){
