@@ -120,7 +120,9 @@ var Settings = {
         parsed = JSON.parse(cookie);
       } catch(e){}
     }
-    _.defaultsDeep(this._settings, parsed, this._defaults);
+    // TODO: updated to remove dependency on lodash. This won't scale well with
+    // additional properties.
+    this._settings.sites = parsed.sites || this._defaults.sites;
   },
   save: function(){
     cookies.setItem('settings', JSON.stringify(this._settings), Infinity);
