@@ -77,28 +77,3 @@ SitesList.prototype.addSite = function(site){
   this.sites.push(site);
   this.$container.append(site.getDOM());
 };
-
-/**
- * Settings
- */
-var Settings = {
-  _settings: {},
-  _defaults: {
-    sites: ['ancestry', 'familysearch', 'findmypast.co.uk', 'findagrave', 'google', 'myheritage']
-  },
-  load: function(){
-    var cookie = cookies.getItem('settings'),
-        parsed = {};
-    if(cookie){
-      try {
-        parsed = JSON.parse(cookie);
-      } catch(e){}
-    }
-    // TODO: updated to remove dependency on lodash. This won't scale well with
-    // additional properties.
-    this._settings.sites = parsed.sites || this._defaults.sites;
-  },
-  get: function(key){
-    return this._settings[key];
-  }
-};
