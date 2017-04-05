@@ -31,8 +31,10 @@
         var g = d.createElement(t);g.id = 'doorbellScript';g.type = 'text/javascript';g.async = true;g.src = 'https://embed.doorbell.io/button/1422?t='+(new Date().getTime());(d.getElementsByTagName('head')[0]||d.getElementsByTagName('body')[0]).appendChild(g);
       }(document, 'script'));
       document.getElementById('contact-link').addEventListener('click', function(){
-        event.preventDefault();
-        doorbell.show();
+        if(doorbell){
+          event.preventDefault();
+          doorbell.show();
+        }
       });
     </script>
   </body>
