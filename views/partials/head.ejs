@@ -20,6 +20,7 @@
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     
+    <% if(process.env.NODE_ENV === 'production') { %>
     <script>
       var _rollbarConfig = {
         accessToken: "1b46f947b0b9436490d8b6dbe7fde730",
@@ -43,5 +44,6 @@
       ga('require', 'linkid');
       ga('send', 'pageview');
     </script>
+    <% } %>
   </head>
   <body>
