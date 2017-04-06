@@ -1,3 +1,6 @@
+var Settings = require('./settings-manager'),
+    gensites = require('./gensites.0.1.1.js');
+
 var sitesList;
 
 document.addEventListener("DOMContentLoaded", function(){

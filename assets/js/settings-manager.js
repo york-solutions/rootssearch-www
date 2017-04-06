@@ -1,7 +1,9 @@
+var cookies = require('./cookies');
+
 /**
  * Load, get, set, and save settings.
  */
-var Settings = {
+module.exports = {
   _settings: {},
   _defaults: {
     sites: ['ancestry', 'familysearch', 'findmypast.co.uk', 'findagrave', 'google', 'myheritage']
