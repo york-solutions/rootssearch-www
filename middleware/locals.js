@@ -7,7 +7,6 @@ var bundles = require('../webpack-assets.json');
 module.exports = function(req, res, next){
   res.locals.pageTitle = '';
   res.locals.css = [];
-  res.locals.js = [];
   res.locals.bundles = [];
   res.locals.bundle = function(name){
     return bundles[name] ? '/public/' + bundles[name].js : '';
