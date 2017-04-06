@@ -1,5 +1,5 @@
 var Settings = require('./settings-manager'),
-    gensites = require('./gensites.0.1.1.js');
+    gensites = require('gensites');
 
 var sitesList;
 
