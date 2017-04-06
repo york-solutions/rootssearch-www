@@ -2,8 +2,8 @@ var webpack = require('webpack');
 var path = require('path');
 var AssetsPlugin = require('assets-webpack-plugin');
 
-module.exports = function() {
-  return {
+module.exports = function(env) {
+  var config = {
     entry: {
       settings: './assets/js/settings.js',
       search: './assets/js/search.js'
@@ -27,4 +27,10 @@ module.exports = function() {
       new AssetsPlugin()
     ]
   };
-}
+  
+  if(env && env.production){
+    config.plugins.push(new webpack.optimize.UglifyJsPlugin());
+  }
+  
+  return config;
+};

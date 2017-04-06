@@ -9,8 +9,10 @@
   },
   "scripts": {
     "start": "node app.js",
-    "start:dev": "webpack && DEBUG=rootssearch:* node-dev app.js",
-    "build": "webpack"
+    "start:dev": "DEBUG=rootssearch:* node-dev app.js",
+    "build:dev": "webpack",
+    "build:prod": "webpack -p",
+    "heroku-postbuild": "npm run build:prod"
   },
   "repository": {
     "type": "git",
