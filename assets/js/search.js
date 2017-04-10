@@ -7,7 +7,6 @@ var sitesList;
 document.addEventListener("DOMContentLoaded", function(){
   Settings.load();
   
-  SearchSite.template = Handlebars.compile($('#sites-template').html());
   sitesList = new SitesList('#sites-list');
   
   var isData = false;
@@ -52,15 +51,20 @@ function getPersonFormData(){
  * Manage a site's display and settings
  */
 var SearchSite = function(site){
-  this._site = site;
+  this.site = site;
   this.render();
 };
 
 SearchSite.prototype.render = function(){
   var self = this;
-  self.$dom = $(SearchSite.template(self._site));
+  self.$dom = $(`<div class="col-xs-12 col-sm-6 col-lg-4">
+    <button class="site btn btn-lg btn-default">
+      <div class="site-name">${this.site.name}</div>
+      <div class="site-search-btn"><span class="glyphicon glyphicon-search"></span></div>
+    </div>
+  </div>`);
   self.$dom.click(function(){
-    search(self._site.id);
+    search(self.site.id);
   });
 };
 

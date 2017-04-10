@@ -8,6 +8,20 @@ module.exports = function(env) {
       settings: './assets/js/settings.js',
       search: './assets/js/search.js'
     },
+    module: {
+      rules: [
+        {
+          test: /\.js$/,
+          exclude: /(node_modules|bower_components)/,
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: ['env']
+            }
+          }
+        }
+      ]
+    },
     output: {
       filename: '[name].[chunkhash].js',
       path: path.resolve(__dirname, 'public')
