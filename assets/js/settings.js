@@ -1,11 +1,11 @@
 var Settings = require('./settings-manager'),
-    gensites = require('gensites');
+    gensites = require('gensites'),
+    $ = require('jquery');
 
 var sitesList;
 
 document.addEventListener("DOMContentLoaded", function(){
   Settings.load();
-  SearchSite.template = Handlebars.compile($('#sites-template').html());
   sitesList = new SitesList('#sites-list');
 });
 
@@ -20,10 +20,24 @@ var SearchSite = function(site, enabled){
 
 SearchSite.prototype.render = function(){
   var self = this;
-  self.$dom = $(SearchSite.template({
-    site: self.site,
-    enabled: self.enabled
-  }));
+  self.$dom = $(`<div class="site row">
+    <div class="site-description col-md-10">
+      <div class="site-name">${this.site.name}</div>
+      <p class="text-muted">${this.site.description.en}</p>
+    </div>
+    <div class="site-settings-col col-md-2">
+      <div class="btn-group btn-toggle" data-toggle="buttons">
+        <label class="btn btn-rs enabled-btn">
+          <input type="radio" name="enabled" autocomplete="off" value="enabled"> Enabled
+        </label>
+        <label class="btn btn-rs disabled-btn">
+          <input type="radio" name="enabled" autocomplete="off" value="disabled"> Disabled
+        </label>
+      </div>
+    </div>
+    <div class="col-xs-12"><hr></div>
+  </div>`);
+  self.updateButtonStates();
   self.$dom.find('.enabled-btn').click(function(){
     self.enable();
   });
@@ -59,8 +73,19 @@ SearchSite.prototype.enable = function(){
   return this;
 };
 
+SearchSite.prototype.updateButtonStates = function(){
+  if(this.enabled){
+    this.$dom.find('.enabled-btn').addClass('active');
+    this.$dom.find('.disabled-btn').removeClass('active');
+  } else {
+    this.$dom.find('.disabled-btn').addClass('active');
+    this.$dom.find('.enabled-btn').removeClass('active');
+  }
+};
+
 SearchSite.prototype.changed = function(){
   var self = this;
+  self.updateButtonStates();
   setTimeout(function(){
     self.changeFunc();
   });
