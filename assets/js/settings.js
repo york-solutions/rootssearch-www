@@ -1,17 +1,100 @@
 var Settings = require('./settings-manager'),
     gensites = require('gensites'),
+    React = require('react'),
+    ReactDOM = require('react-dom'),
+    Redux = require('redux'),
     $ = require('jquery');
 
-var sitesList;
+/**
+ * Manage the display of the list of sites
+ */
+class SitesList extends React.Component {
+  render() {
+    let sites = this.props.sites.map(site => 
+      <SearchSite site={site} key={site.id} enableSite={this.props.enableSite} disableSite={this.props.disableSite} />
+    );
+    return <div>{sites}</div>;
+  }
+}
+
+class SearchSite extends React.Component {
+  constructor(props){
+    super(props);
+    this.enable = this.enable.bind(this);
+    this.disable = this.disable.bind(this);
+  }
+  render(){
+    return <div className="site row">
+      <div className="site-description col-md-10">
+        <div className="site-name">{this.props.site.name}</div>
+        <p className="text-muted">{this.props.site.description.en}</p>
+      </div>
+      <div className="site-settings-col col-md-2">
+        <div className="btn-group btn-toggle" data-toggle="buttons">
+          <label className={"btn btn-rs enabled-btn " + (this.props.site.enabled ? 'active' : '')}>
+            <input type="radio" name="enabled" autoComplete="off" value="enabled" onClick={this.enable} /> Enabled
+          </label>
+          <label className={"btn btn-rs disabled-btn " + (!this.props.site.enabled ? 'active' : '')}>
+            <input type="radio" name="enabled" autoComplete="off" value="disabled" onClick={this.disable} /> Disabled
+          </label>
+        </div>
+      </div>
+      <div className="col-xs-12"><hr /></div>
+    </div>;
+  }
+  enable(){
+    this.props.enableSite(this.props.site.id);
+  }
+  disable(){
+    this.props.disableSite(this.props.site.id);
+  }
+}
 
 document.addEventListener("DOMContentLoaded", function(){
   Settings.load();
-  sitesList = new SitesList('#sites-list');
+  const sites = gensites.sites(),
+      enabledSites = Settings.get('sites');
+  sites.forEach(site => {
+    site.enabled = enabledSites.indexOf(site.id) !== -1;
+  });
+  
+  const store = Redux.createStore((state = [], action) => {
+    switch(action.type){
+      case 'ENABLE_SITE':
+      case 'DISABLE_SITE':
+      default:
+        return state;
+    }
+  }, sites);
+  
+  const enableSite = (siteId) => {
+    console.log('enable site', siteId);
+    store.dispatch({
+      type: 'ENABLE_SITE',
+      site: siteId
+    });
+  };
+  const disableSite = (siteId) => {
+    console.log('disable site', siteId);
+    store.dispatch({
+      type: 'DISABLE_SITE',
+      site: siteId
+    });
+  };
+  
+  const render = () => ReactDOM.render(
+    <SitesList sites={store.getState()} enableSite={enableSite} disableSite={disableSite} />, 
+    document.getElementById('sites-list')
+  );
+  
+  store.subscribe(render);
+  render();
 });
 
 /**
  * Manage a site's display and settings
  */
+ /*
 var SearchSite = function(site, enabled){
   this.site = site;
   this.enabled = enabled;
@@ -94,40 +177,4 @@ SearchSite.prototype.changed = function(){
 SearchSite.prototype.onChange = function(func){
   this.changeFunc = func;
 };
-
-/**
- * Manage the display of the list of site
- */
-var SitesList = function(selector){
-  this.$container = $(selector);
-  this.sites = [];
-  
-  var availableSites = gensites.sites(),
-      enabledSites = Settings.get('sites');
-  for(var i = 0; i < availableSites.length; i++){
-    var gensite = availableSites[i],
-        enabled = enabledSites.indexOf(gensite.id) !== -1,
-        searchSite = new SearchSite(gensite, enabled);
-    this.addSite(searchSite);
-  }
-};
-
-SitesList.prototype.addSite = function(site){
-  var self = this;
-  self.sites.push(site);
-  self.$container.append(site.render().getDOM());
-  site.onChange(function(){
-    self.updateSettings();
-  });
-};
-
-SitesList.prototype.updateSettings = function(){
-  var enabledSites = [];
-  for(var i = 0; i < this.sites.length; i++){
-    if(this.sites[i].isEnabled()){
-      enabledSites.push(this.sites[i].site.id);
-    }
-  }
-  Settings.set('sites', enabledSites);
-  Settings.save();
-};
+*/
