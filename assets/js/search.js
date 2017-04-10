@@ -1,14 +1,51 @@
 var Settings = require('./settings-manager'),
     gensites = require('gensites'),
     gensearch = require('gensearch'),
+    React = require('react'),
+    ReactDOM = require('react-dom'),
     $ = require('jquery');
 
-var sitesList;
+/**
+ * Manage a site's display and settings
+ */
+class SearchSite extends React.Component {
+  
+  constructor(props){
+    super(props);
+    this.search = this.search.bind(this);
+  }
+  
+  render() {
+    return <div className="col-xs-12 col-sm-6 col-lg-4">
+      <button className="site btn btn-lg btn-default" onClick={this.search}>
+        <div className="site-name">{this.props.site.name}</div>
+        <div className="site-search-btn"><span className="glyphicon glyphicon-search"></span></div>
+      </button>
+    </div>;
+  }
+
+  search(){
+    var data = getPersonFormData(),
+        url = gensearch(this.props.site.id, data);
+    window.open(url, '_blank');
+    ga('send', 'event', 'search', 'site', this.props.site.id);
+  }
+}
 
 document.addEventListener("DOMContentLoaded", function(){
   Settings.load();
   
-  sitesList = new SitesList('#sites-list');
+  let sites = Settings.get('sites')
+    .filter(site => {
+      return gensites.site(site) && gensearch.sites[site];
+    })
+    .map(site => gensites.site(site))
+    .map(site => <SearchSite key={site.id} site={site}></SearchSite>);
+  
+  ReactDOM.render(
+    <div>{sites}</div>,
+    document.getElementById('sites-list')
+  );
   
   var isData = false;
   for(var prop in personData){
@@ -22,22 +59,7 @@ document.addEventListener("DOMContentLoaded", function(){
     ga('send', 'event', 'search', 'noData');
   }
 
-  // Add sites
-  var enabledSites = Settings.get('sites');
-  for(var i = 0; i < enabledSites.length; i++){
-    var gensite = gensites.site(enabledSites[i]);
-    if(gensite && gensearch.sites[enabledSites[i]]){
-      sitesList.addSite(new SearchSite(gensite));
-    }
-  }
 });
-
-function search(siteKey){
-  var data = getPersonFormData(),
-      url = gensearch(siteKey, data);
-  window.open(url, '_blank');
-  ga('send', 'event', 'search', 'site', siteKey);
-}
 
 function getPersonFormData(){
   var data = {};
@@ -47,41 +69,3 @@ function getPersonFormData(){
   });
   return data;
 }
-
-/**
- * Manage a site's display and settings
- */
-var SearchSite = function(site){
-  this.site = site;
-  this.render();
-};
-
-SearchSite.prototype.render = function(){
-  var self = this;
-  self.$dom = $(`<div class="col-xs-12 col-sm-6 col-lg-4">
-    <button class="site btn btn-lg btn-default">
-      <div class="site-name">${this.site.name}</div>
-      <div class="site-search-btn"><span class="glyphicon glyphicon-search"></span></div>
-    </div>
-  </div>`);
-  self.$dom.click(function(){
-    search(self.site.id);
-  });
-};
-
-SearchSite.prototype.getDOM = function(){
-  return this.$dom;
-};
-
-/**
- * Manage the display of the list of site
- */
-var SitesList = function(selector){
-  this.$container = $(selector);
-  this.sites = [];
-};
-
-SitesList.prototype.addSite = function(site){
-  this.sites.push(site);
-  this.$container.append(site.getDOM());
-};
