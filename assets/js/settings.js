@@ -1,5 +1,6 @@
 var Settings = require('./settings-manager'),
-    gensites = require('gensites');
+    gensites = require('gensites'),
+    $ = require('jquery');
 
 var sitesList;
 
