@@ -77,6 +77,11 @@ function loadSiteSettings(){
   return sites;
 }
 
+function saveSiteSettings(sites){
+  Settings.set('sites', sites.filter(site => site.enabled).map(site => site.id));
+  Settings.save();
+}
+
 function init(){
   const sites = loadSiteSettings();
   const store = Redux.createStore((state, action) => {
@@ -104,6 +109,9 @@ function init(){
     document.getElementById('sites-list')
   );
   store.subscribe(render);
+  store.subscribe(() => {
+    saveSiteSettings(store.getState().sites);
+  });
   render();
 }
 
