@@ -49,6 +49,12 @@ class SearchSite extends React.Component {
   }
 }
 
+function settingsReducer(state, action) {
+  return {
+    sites: sitesReducer(state.sites, action)
+  };
+}
+
 function sitesReducer(sitesState = [], action){
   let enable = true;
   switch(action.type){
@@ -83,12 +89,9 @@ function saveSiteSettings(sites){
 }
 
 function init(){
-  const sites = loadSiteSettings();
-  const store = Redux.createStore((state, action) => {
-    return {
-      sites: sitesReducer(state.sites, action)
-    };
-  }, { sites });
+  const store = Redux.createStore(settingsReducer, { 
+    sites: loadSiteSettings()
+  });
   const render = () => ReactDOM.render(
     <SitesList 
       sites={store.getState().sites} 
