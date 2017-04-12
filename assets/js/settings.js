@@ -1,8 +1,6 @@
-var Settings = require('./settings-manager'),
-    gensites = require('gensites'),
-    React = require('react'),
-    ReactDOM = require('react-dom'),
-    Redux = require('redux');
+const React = require('react'),
+      ReactDOM = require('react-dom'),
+      store = require('./settings-store');
 
 /**
  * Manage the display of the list of sites
@@ -10,7 +8,7 @@ var Settings = require('./settings-manager'),
 class SitesList extends React.Component {
   render() {
     let sites = this.props.sites.map(site => 
-      <SearchSite site={site} key={site.id} enableSite={this.props.enableSite} disableSite={this.props.disableSite} />
+      <SearchSite site={site} key={site.id} />
     );
     return <div>{sites}</div>;
   }
@@ -42,79 +40,25 @@ class SearchSite extends React.Component {
     </div>;
   }
   enable(){
-    this.props.enableSite(this.props.site.id);
+    store.dispatch({
+      type: 'ENABLE_SITE',
+      site: this.props.site.id
+    });
   }
   disable(){
-    this.props.disableSite(this.props.site.id);
+    store.dispatch({
+      type: 'DISABLE_SITE',
+      site: this.props.site.id
+    });
   }
-}
-
-function settingsReducer(state, action) {
-  return {
-    sites: sitesReducer(state.sites, action)
-  };
-}
-
-function sitesReducer(sitesState = [], action){
-  let enable = true;
-  switch(action.type){
-    // Toggle site. Take advantage of switch statement fallthrough
-    // to reuse code for toggling a site.
-    case 'DISABLE_SITE':
-      enable = false;
-    case 'ENABLE_SITE':
-      return sitesState.map(site => {
-        return Object.assign({}, site, {
-          enabled: site.id === action.site ? enable : site.enabled
-        });
-      });
-    default:
-      return sitesState;
-  }
-}
-
-function loadSiteSettings(){
-  Settings.load();
-  const sites = gensites.sites(),
-      enabledSites = Settings.get('sites');
-  sites.forEach(site => {
-    site.enabled = enabledSites.indexOf(site.id) !== -1;
-  });
-  return sites;
-}
-
-function saveSiteSettings(sites){
-  Settings.set('sites', sites.filter(site => site.enabled).map(site => site.id));
-  Settings.save();
 }
 
 function init(){
-  const store = Redux.createStore(settingsReducer, { 
-    sites: loadSiteSettings()
-  });
   const render = () => ReactDOM.render(
-    <SitesList 
-      sites={store.getState().sites} 
-      enableSite={(siteId) => {
-        console.log('enable site', siteId);
-        store.dispatch({
-          type: 'ENABLE_SITE',
-          site: siteId
-        });
-      }} 
-      disableSite={(siteId) => {
-        console.log('disable site', siteId);
-        store.dispatch({
-          type: 'DISABLE_SITE',
-          site: siteId
-        });
-      }} />, 
+    <SitesList sites={store.getState().sites} />, 
     document.getElementById('sites-list')
   );
   store.subscribe(render);
-  store.subscribe(() => {
-    saveSiteSettings(store.getState().sites);
-  });
   render();
 }
 
