@@ -1,7 +1,14 @@
 const Redux = require('redux'),
       gensites = require('gensites'),
-      Settings = require('./settings-manager');
+      Settings = require('./settings-manager'),
+      settingsReducer = require('./settings-reducer');
 
+/**
+ * Load the current list of enabled sites from storage and use that to set
+ * the enabled property on the full list of available sites.
+ * 
+ * @returns {Sites[]} full list of available sites
+ */
 function loadSiteSettings(){
   Settings.load();
   const sites = gensites.sites(),
@@ -12,38 +19,20 @@ function loadSiteSettings(){
   return sites;
 }
 
+/**
+ * Persists the current list of enabled sites.
+ */
 function saveSiteSettings(sites){
   Settings.set('sites', sites.filter(site => site.enabled).map(site => site.id));
   Settings.save();
 }
 
-function settingsReducer(state, action) {
-  return {
-    sites: sitesReducer(state.sites, action)
-  };
-}
-
-function sitesReducer(sitesState = [], action){
-  let enable = true;
-  switch(action.type){
-    // Toggle site. Take advantage of switch statement fallthrough
-    // to reuse code for toggling a site.
-    case 'DISABLE_SITE':
-      enable = false;
-    case 'ENABLE_SITE':
-      return sitesState.map(site => {
-        return Object.assign({}, site, {
-          enabled: site.id === action.site ? enable : site.enabled
-        });
-      });
-    default:
-      return sitesState;
-  }
-}
-
+// Initialize the store with site settings loaded from cookies
 const store = Redux.createStore(settingsReducer, { 
   sites: loadSiteSettings()
 });
+
+// Whenever the settings change, recompute the list of enabled sites
 store.subscribe(() => {
   saveSiteSettings(store.getState().sites);
 });
