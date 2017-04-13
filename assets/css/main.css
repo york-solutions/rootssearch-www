@@ -69,7 +69,8 @@ header .nav a {
 }
 
 #main {
-  flex: 1;
+  /* Make sure the footer is always at the bottom of the page by making the main content fill available vertical space */
+  flex: 1 0 auto;
 }
 
 footer {
