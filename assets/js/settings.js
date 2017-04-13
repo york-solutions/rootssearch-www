@@ -53,13 +53,12 @@ class SearchSite extends React.Component {
   }
 }
 
-function init(){
-  const render = () => ReactDOM.render(
+function render(){
+  return ReactDOM.render(
     <SitesList sites={store.getState().sites} />, 
     document.getElementById('sites-list')
   );
-  store.subscribe(render);
-  render();
 }
 
-document.addEventListener("DOMContentLoaded", init);
+store.subscribe(render);
+render();
