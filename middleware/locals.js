@@ -9,7 +9,7 @@ module.exports = function(req, res, next){
   res.locals.css = [];
   res.locals.bundles = [];
   res.locals.bundle = function(name){
-    return bundles[name] ? '/public/' + bundles[name].js : '';
+    return bundles[name] ? '/assets/js/' + bundles[name].js : '';
   };
   res.locals.bundleScript = function(name){
     return '<script src="' + res.locals.bundle(name) + '"></script>';

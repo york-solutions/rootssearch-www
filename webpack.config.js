@@ -5,8 +5,8 @@ var AssetsPlugin = require('assets-webpack-plugin');
 module.exports = function(env) {
   var config = {
     entry: {
-      settings: './assets/js/settings.js',
-      search: './assets/js/search.js'
+      settings: './lib/pages/search/settings.js',
+      search: './lib/pages/search/search.js'
     },
     module: {
       rules: [
@@ -24,7 +24,7 @@ module.exports = function(env) {
     },
     output: {
       filename: '[name].[chunkhash].js',
-      path: path.resolve(__dirname, 'public')
+      path: path.resolve(__dirname, 'assets', 'js')
     },
     plugins: [
       new webpack.optimize.CommonsChunkPlugin({
