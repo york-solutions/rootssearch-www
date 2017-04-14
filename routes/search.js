@@ -10,6 +10,10 @@ router.get('/', function(req, res){
   });
 });
 
+router.get('/settings', function(req, res) {
+  res.render('settings');
+});
+
 /**
  * Data has been POSTed for pre-filling the search form.
  */
