@@ -19,6 +19,7 @@ app.use(bodyParser.urlencoded({
 // Routes
 app.use('/', require('./routes/index'));
 app.use('/search', require('./routes/search'));
+app.use('/save', require('./routes/save'));
 app.use('/help', require('./routes/help'));
 
 // 404 if we couldn't match a route.

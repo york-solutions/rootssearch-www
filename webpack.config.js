@@ -6,7 +6,8 @@ module.exports = function(env) {
   var config = {
     entry: {
       settings: './lib/pages/search/settings.js',
-      search: './lib/pages/search/search.js'
+      search: './lib/pages/search/search.js',
+      'save.fs': './lib/pages/save/fs/index.js'
     },
     module: {
       rules: [
