@@ -1,0 +1,80 @@
+<style>
+  body {
+    padding: 0;
+    margin: 0;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  button {
+    height: 2em;
+  }
+  textarea {
+    flex: 1;
+    margin-top: 1em;
+  }
+</style>
+<form method="POST" action="https://rootssearch-www-justincy.c9.io/save/fs" target="fsSave">
+<button>Submit</button>
+<textarea name="gedcomx">{
+  "persons" : [ {
+    "living" : false,
+    "gender" : {
+      "type" : "http://gedcomx.org/Female"
+    },
+    "names" : [ {
+      "type" : "http://gedcomx.org/BirthName",
+      "preferred" : true,
+      "nameForms" : [ {
+        "fullText" : "Anastasia Aleksandrova",
+        "parts" : [ {
+          "type" : "http://gedcomx.org/Given",
+          "value" : "Anastasia"
+        }, {
+          "type" : "http://gedcomx.org/Surname",
+          "value" : "Aleksandrova"
+        } ]
+      }, {
+        "fullText" : "Анастасия Александрова",
+        "parts" : [ {
+          "type" : "http://gedcomx.org/Given",
+          "value" : "Анастасия"
+        }, {
+          "type" : "http://gedcomx.org/Surname",
+          "value" : "Александрова"
+        } ]
+      } ]
+    } ],
+    "facts" : [ {
+      "type" : "http://gedcomx.org/Birth",
+      "date" : {
+        "original" : "3 Apr 1836",
+        "formal" : "+1836"
+      },
+      "place" : {
+        "original" : "Moscow, Russia",
+        "normalized" : [ {
+          "lang" : "en",
+          "value" : "Moscow, Moskva, Russia"
+        } ]
+      }
+    }, {
+      "type" : "http://gedcomx.org/Residence",
+      "date" : {
+        "original" : "13 Apr 1836",
+        "formal" : "+1836-04-13"
+      },
+      "place" : {
+        "original" : "Moscow, Russia",
+        "normalized" : [ {
+          "value" : "Moskva, Moscow, Russia"
+        } ]
+      }
+    } ]
+  } ]
+}</textarea>
+</form>
