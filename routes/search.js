@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var gedx = require('../lib/server/gedx.js');
+var gedx = require('../lib/gedx.js');
 var debug = require('debug')('rootssearch:routes:search');
 
 router.get('/', function(req, res){
