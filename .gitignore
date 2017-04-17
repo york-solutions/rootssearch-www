@@ -1,4 +1,4 @@
 npm-debug.log
 node_modules
-assets/js
-webpack-assets.json
+assets
+build

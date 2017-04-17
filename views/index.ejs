@@ -35,7 +35,7 @@
         var info = marketing[i];  
     %>
     <div class="row">
-      <div class="marketing-img col-lg-offset-1 col-md-5"><img src="/assets/img/home/<%= info.img %>"></div>
+      <div class="marketing-img col-lg-offset-1 col-md-5"><img src="<%- asset(`img/home/${info.img}`) %>"></div>
       <div class="marketing-text col-md-5"><%= info.text %></div>
     </div>
     <% } %>
