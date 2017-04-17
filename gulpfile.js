@@ -2,6 +2,7 @@ const gulp = require('gulp');
 const webpack = require('webpack');
 const del = require('del');
 const rev = require('gulp-rev');
+const revCssUrl = require('gulp-rev-css-url');
 
 const PRODUCTION = process.env.NODE_ENV === 'production';
 
@@ -70,6 +71,7 @@ gulp.task('build', ['js', 'css', 'img']);
 gulp.task('fingerprint', ['build'], function(){
   gulp.src('build/**/*.*')
     .pipe(rev())
+    .pipe(revCssUrl())
     .pipe(gulp.dest('assets'))
     .pipe(rev.manifest('manifest.json'))
     .pipe(gulp.dest('assets'));
