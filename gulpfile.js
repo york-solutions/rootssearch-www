@@ -66,9 +66,10 @@ gulp.task('clean-img', function(){
 });
 
 gulp.task('build', ['js', 'css', 'img']);
+gulp.task('default', ['build']);
 
 // Load all files from the build directory, hash them, then write to the assets directory
-gulp.task('fingerprint', ['build'], function(){
+gulp.task('production', ['build'], function(){
   gulp.src('build/**/*.*')
     .pipe(rev())
     .pipe(revCssUrl())

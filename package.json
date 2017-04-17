@@ -11,10 +11,8 @@
     "start": "node app.js",
     "start:debug": "DEBUG=rootssearch:* node-dev app.js",
     "start:dev": "node-dev app.js",
-    "gulp": "gulp",
-    "build:dev": "webpack",
-    "build:watch": "webpack --progress --watch",
-    "build:prod": "webpack -p",
+    "build:dev": "gulp",
+    "build:prod": "gulp production",
     "heroku-postbuild": "npm run build:prod"
   },
   "repository": {
