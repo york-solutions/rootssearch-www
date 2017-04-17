@@ -1,12 +1,15 @@
 const gulp = require('gulp');
 const webpack = require('webpack');
 const del = require('del');
+const rev = require('gulp-rev');
+
+const PRODUCTION = process.env.NODE_ENV === 'production';
 
 // In dev we constantly watch for changes. But in production we just build once.
 gulp.task('js', ['clean-js'], function(cb){
   const compiler = webpack(require('./webpack.config.js'));
   
-  if(process.env.NODE_ENV === 'production'){
+  if(PRODUCTION){
     compiler.run((error, stats) => {
     
       // Return errors
@@ -40,25 +43,41 @@ gulp.task('js', ['clean-js'], function(cb){
 });
 
 gulp.task('clean-js', function(){
-  return del('assets/js');
+  return cleanAssetType('js');
 });
 
 gulp.task('css', ['clean-css'], function(){
   return gulp.src('src/css/*.css')
-    .pipe(gulp.dest('assets/css'));
+    .pipe(gulp.dest(PRODUCTION ? 'build/css' : 'assets/css'));
 });
 
 gulp.task('clean-css', function(){
-  return del('assets/css');
+  return cleanAssetType('css');
 });
 
 gulp.task('img', ['clean-img'], function(){
   return gulp.src('src/img/**/*.*')
-    .pipe(gulp.dest('assets/img'));
+    .pipe(gulp.dest(PRODUCTION ? 'build/img' : 'assets/img'));
 });
 
 gulp.task('clean-img', function(){
-  return del('assets/img');
+  return cleanAssetType('img');
 });
 
-gulp.task('default', ['js', 'css', 'img']);
+// Load all files from the build directory, hash them, then write to the assets directory
+gulp.task('fingerprint', ['build'], function(){
+  gulp.src('build/**/*.*')
+    .pipe(rev())
+    .pipe(gulp.dest('assets'));
+});
+
+gulp.task('build', ['js', 'css', 'img']);
+gulp.task('production', ['fingerprint']);
+
+function cleanAssetType(type){
+  const paths = [`assets/${type}`];
+  if(PRODUCTION){
+    paths.push(`build/${type}`);
+  }
+  return del(paths);
+}

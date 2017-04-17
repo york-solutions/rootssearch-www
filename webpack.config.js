@@ -41,6 +41,7 @@ const config = {
 
 if(process.env.NODE_ENV === 'production'){
   config.plugins.push(new webpack.optimize.UglifyJsPlugin());
+  config.output.path = path.resolve(__dirname, 'build', 'js');
 }
   
 module.exports = config;
