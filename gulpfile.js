@@ -64,15 +64,16 @@ gulp.task('clean-img', function(){
   return cleanAssetType('img');
 });
 
+gulp.task('build', ['js', 'css', 'img']);
+
 // Load all files from the build directory, hash them, then write to the assets directory
 gulp.task('fingerprint', ['build'], function(){
   gulp.src('build/**/*.*')
     .pipe(rev())
+    .pipe(gulp.dest('assets'))
+    .pipe(rev.manifest('manifest.json'))
     .pipe(gulp.dest('assets'));
 });
-
-gulp.task('build', ['js', 'css', 'img']);
-gulp.task('production', ['fingerprint']);
 
 function cleanAssetType(type){
   const paths = [`assets/${type}`];
