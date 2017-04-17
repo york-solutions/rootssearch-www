@@ -8,7 +8,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(require('./middleware/locals'));
-app.use(favicon(__dirname + '/assets/favicon.ico'));
+app.use(favicon(__dirname + '/assets/img/favicon.ico'));
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ 
