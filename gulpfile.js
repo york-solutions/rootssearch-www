@@ -2,7 +2,7 @@ const gulp = require('gulp');
 const webpack = require('webpack');
 const del = require('del');
 const rev = require('gulp-rev');
-const revCssUrl = require('gulp-rev-css-url');
+const revcss = require('gulp-rev-css-url');
 
 const PRODUCTION = process.env.NODE_ENV === 'production';
 
@@ -70,12 +70,15 @@ gulp.task('default', ['build']);
 
 // Load all files from the build directory, hash them, then write to the assets directory
 gulp.task('production', ['build'], function(){
-  gulp.src('build/**/*.*')
+  return gulp.src('build/**/*.*')
     .pipe(rev())
-    .pipe(revCssUrl())
+    .pipe(revcss())
     .pipe(gulp.dest('assets'))
     .pipe(rev.manifest('manifest.json'))
-    .pipe(gulp.dest('assets'));
+    .pipe(gulp.dest('assets'))
+    .on('end', function(){
+      del('build');
+    });
 });
 
 function cleanAssetType(type){
