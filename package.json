@@ -23,7 +23,6 @@
   },
   "homepage": "https://github.com/york-solutions/rootssearch-www",
   "dependencies": {
-    "assets-webpack-plugin": "3.5.1",
     "babel-core": "6.24.1",
     "babel-loader": "7.0.0-beta.1",
     "babel-preset-env": "1.3.3",
