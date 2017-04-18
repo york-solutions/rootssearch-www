@@ -1,0 +1,49 @@
+@import '_variables';
+
+.settings-page {
+
+  #sites-list {
+    margin-bottom: $spacing;
+  }
+  
+  hr {
+    border-color: #e5e5e5;
+  }
+  
+  .site-name {
+    font-size: 22px;
+    margin-bottom: $spacingHalf;
+  }
+  
+  .site-description {
+    font-size: 16px;
+  }
+  
+  .site-settings-col {
+    text-align: right;
+    padding-top: 12px;
+  }
+  
+  .btn-toggle {
+    
+    .btn.active {
+      box-shadow: none;
+      &:hover {
+        background-color: #49AFCD;
+      }
+    }
+    
+    .btn:not(.active) {
+      box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
+      background-color: #fff;
+      border: 1px solid #ccc;
+      color: #333;
+      &:hover {
+        background-color: #e6e6e6;
+        border: 1px solid #adadad;
+      }
+    }
+    
+  }
+
+}
