@@ -4,9 +4,8 @@ const webpackConfig = require('./webpack.config.js');
 const del = require('del');
 const rev = require('gulp-rev');
 const revcss = require('gulp-rev-css-url');
+const revdel = require('gulp-rev-delete-original');
 const sass = require('gulp-sass');
-
-const PRODUCTION = process.env.NODE_ENV === 'production';
 
 //
 // JS
@@ -50,7 +49,7 @@ gulp.task('js:watch', ['clean:js'], function(cb){
 });
 
 gulp.task('clean:js', function(){
-  return cleanAssetType('js');
+  return del('assets/js');
 });
 
 //
@@ -60,14 +59,14 @@ gulp.task('clean:js', function(){
 gulp.task('css', ['clean:css'], function(){
   return gulp.src('src/css/*')
     .pipe(sass().on('error', sass.logError))
-    .pipe(gulp.dest(PRODUCTION ? 'build/css' : 'assets/css'));
+    .pipe(gulp.dest('assets/css'));
 });
 gulp.task('css:watch', ['css'], function () {
   gulp.watch('src/css/*', ['css']);
 });
 
 gulp.task('clean:css', function(){
-  return cleanAssetType('css');
+  return del('assets/css');
 });
 
 //
@@ -76,11 +75,11 @@ gulp.task('clean:css', function(){
 
 gulp.task('img', ['clean:img'], function(){
   return gulp.src('src/img/**/*.*')
-    .pipe(gulp.dest(PRODUCTION ? 'build/img' : 'assets/img'));
+    .pipe(gulp.dest('assets/img'));
 });
 
 gulp.task('clean:img', function(){
-  return cleanAssetType('img');
+  return del('assets/img');
 });
 
 //
@@ -88,27 +87,16 @@ gulp.task('clean:img', function(){
 //
 
 gulp.task('build', ['js', 'css', 'img']);
-gulp.task('default', ['build']);
-
 gulp.task('watch', ['js:watch', 'css:watch', 'img']);
+gulp.task('default', ['build']);
 
 // Load all files from the build directory, hash them, then write to the assets directory
 gulp.task('production', ['build'], function(){
-  return gulp.src('build/**/*.*')
+  return gulp.src('assets/**/*')
     .pipe(rev())
     .pipe(revcss())
+    .pipe(revdel())
     .pipe(gulp.dest('assets'))
     .pipe(rev.manifest('manifest.json'))
-    .pipe(gulp.dest('assets'))
-    .on('end', function(){
-      del('build');
-    });
+    .pipe(gulp.dest('assets'));
 });
-
-function cleanAssetType(type){
-  const paths = [`assets/${type}`];
-  if(PRODUCTION){
-    paths.push(`build/${type}`);
-  }
-  return del(paths);
-}
