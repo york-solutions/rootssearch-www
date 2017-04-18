@@ -1,3 +1,5 @@
+@import '_variables';
+
 body {
   font-family: Lato, Arial, sans-serif;
   font-size: 18px;
@@ -16,56 +18,43 @@ a {
 }
 
 header {
-  background-color: #49AFCD;
-  border-bottom: 2px solid #4193ab;
+  background-color: $primaryColor;
+  border-bottom: 2px solid $primaryColorDark;
   color: #fff;
   line-height: 1;
-}
-
-header a {
-  color: inherit;
-}
-
-header a:hover {
-  color: #000;
-  text-decoration: none;
-}
-
-header .nav a {
-  margin-left: 18px;
-}
-
-.branding a:hover {
-  color: inherit;
-}
-
-.header-large {
-  padding: 64px;
-  font-size: 65px;
-  text-align: center;
-}
-
-.header-large .logo {
-  margin-right: 32px;
-}
-
-.header-small {
-  padding: 16px;
+  padding: $spacingHalf;
   overflow: auto;
-}
-
-.header-small .branding {
-  font-size: 24px;
-  float: left;
-}
-
-.header-small .nav {
-  float: right;
-  margin-top: 8px;
-}
-
-.header-small .logo {
-  margin-right: 16px;
+  
+  a {
+    color: inherit;
+  
+    &:hover {
+      color: #000;
+      text-decoration: none;
+    }
+  }
+  
+  .branding {
+    font-size: 24px;
+    float: left;
+  
+    a:hover {
+      color: inherit;
+    }
+    
+    .logo {
+      margin-right: $spacing;
+    }
+  }
+  
+  .nav {
+    float: right;
+    margin-top: $spacingHalf;
+    
+    a {
+      margin-left: $spacing;
+    }
+  }
 }
 
 #main {
@@ -74,23 +63,24 @@ header .nav a {
 }
 
 footer {
-  border-top: 2px solid #4193ab;
-  background-color: #49AFCD;
+  border-top: 2px solid $primaryColorDark;
+  background-color: $primaryColor;
   color: #f9f9f9;
-  padding: 16px;
-}
-
-footer a {
-  color: inherit;
-}
-
-footer a:hover {
-  color: #000;
-  text-decoration: none;
-}
-
-footer a:not(:last-child) {
-  margin-right: 18px;
+  padding: $spacing;
+  
+  a {
+    color: inherit;
+  
+    &:hover {
+      color: #000;
+      text-decoration: none;
+    }
+    
+    &:not(:last-child) {
+      margin-right: $spacing;
+    }
+  }
+  
 }
 
 .form-control {
@@ -105,17 +95,16 @@ footer a:not(:last-child) {
 }
 
 .btn-rs {
-  background-color: #49AFCD;
+  background-color: $primaryColor;
   color: #fff;
-}
-
-.btn-rs:hover {
-  background-color: #3D8FA8;
-  color: #fff;
-}
-
-.btn-rs:focus {
-  color: #fff;
+  
+  &:hover {
+    background-color: $primaryColorDark;
+    color: #fff;
+  }
+  &:focus {
+    color: #fff;
+  }
 }
 
 .btn-xl {
