@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 // Routes
-app.use('/', require('./routes/index'));
+app.use('/', require('./routes/home'));
 app.use('/search', require('./routes/search'));
 app.use('/help', require('./routes/help'));
 
