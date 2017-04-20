@@ -14,3 +14,5 @@ function render(){
 store.subscribe(render);
 render();
 loaded();
+
+require('./fs').get('/platform/users/current', function(){});
