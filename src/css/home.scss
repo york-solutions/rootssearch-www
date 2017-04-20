@@ -1,0 +1,33 @@
+@import '_variables';
+
+.index-page {
+
+  & > div {
+    margin: ($spacing * 4) 0;
+  }
+  
+  h1 {
+    font-size: $spacing * 3;
+  }
+  
+  .marketing-img {
+    text-align: center;
+  }
+  
+  .marketing-img img {
+    width: 50%;
+    padding: $spacing;
+  }
+  
+  .marketing-text {
+    font-size: 32px;
+    margin-top: $spacingDouble;
+  }
+  
+  @media (max-width: 991px) {
+    .marketing-text {
+      text-align: center;
+    }
+  }
+
+}

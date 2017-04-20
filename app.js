@@ -8,7 +8,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(require('./middleware/locals'));
-app.use(favicon(__dirname + '/assets/favicon.ico'));
+app.use(favicon(__dirname + '/src/img/favicon.ico'));
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ 
@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 // Routes
-app.use('/', require('./routes/index'));
+app.use('/', require('./routes/home'));
 app.use('/search', require('./routes/search'));
 app.use('/save', require('./routes/save'));
 app.use('/help', require('./routes/help'));

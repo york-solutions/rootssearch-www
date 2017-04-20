@@ -1,13 +1,15 @@
 <%
   var pageTitle = 'Search',
       css = ['settings'],
-      bundles = ['settings'];
+      js = ['settings'];
 %>
-<%- include('partials/header_small'); %>
+<%- include('partials/header'); %>
 
-<div id="main" class="container">
-  <h1>Settings</h1>
-  <div id="sites-list"></div>
+<div class="settings-page">
+  <div class="container">
+    <h1>Settings</h1>
+    <div id="sites-list"></div>
+  </div>
 </div>
 <div class="page-loader"></div>
 

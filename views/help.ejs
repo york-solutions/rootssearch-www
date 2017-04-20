@@ -3,10 +3,10 @@
       css = ['help'];
 %>
 <%- 
-  include('partials/header_small'); 
+  include('partials/header'); 
 %>
 
-<div id="main">
+<div class="settings-page">
 
   <div class="container">
     
@@ -14,13 +14,13 @@
     
     <p>Start by filling in the search form. None of the fields are required though it's recommended that you at least include a name.</p>
     
-    <img class="img-thumbnail center-block" src="/assets/img/help/search-form.png">
+    <img class="img-thumbnail center-block" src="<%- asset('img/help/search-form.png') %>">
     
     <blockquote><span class="label label-rs">Protip</span> Use the <a href="https://chrome.google.com/webstore/detail/rootssearch/aolcffalbhpnojekmimmelebjchjmmgn?hl=en">RootsSearch Google Chrome Extension</a> to automatically fill out the search form and quickly search between websites.</blockquote>
     
     <p>Below the search form is a list of buttons for genealogy websites. Click a website's button to search that website.</p>
     
-    <img class="img-thumbnail center-block" src="/assets/img/help/search-buttons.png">
+    <img class="img-thumbnail center-block" src="<%- asset('img/help/search-buttons.png') %>">
     
     <blockquote><span class="label label-rs">Protip</span> Click the "More sites" link to view the complete list of supported sites and enable other websites you use.</blockquote>
     
@@ -30,18 +30,18 @@
     
     <p>The <a href="https://chrome.google.com/webstore/detail/rootssearch/aolcffalbhpnojekmimmelebjchjmmgn?hl=en">RootsSearch Google Chrome Extension</a> makes it easier to use RootsSearch by automatically filling in the search form.</p>
     
-    <img class="img-thumbnail center-block" src="/assets/img/help/chrome-screen1.png">
+    <img class="img-thumbnail center-block" src="<%- asset('img/help/chrome-screen1.png') %>">
     
     <p>When viewing ancestor profiles or records on genealogy websites, the Chrome Extension will detect the person's information.
     Then, if you click on the RootsSearch icon in the icon bar, the search page will be loaded with the person's details
     automatically filled in.</p>
     
-    <img class="img-thumbnail center-block" src="/assets/img/help/chrome-screen2.png">
+    <img class="img-thumbnail center-block" src="<%- asset('img/help/chrome-screen2.png') %>">
     
     <p>When the Chrome Extension has detected information it will show a badge <span class="label label-rs">1</span> in the lower-right corner of the icon. If you click
     the icon when the badge is not showing it will still open the search page but there won't be any information filled in.</p>
     
-    <img class="img-thumbnail center-block" src="/assets/img/help/chrome-icon.png">
+    <img class="img-thumbnail center-block" src="<%- asset('img/help/chrome-icon.png') %>">
     
     <p>In just two clicks you can search FamilySearch for records about someone in your Ancestry family tree
     or search Mocavo for records about someone in your MyHeritage tree.</p>

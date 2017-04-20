@@ -12,9 +12,9 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
     
-    <link href="/assets/css/main.css" rel="stylesheet">
+    <link href="<%- asset('css/main.css') %>" rel="stylesheet">
     <% for(var i = 0; i < css.length; i++){ %>
-    <link href="/assets/css/<%= css[i] %>.css" rel="stylesheet">
+    <link href="<%- asset(`css/${css[i]}.css`) %>" rel="stylesheet">
     <% } %>
     
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">

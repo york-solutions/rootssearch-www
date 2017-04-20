@@ -1,0 +1,127 @@
+@import '_variables';
+
+body {
+  font-family: Lato, Arial, sans-serif;
+  font-size: 18px;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  background-color: #fafafa;
+}
+
+p {
+  margin-bottom: 1em;
+}
+
+a {
+  color: #37879E;
+}
+
+header {
+  background-color: $primaryColor;
+  border-bottom: 2px solid $primaryColorDark;
+  color: #fff;
+  line-height: 1;
+  padding: $spacingHalf;
+  overflow: auto;
+  
+  a {
+    color: inherit;
+  
+    &:hover {
+      color: #000;
+      text-decoration: none;
+    }
+  }
+  
+  .branding {
+    font-size: 24px;
+    float: left;
+  
+    a:hover {
+      color: inherit;
+    }
+    
+    .logo {
+      margin-right: $spacing;
+    }
+  }
+  
+  .nav {
+    float: right;
+    margin-top: $spacingHalf;
+    
+    a {
+      margin-left: $spacing;
+    }
+  }
+}
+
+#main {
+  // Make sure the footer is always at the bottom of the page by making the main
+  // content fill available vertical space
+  flex: 1 0 auto;
+}
+
+footer {
+  border-top: 2px solid $primaryColorDark;
+  background-color: $primaryColor;
+  color: #f9f9f9;
+  padding: $spacing;
+  
+  a {
+    color: inherit;
+  
+    &:hover {
+      color: #000;
+      text-decoration: none;
+    }
+    
+    &:not(:last-child) {
+      margin-right: $spacing;
+    }
+  }
+  
+}
+
+.form-control {
+  border-radius: 0;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+
+.btn {
+  border-radius: 0;
+}
+
+.btn-rs {
+  background-color: $primaryColor;
+  color: #fff;
+  
+  &:hover {
+    background-color: $primaryColorDark;
+    color: #fff;
+  }
+  &:focus {
+    color: #fff;
+  }
+}
+
+.btn-xl {
+  padding: 10px 16px;
+  font-size: 24px;
+  line-height: 1.3333333;
+}
+
+.page-loader {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-image: url(/assets/img/loader.svg);
+  background-repeat: no-repeat;
+  background-position: 50%;
+  background-color: rgba(255, 255, 255, .4);
+}

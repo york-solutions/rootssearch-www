@@ -1,7 +1,7 @@
 <%
   var pageTitle = 'Search',
       css = ['search'],
-      bundles = ['search'];
+      js = ['search'];
       
   var fields = [
     {
@@ -63,13 +63,12 @@
   ];
 %>
 <%- 
-  include('partials/header_small');
+  include('partials/header');
 %>
 
-<div id="main">
-
+<div class="search-page">
   <div class="container">
-
+  
     <div class="row" id="search-form">
       <% for(var i = 0; i < fields.length; i++){ %>
         <div class="col-sm-6 form-group">
@@ -94,8 +93,8 @@
     </div>
   
   </div>
-
 </div>
+
 <div class="page-loader"></div>
 
 <script>

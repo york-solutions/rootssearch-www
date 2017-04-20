@@ -1,0 +1,23 @@
+.page-save-fs {
+
+  .status-list {
+    margin: 0;
+    overflow: auto;
+    padding: 0;
+    
+    .circle {
+      float: left;
+      width: 1em;
+      height: 1em;
+      display: block;
+      border-radius: 50%;
+      border: 1px solid #ccc;
+      background-color: white;
+      
+      &:not(:first-child) {
+        margin-left: 1em;
+      }
+    }
+  }
+  
+}
