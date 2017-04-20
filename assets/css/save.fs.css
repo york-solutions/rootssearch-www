@@ -1,5 +1,9 @@
+.page-save-fs .box {
+  border: 1px solid #ccc;
+  padding: 16px; }
+
 .page-save-fs .status-list {
-  margin: 0;
+  margin: 16px 0;
   overflow: auto;
   padding: 0; }
   .page-save-fs .status-list .circle {
@@ -12,3 +16,7 @@
     background-color: white; }
     .page-save-fs .status-list .circle:not(:first-child) {
       margin-left: 1em; }
+
+.page-save-fs .person-name {
+  font-weight: bold;
+  font-size: 1.1em; }

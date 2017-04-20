@@ -4,7 +4,7 @@ const Redux = require('redux'),
 
 // Initialize the store with site settings loaded from cookies
 const store = Redux.createStore(reducer, {
-  gedcomx: gedx.massage(gedx.load())
+  gedcomx: gedx.load()
 });
 module.exports = store;
 

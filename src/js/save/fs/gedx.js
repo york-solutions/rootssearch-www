@@ -1,14 +1,23 @@
 /**
- * Misc GEDCOM X utilities
+ * Load and configure the gedcomx-js library.
+ * Setup extensions to the gedcomx-js library.
+ * Expose helper utitilies.
  */
+
+const GedcomX = require('gedcomx-js');
+GedcomX.enableRsExtensions();
+GedcomX.enableRecordsExtensions();
+GedcomX.enableAtomExtensions();
+
 module.exports = {
   
   /**
-   * Load the GEDCOM X data
+   * Get the GEDCOM X data off the page, if it exists
    */
   load: function(){
+  
     let data;
-    
+      
     // gedxData is supposed to be included on the page but to be safe we're going make sure it's there
     if(typeof gedxData !== 'undefined'){
       data = gedxData;
@@ -16,39 +25,77 @@ module.exports = {
       data = {};
     }
     
-    return data;
-  },
+    let gedx = GedcomX(data);
+    clean(gedx);
+    
+    return gedx;
+  }
+};
   
-  /**
-   * Massage the GEDCOM X data so that
-   * - all persons have IDs (the only case where persons could have no ID is when
-   *   they aren't part of a relationship; don't need an ID if nothing references you)
-   */
-  massage: function (data){
+/**
+ * Massage the GEDCOM X data so that
+ * - all persons have IDs (the only case where persons could have no ID is when
+ *   they aren't part of a relationship; don't need an ID if nothing references you)
+ */
+function clean(gedx){
+  
+  // Make sure all persons have IDs. Get a list of existing IDs to make sure
+  // any of our generated IDs don't conflict with existing IDs.
+  let ids = gedx.getPersons().filter(p => p.getId() !== undefined).map(p => p.getId()),
+      id = 0;
+  gedx.getPersons().forEach(p => {
     
-    // Make sure we have a persons array
-    if(!Array.isArray(data.persons)){
-      data.persons = [];
-    }
-    
-    // Make sure all persons have IDs. Get a list of existing IDs to make sure
-    // any of our generated IDs don't conflict with existing IDs.
-    let ids = data.persons.filter(p => p.id !== undefined).map(p => p.id),
-        id = 0;
-    data.persons.forEach(p => {
+    // If a person doesn't have an ID...
+    if(!p.getId()){
       
-      // If a person doesn't have an ID...
-      if(!p.id){
-        
-        // Loop until we find an ID that's not being used
-        while(ids.indexOf(++id) !== -1){ }
-        
-        // Set and increment the ID
-        p.id = id;
-      }
-    });
-    
-    return data;
+      // Loop until we find an ID that's not being used
+      while(ids.indexOf(++id) !== -1){ }
+      
+      // Set and increment the ID
+      p.setId(id);
+    }
+  });
+}
+
+/**
+ * Get a person's display name. Optionally calculate a display name if one
+ * isn't set in the display properties.
+ * 
+ * @param {Boolean=} calculateIfMissing Calculate the display name if one isn't
+ * set in the display properties.
+ * @returns {String} display name
+ */
+GedcomX.Person.prototype.getDisplayName = function(calculateIfMissing){
+  let displayName = '';
+  
+  if(this.getDisplay()){
+    displayName = this.getDisplay.getName();
   }
   
+  if(!displayName && calculateIfMissing){
+    
+    // Choose the preferred name or the first name
+    let name = this.getPreferredName() || this.getNames()[0];
+    
+    // Calculate the name
+    if(name){
+      displayName = name.getFullText();
+    }
+  }
+  
+  return displayName;
+};
+
+/**
+ * Calculate the full text string of a name.
+ * 
+ * @returns {String} full text
+ */
+GedcomX.Name.prototype.getFullText = function(){
+  let fullText = '';
+  let nameForm = this.getNameForms()[0];
+  if(nameForm){
+    fullText = nameForm.getFullText(true);
+  }
+  return fullText;
 };
