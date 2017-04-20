@@ -9,6 +9,21 @@ GedcomX.enableRsExtensions();
 GedcomX.enableRecordsExtensions();
 GedcomX.enableAtomExtensions();
 
+const months = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December'
+];
+
 module.exports = {
   
   /**
@@ -98,4 +113,73 @@ GedcomX.Name.prototype.getFullText = function(){
     fullText = nameForm.getFullText(true);
   }
   return fullText;
+};
+
+/**
+ * Get the first fact of a given type, if one exists
+ * 
+ * @param {String} type
+ * @returns {Fact}
+ */
+GedcomX.Person.prototype.getFact = function(type){
+  return this.getFactsByType(type)[0];
+};
+
+/**
+ * Generate a display version of a string, when possible
+ * 
+ * @returns {String}
+ */
+GedcomX.Date.prototype.getDisplayString = function(){
+  
+  // Check for a normalized date
+  if(this.getNormalized().length > 0){
+    return this.getNormalized()[0].getValue();
+  }
+  
+  // Parse the formal value if set
+  if(this.getFormal()){
+    let date = new Date(this.getFormal().replace('+',''));
+    if(!isNaN(date.getTime())){
+      return [date.getDate(), months[date.getMonth()], date.getFullYear()].join(' ');
+    }
+  }
+  
+  // Just return what we have if nothing else works
+  return this.getOriginal();
+};
+
+/**
+ * Get the date display string for a fact, if the date exists
+ * 
+ * @returns {String}
+ */
+GedcomX.Fact.prototype.getDateDisplayString = function(){
+  if(this.getDate()){
+    return this.getDate().getDisplayString();
+  }
+};
+
+/**
+ * Get the place name from a fact, if a place exists
+ * 
+ * @returns {String}
+ */
+GedcomX.Fact.prototype.getPlaceDisplayString = function(){
+  if(this.getPlace()){
+    return this.getPlace().getDisplayString();
+  }
+};
+
+/**
+ * Get a place name from a place
+ * 
+ * @returns {String}
+ */
+GedcomX.PlaceReference.prototype.getDisplayString = function(){
+  if(this.getNormalized().length > 0){
+    return this.getNormalized()[0].getValue();
+  } else {
+    return this.getOriginal();
+  }
 };

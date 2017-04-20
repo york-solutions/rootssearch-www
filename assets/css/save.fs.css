@@ -20,3 +20,11 @@
 .page-save-fs .person-name {
   font-weight: bold;
   font-size: 1.1em; }
+
+.page-save-fs .vital .type {
+  font-size: .9em;
+  color: #777;
+  text-transform: uppercase; }
+
+.page-save-fs .person .vital {
+  margin-top: 16px; }
