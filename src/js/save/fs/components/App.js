@@ -11,15 +11,6 @@ class App extends React.Component {
   
   render() {
     const { auth } = this.props;
-    
-    let matchStep = null;
-    // switch(state.step){
-    switch('MATCHING'){
-      case 'MATCHING':
-        matchStep = <PersonMatches />;
-        break;
-    }
-    
     return (
       <div>
         <StatusBar />
@@ -28,7 +19,7 @@ class App extends React.Component {
             <RecordPerson />
           </div>
           <div className="col-md-6">
-            {matchStep}
+            <PersonMatches />
           </div>
         </div>
         { auth.inProgress ? <FSAuthModal /> : null }
