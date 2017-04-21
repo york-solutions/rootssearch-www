@@ -1,11 +1,12 @@
 /**
  * Setup the FS SDK client singleton
+ * 
+ * TODO: refactor so that state is handled by Redux and this component
+ * doesn't do any React rendering.
  */
  
 const FamilySearch = require('fs-js-lite');
-const React = require('react');
-const ReactDOM = require('react-dom');
-const FSAuthModal = require('./components/FSAuthModal');
+const store = require('./store');
 
 /**
  * Add a custom method for oauth via a popup
@@ -13,6 +14,7 @@ const FSAuthModal = require('./components/FSAuthModal');
 FamilySearch.prototype.oauthPopup = function(callback){
   
   // Open redirect window
+  // TODO: position in the middle of the page horizontally
   let popup = window.open(this.oauthRedirectURL(), 'FSAUTH', 'height=800,width=600');
 
   // Poll the window's URL for the auth token response. While the window is
@@ -68,7 +70,9 @@ client.addResponseMiddleware(function(client, request, response, next){
       
         // On success, replace request
         else {
-          ReactDOM.unmountComponentAtNode(document.getElementById('fs-auth'))
+          store.dispatch({
+            type: 'FS_AUTH_END'
+          });
           client._execute(request, function(error, replayResponse){
             setTimeout(function(){
               request.callback(error, replayResponse);
@@ -78,10 +82,10 @@ client.addResponseMiddleware(function(client, request, response, next){
       });
     };
     
-    ReactDOM.render(
-      <FSAuthModal onClick={clickHandler} />,
-      document.getElementById('fs-auth')
-    );
+    store.dispatch({
+      type: 'FS_AUTH_BEGIN',
+      onClick: clickHandler
+    });
     
     return next(undefined, true);
   }
