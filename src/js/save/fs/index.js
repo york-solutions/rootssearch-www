@@ -6,7 +6,10 @@ const React = require('react'),
       
 function render(){
   ReactDOM.render(
-    <App />,
+    <div>
+      <App />
+      <div id="fs-auth"></div>
+    </div>,
     document.getElementById('app')
   );
 }
