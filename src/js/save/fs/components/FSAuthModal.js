@@ -5,8 +5,9 @@
  */
 
 const React = require('react');
+const connect = require('react-redux').connect;
 
-module.exports = function(props){
+const FSAuthModal = function(props){
   return (
     <div className="modal-fade fs-auth">
       <div className="modal-container">
@@ -18,3 +19,11 @@ module.exports = function(props){
     </div>
   );
 };
+
+const mapStateToProps = state => {
+  return {
+    onClick: state.auth.onClick
+  };
+};
+
+module.exports = connect(mapStateToProps)(FSAuthModal);

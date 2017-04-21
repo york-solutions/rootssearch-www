@@ -1,25 +1,47 @@
 const React = require('react');
-const store = require('../store');
+const connect = require('react-redux').connect;
 const StatusBar = require('./StatusBar');
 const RecordPerson = require('./RecordPerson');
+const PersonMatches = require('./PersonMatches');
 const FSAuthModal = require('./FSAuthModal');
 
-module.exports = function(){
-  const state = store.getState();
+class App extends React.Component {
   
   // TODO: if we have no persons then show an error
   
-  const person = state.gedcomx.persons[state.currentPerson];
-  
-  return (
-    <div>
-      <StatusBar persons={state.gedcomx.persons} />
-      <div className="row">
-        <div className="col-md-6">
-          <RecordPerson person={person} />
+  render() {
+    const { auth } = this.props;
+    
+    let matchStep = null;
+    // switch(state.step){
+    switch('MATCHING'){
+      case 'MATCHING':
+        matchStep = <PersonMatches />;
+        break;
+    }
+    
+    return (
+      <div>
+        <StatusBar />
+        <div className="row">
+          <div className="col-md-6">
+            <RecordPerson />
+          </div>
+          <div className="col-md-6">
+            {matchStep}
+          </div>
         </div>
+        { auth.inProgress ? <FSAuthModal /> : null }
       </div>
-      { state.fs_auth && state.fs_auth.in_progress ? <FSAuthModal onClick={state.fs_auth.click_handler} /> : null }
-    </div>
-  );
+    );
+  }
+  
+}
+
+const mapStateToProps = state => {
+  return {
+    auth: state.auth
+  };
 };
+
+module.exports = connect(mapStateToProps)(App);

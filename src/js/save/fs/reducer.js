@@ -3,17 +3,22 @@ module.exports = function(state, action){
     
     case 'FS_AUTH_BEGIN':
       return Object.assign({}, state, {
-        fs_auth: {
-          in_progress: true,
-          click_handler: action.onClick
+        auth: {
+          inProgress: true,
+          onClick: action.onClick
         }
       });
     
     case 'FS_AUTH_END':
       return Object.assign({}, state, {
-        fs_auth: {
-          in_progress: false
+        auth: {
+          inProgress: false
         }
+      });
+      
+    case 'FOCUS_PERSON':
+      return Object.assign({}, state, {
+        currentPerson: action.personIndex
       });
   }
   return state;

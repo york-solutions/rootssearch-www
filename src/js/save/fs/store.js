@@ -1,4 +1,5 @@
 const Redux = require('redux'),
+      thunk = require('redux-thunk').default,
       reducer = require('./reducer'),
       gedx = require('./gedx');
 
@@ -8,8 +9,16 @@ const store = Redux.createStore(
   {
     currentPerson: 0,
     step: 'MATCHING',
-    gedcomx: gedx.load()
-  }
+    auth: {
+      inProgress: false
+    },
+    gedcomx: gedx.load(),
+    matches: {
+      state: 'NOT_REQUESTED',
+      entries: []
+    }
+  },
+  Redux.applyMiddleware(thunk)
 );
 
 module.exports = store;

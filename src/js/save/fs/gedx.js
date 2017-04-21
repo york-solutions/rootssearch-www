@@ -8,6 +8,7 @@ const GedcomX = require('gedcomx-js');
 GedcomX.enableRsExtensions();
 GedcomX.enableRecordsExtensions();
 GedcomX.enableAtomExtensions();
+GedcomX.addExtensions(require('gedcomx-fs-js'));
 
 const months = [
   'January',

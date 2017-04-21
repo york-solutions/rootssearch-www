@@ -1,15 +1,16 @@
 const React = require('react'),
       ReactDOM = require('react-dom'),
+      Provider = require('react-redux').Provider,
       store = require('./store'),
       loaded = require('../../loaded'),
-      App = require('./components/App');
+      App = require('./components/App'),
+      changeFocusPerson = require('./actions/changeFocusPerson');
       
 function render(){
   ReactDOM.render(
-    <div>
+    <Provider store={store}>
       <App />
-      <div id="fs-auth"></div>
-    </div>,
+    </Provider>,
     document.getElementById('app')
   );
 }
@@ -18,4 +19,4 @@ store.subscribe(render);
 render();
 loaded();
 
-require('./fs').get('/platform/users/current', function(){});
+store.dispatch(changeFocusPerson(0));

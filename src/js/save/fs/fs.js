@@ -7,6 +7,7 @@
  
 const FamilySearch = require('fs-js-lite');
 const store = require('./store');
+const GedcomX = require('gedcomx-js');
 
 /**
  * Add a custom method for oauth via a popup
@@ -52,6 +53,22 @@ const client = new FamilySearch({
   appKey: 'a02f100000PUcPnAAL',
   redirectUri: `${window.location.origin}/save/fs/oauth-redirect`,
   saveAccessToken: true
+});
+
+// Hydrate response data
+client.addResponseMiddleware(function(client, request, response, next){
+  if(response.data){
+    if(response.data.entries){
+      response.gedcomx = GedcomX.AtomFeed(response.data);
+    }
+    else if(response.data.access_token){
+      response.gedcomx = GedcomX.OAuth2(response.data);
+    }
+    else {
+      response.gedcomx = GedcomX(response.data);
+    }
+  }
+  next();
 });
 
 // Add middleware that detects 401s

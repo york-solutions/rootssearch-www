@@ -3,9 +3,10 @@
  */
 
 const React = require('react');
+const connect = require('react-redux').connect;
 const Vital = require('./Vital');
 
-module.exports = function({person}){
+const RecordPerson = function({person}){
   let birth = person.getFact('http://gedcomx.org/Birth'),
       death = person.getFact('http://gedcomx.org/Death');
   return (
@@ -16,3 +17,11 @@ module.exports = function({person}){
     </div>
   );
 };
+
+const mapStateToProps = state => {
+  return {
+    person: state.gedcomx.persons[state.currentPerson]
+  };
+};
+
+module.exports = connect(mapStateToProps)(RecordPerson);
