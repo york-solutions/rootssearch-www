@@ -8,7 +8,7 @@ module.exports = function(person){
   return function (dispatch){
   
     dispatch({
-      type: 'REQUESTING_MATCHES'
+      type: 'LOADING_MATCHES'
     });
   
     const query = createMatchesQuery(person);
@@ -17,23 +17,27 @@ module.exports = function(person){
         Accept: 'application/x-gedcomx-atom+json'
       }
     }, function(error, response){
-      
       // TODO: handle error
-      
-      if(response.gedcomx){
-        dispatch({
-          type: 'MATCHES_LOADED',
-          matches: response.gedcomx.getEntries()
-        });
-      }
+      dispatch({
+        type: 'MATCHES_LOADED',
+        matches: response.gedcomx ? response.gedcomx.getEntries() : []
+      });
     });
   };
 };
 
 function createMatchesQuery(person){
   
+  const birth = person.getFact('http://gedcomx.org/Birth'),
+        death = person.getFact('http://gedcomx.org/Death');
+  
   const params = {
-    name: person.getDisplayName(true)
+    name: person.getDisplayName(true),
+    gender: person.getGender().getType() === 'http://gedcomx.org/Female' ? 'female' : 'male',
+    birthDate: birth.getDateDisplayString(),
+    birthPlace: birth.getPlaceDisplayString(),
+    deathDate: death.getDateDisplayString(),
+    deathPlace: death.getPlaceDisplayString()
   };
   
   // TODO: process relationships
@@ -41,6 +45,6 @@ function createMatchesQuery(person){
   // Turn the params object into a valid match query string
   // https://familysearch.org/developers/docs/api/tree/Person_Matches_Query_resource
   return 'q=' + Object.keys(params)
-    .map(k => `${k}:${encodeURIComponent(params[k])}`)
+    .map(k => `${k}:"${encodeURIComponent(params[k])}"`)
     .join(' ');
 }

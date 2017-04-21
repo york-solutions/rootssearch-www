@@ -1,4 +1,6 @@
 module.exports = function(state, action){
+  let newState;
+  
   switch(action.type){
     
     case 'FS_AUTH_BEGIN':
@@ -20,6 +22,17 @@ module.exports = function(state, action){
       return Object.assign({}, state, {
         currentPerson: action.personIndex
       });
+      
+    case 'LOADING_MATCHES':
+      newState = Object.assign({}, state);
+      newState.matches.state = 'LOADING';
+      return newState;
+      
+    case 'MATCHES_LOADED':
+      newState = Object.assign({}, state);
+      newState.matches.state = 'LOADED';
+      newState.matches.entries = action.matches;
+      return newState;
   }
   return state;
 };
