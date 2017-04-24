@@ -13,9 +13,12 @@ const PersonMatches = function({ matchState, matches = [] }){
     return <Loader message="Loading matches..." />;
   }
   
-  return <div>{matches.map(m => {
-    return <Match match={m} key={m.id} />;
-  })}</div>;
+  return (
+    <div>{matches.map(m => {
+      return <Match match={m} key={m.getId()} />;
+    })}
+    </div>
+  );
 };
 
 const mapStateToProps = state => {

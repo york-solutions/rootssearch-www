@@ -85,7 +85,7 @@ GedcomX.Person.prototype.getDisplayName = function(calculateIfMissing){
   let displayName = '';
   
   if(this.getDisplay()){
-    displayName = this.getDisplay.getName();
+    displayName = this.getDisplay().getName();
   }
   
   if(!displayName && calculateIfMissing){

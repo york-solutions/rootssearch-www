@@ -11,7 +11,7 @@ const RecordPerson = function({person}){
       death = person.getFact('http://gedcomx.org/Death');
   return (
     <div className="box person">
-      <span className="person-name">{person.getDisplayName(true)}</span> - {person.id}
+      <div className="person-name">{person.getDisplayName(true)}</div>
       {birth ? <Vital fact={birth} /> : null}
       {death ? <Vital fact={death} /> : null}
     </div>
