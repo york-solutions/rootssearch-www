@@ -10,7 +10,7 @@ module.exports = function({fact}){
   }
   return (
     <div className="vital">
-      <div className="type">{fact.getType().split('/').pop()}</div>
+      <span className="label">{fact.getType().split('/').pop()}</span>
       <div>{fact.getDateDisplayString()}</div>
       <div>{fact.getPlaceDisplayString()}</div>
     </div>

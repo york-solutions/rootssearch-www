@@ -7,6 +7,14 @@
   h1 {
     margin: 0;
   }
+  
+  .label {
+    font-size: .8em;
+    color: $textLight;
+    text-transform: uppercase;
+    padding: 0;
+    font-weight: normal;
+  }
 
   .box {
     border: 1px solid #ccc;
@@ -37,16 +45,6 @@
   .person-name {
     font-weight: bold;
     font-size: 1.1em;
-  }
-  
-  .vital {
-    
-    .type {
-      font-size: .9em;
-      color: $textLight;
-      text-transform: uppercase;
-    }
-    
   }
   
   .person .vital {
@@ -87,12 +85,14 @@
     }
     
     .person-id {
-      color: $textLight;
-      font-size: .8em;
       margin-left: $spacing;
     }
     
     .vital {
+      margin-top: $spacing;
+    }
+    
+    .relation {
       margin-top: $spacing;
     }
     
