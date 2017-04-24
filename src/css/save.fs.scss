@@ -65,4 +65,12 @@
     background-color: #fff;
   }
   
+  .loader {
+    text-align: center;
+    
+    p {
+      margin-top: $spacing;
+    }
+  }
+  
 }
