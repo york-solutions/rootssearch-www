@@ -2,6 +2,12 @@
 
 .page-save-fs {
 
+  padding: $spacingDouble;
+  
+  h1 {
+    margin: 0;
+  }
+
   .box {
     border: 1px solid #ccc;
     padding: $spacing;
@@ -71,6 +77,14 @@
     p {
       margin-top: $spacing;
     }
+  }
+  
+  .match {
+    
+    &:not(:first-child){
+      margin-top: $spacing;
+    }
+    
   }
   
 }
