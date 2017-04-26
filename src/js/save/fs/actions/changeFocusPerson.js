@@ -5,11 +5,19 @@ const getMatches = require('./getMatches') ;
  
 module.exports = function(personIndex){
   return function(dispatch, getState){
+    
     dispatch({
       type: 'FOCUS_PERSON',
       personIndex
     });
-    let persons = getState().gedcomx.persons;
-    dispatch(getMatches(persons[personIndex]));
+    
+    const state = getState(),
+          persons = state.gedcomx.persons,
+          matches = state.matches;
+    
+    // Only request matches if they haven't already been requested
+    if(matches[personIndex].status === 'NOT_REQUESTED'){
+      dispatch(getMatches(persons[personIndex]));
+    }
   };
 };

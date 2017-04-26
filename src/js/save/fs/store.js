@@ -15,7 +15,7 @@ const store = Redux.createStore(
       return {
         id: person.getId(),
         match: null,
-        status: null,
+        status: 'NOT_REQUESTED',
         entries: []
       };
     }, {})
