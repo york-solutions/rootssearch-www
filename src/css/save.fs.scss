@@ -36,9 +36,14 @@
       border-radius: 50%;
       border: 1px solid #ccc;
       background-color: white;
+      cursor: pointer;
       
       &:not(:first-child) {
         margin-left: 1em;
+      }
+      
+      &.selected {
+        border: 2px solid $primaryColor;
       }
     }
   }

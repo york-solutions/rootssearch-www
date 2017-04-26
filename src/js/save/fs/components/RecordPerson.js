@@ -28,7 +28,7 @@ const RecordPerson = function({ gedcomx, currentPersonIndex }){
       <Relation person={father} relationship="Father" />
       <Relation person={mother} relationship="Mother" />
       <Relation person={spouse} relationship="Spouse" />
-      {children.length && <div className="person">
+      {children.length === 0 ? null : <div className="person">
         <div className="label">Children</div>
         {children.map(child => <Relation person={child} key={child.getId()} />)}
       </div>}

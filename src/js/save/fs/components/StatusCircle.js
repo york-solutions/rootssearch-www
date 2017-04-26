@@ -1,5 +1,7 @@
 const React = require('react');
 
-module.exports = function(props){
-  return <div className="circle" title={props.person.id} />;
+module.exports = function({person, onClick, selected = false}){
+  const name = person.getDisplayName(true),
+        lifespan = person.getLifespan(true);
+  return <div className={'circle ' + (selected ? 'selected' : '') } title={`${name} — ${lifespan}`} onClick={onClick} />;
 };
