@@ -30,10 +30,8 @@ class App extends React.Component {
   
 }
 
-const mapStateToProps = state => {
+module.exports = connect(state => {
   return {
     auth: state.auth
   };
-};
-
-module.exports = connect(mapStateToProps)(App);
+})(App);

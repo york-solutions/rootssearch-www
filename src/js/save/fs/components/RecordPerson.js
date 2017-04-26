@@ -20,7 +20,7 @@ const RecordPerson = function({person}){
 
 const mapStateToProps = state => {
   return {
-    person: state.gedcomx.persons[state.currentPerson]
+    person: state.gedcomx.persons[state.currentPersonIndex]
   };
 };
 

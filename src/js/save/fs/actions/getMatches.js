@@ -8,7 +8,8 @@ module.exports = function(person){
   return function (dispatch){
   
     dispatch({
-      type: 'LOADING_MATCHES'
+      type: 'LOADING_MATCHES',
+      personId: person.getId()
     });
   
     const query = createMatchesQuery(person);
@@ -20,7 +21,8 @@ module.exports = function(person){
       // TODO: handle error
       dispatch({
         type: 'MATCHES_LOADED',
-        matches: response.gedcomx ? response.gedcomx.getEntries() : []
+        matches: response.gedcomx ? response.gedcomx.getEntries() : [],
+        personId: person.getId()
       });
     });
   };

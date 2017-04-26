@@ -1,15 +1,24 @@
 const Redux = require('redux'),
       thunk = require('redux-thunk').default,
       reducer = require('./reducers'),
-      gedx = require('./gedx');
+      gedx = require('./gedx'),
+      data = gedx.load();
 
 // Initialize the store with site settings loaded from cookies
 const store = Redux.createStore(
   reducer, 
   {
-    // TODO: can we put this anywhere else? Initial values of other store
-    // properties are set in the reducers default state param value
-    gedcomx: gedx.load()
+    gedcomx: data,
+    
+    // List of match statuses
+    matches: data.persons.map(person => {
+      return {
+        id: person.getId(),
+        match: null,
+        status: null,
+        entries: []
+      };
+    }, {})
   },
   Redux.applyMiddleware(thunk)
 );
