@@ -103,6 +103,46 @@ GedcomX.Person.prototype.getDisplayName = function(calculateIfMissing){
 };
 
 /**
+ * Get a person's lifespan. Calculate it when not available in the display properties
+ * 
+ * @param {Boolean=} calculateIfMissing Calculate the lifespan if one isn't
+ * set in the display properties.
+ * @return {String} lifespan
+ */
+GedcomX.Person.prototype.getLifespan = function(calculateIfMissing){
+  if(this.getDisplay() && this.getDisplay().getLifespan()){
+    return this.getDisplay().getLifespan();
+  }
+  let birth = this.getFactsByType('http://gedcomx.org/Birth')[0],
+      christening = this.getFactsByType('http://gedcomx.org/Christening')[0],
+      death = this.getFactsByType('http://gedcomx.org/Death')[0],
+      burial = this.getFactsByType('http://gedcomx.org/Burial')[0],
+      birthLike = birth || christening,
+      deathLike = death || burial,
+      birthYear = '', 
+      deathYear = '';
+  if(birthLike){
+    let birthDate = birthLike.getDate();
+    if(birthDate){
+      birthYear = birthDate.getYear();
+    }
+  }
+  if(deathLike){
+    let deathDate = deathLike.getDate();
+    if(deathDate){
+      deathYear = deathDate.getYear();
+    }
+  }
+  if(birthYear && deathYear){
+    return `${birthYear} - ${deathYear}`;
+  } else if(birthYear){
+    return `born ${birthYear}`;
+  } else if(deathYear){
+    return `died ${deathYear}`;
+  }
+};
+
+/**
  * Calculate the full text string of a name.
  * 
  * @returns {String} full text
@@ -148,6 +188,27 @@ GedcomX.Date.prototype.getDisplayString = function(){
   
   // Just return what we have if nothing else works
   return this.getOriginal();
+};
+
+/**
+ * Get the year of a date, if possible.
+ * 
+ * @return {String} year
+ */
+GedcomX.Date.prototype.getYear = function(){
+  if(this.normalized){
+    let matches = this.normalized.match(/\+(\d{4})/);
+    if(matches){
+      return matches[1];
+    }
+  }
+  if(this.original){
+    let matches = this.original.match(/\b\d{4}\b/);
+    if(matches){
+      return matches[0];
+    }
+  }
+  return '';
 };
 
 /**
