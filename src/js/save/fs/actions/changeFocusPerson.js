@@ -3,21 +3,24 @@
  */
 const getMatches = require('./getMatches') ;
  
-module.exports = function(personIndex){
+module.exports = function(personId){
   return function(dispatch, getState){
+
+    const state = getState(),
+          { persons, matches, personOrder } = state;
+          
+    if(personId === undefined){
+      personId = personOrder[0];
+    }
     
     dispatch({
       type: 'FOCUS_PERSON',
-      personIndex
+      personId
     });
     
-    const state = getState(),
-          persons = state.gedcomx.persons,
-          matches = state.matches;
-    
     // Only request matches if they haven't already been requested
-    if(matches[personIndex].status === 'NOT_REQUESTED'){
-      dispatch(getMatches(persons[personIndex]));
+    if(matches[personId].status === 'NOT_REQUESTED'){
+      dispatch(getMatches(persons[personId]));
     }
   };
 };

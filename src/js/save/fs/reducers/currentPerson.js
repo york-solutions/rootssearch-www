@@ -1,7 +1,7 @@
-module.exports = function(state = 0, action){
+module.exports = function(state = '', action){
   switch(action.type){
     case 'FOCUS_PERSON':
-      return action.personIndex;
+      return action.personId;
     default:
       return state;
   }

@@ -3,14 +3,14 @@ const connect = require('react-redux').connect;
 const StatusCircle = require('./StatusCircle');
 const changeFocusPerson = require('../actions/changeFocusPerson');
 
-const StatusBar = function({persons, currentPersonIndex, dispatch}){
+const StatusBar = function({persons, currentPerson, dispatch}){
   const generateClickHandler = (i) => {
     return () => {
       dispatch(changeFocusPerson(i));
     };
   };
-  const circles = persons.map((p, i) => {
-    return <StatusCircle person={p} key={p.id} selected={i === currentPersonIndex} onClick={generateClickHandler(i)}/>;
+  const circles = persons.map((p) => {
+    return <StatusCircle person={p} key={p.id} selected={p.getId() === currentPerson} onClick={generateClickHandler(p.getId())}/>;
   });
   return <ul className="status-list">{circles}</ul>;
 };
@@ -18,7 +18,7 @@ const StatusBar = function({persons, currentPersonIndex, dispatch}){
 const mapStateToProps = state => {
   return {
     persons: state.gedcomx.persons,
-    currentPersonIndex: state.currentPersonIndex
+    currentPerson: state.currentPerson
   };
 };
 

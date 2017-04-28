@@ -4,12 +4,12 @@
 
 const React = require('react');
 const connect = require('react-redux').connect;
+const matched = require('../selectors/matched');
 const Vital = require('./Vital');
 const Name = require('./Name');
 
-const RecordPerson = function({ gedcomx, currentPersonIndex, matched }){
-  const person = gedcomx.persons[currentPersonIndex],
-        birth = person.getFact('http://gedcomx.org/Birth'),
+const RecordPerson = function({ person, gedcomx, matched }){
+  const birth = person.getFact('http://gedcomx.org/Birth'),
         death = person.getFact('http://gedcomx.org/Death'),
         parents = gedcomx.getPersonsParents(person),
         father = parents.find(p => p.isMale()),
@@ -53,11 +53,12 @@ function Relation({person, relationship}){
 }
 
 const mapStateToProps = state => {
-  const { gedcomx, currentPersonIndex } = state;
+  const { persons, gedcomx, currentPerson } = state;
   return {
+    person: persons[currentPerson],
     gedcomx,
-    currentPersonIndex,
-    matched: !!state.matches[currentPersonIndex].match
+    currentPerson,
+    matched: matched(state)
   };
 };
 

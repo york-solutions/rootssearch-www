@@ -19,4 +19,4 @@ store.subscribe(render);
 render();
 loaded();
 
-store.dispatch(changeFocusPerson(0));
+store.dispatch(changeFocusPerson());

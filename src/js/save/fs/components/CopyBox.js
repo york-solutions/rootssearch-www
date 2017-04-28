@@ -1,14 +1,14 @@
 const React = require('react');
 const connect = require('react-redux').connect;
 
-const CopyBox = function({type = '', dataId, currentPersonIndex, dispatch}){
+const CopyBox = function({type = '', dataId, currentPerson, dispatch}){
   const onChange = (event) => {
     const checked = event.target.checked;
     const actionType = checked ? `COPY_${type.toUpperCase()}` : `UNCOPY_${type.toUpperCase()}`;
     dispatch({
       type: actionType,
       nameId: dataId,
-      personIndex: currentPersonIndex
+      personId: currentPerson
     });
   };
   return (
@@ -17,8 +17,8 @@ const CopyBox = function({type = '', dataId, currentPersonIndex, dispatch}){
 };
 
 module.exports = connect(state => {
-  const { currentPersonIndex } = state;
+  const { currentPerson } = state;
   return {
-    currentPersonIndex
+    currentPerson
   };
 })(CopyBox);

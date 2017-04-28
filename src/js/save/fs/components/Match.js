@@ -5,7 +5,7 @@ const Vital = require('./Vital');
 class Match extends React.Component {
   
   render(){
-    const {match, dispatch, currentPersonIndex} = this.props,
+    const {match, dispatch, currentPerson} = this.props,
           data = match.getContent().getGedcomX(),
           person = data.getPersonById(match.getId()),
           birth = person.getFact('http://gedcomx.org/Birth'),
@@ -17,7 +17,7 @@ class Match extends React.Component {
           select = () => {
             dispatch({
               type: 'SELECT_MATCH',
-              personIndex: currentPersonIndex,
+              personId: currentPerson,
               matchId: match.getId()
             });
           };
@@ -42,7 +42,7 @@ class Match extends React.Component {
 }
 
 module.exports = connect(state => {
-  return { currentPersonIndex: state.currentPersonIndex };
+  return { currentPerson: state.currentPerson };
 })(Match);
 
 function Relation({person, relationship}){

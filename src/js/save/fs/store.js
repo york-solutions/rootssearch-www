@@ -10,10 +10,17 @@ const store = Redux.createStore(
   {
     gedcomx: data,
     
-    // List of match statuses
-    matches: data.persons.map(person => {
-      return {
-        id: person.getId(),
+    personOrder: data.persons.map(p => p.getId()),
+    
+    persons: data.persons.reduce((accumulated, person) => {
+      accumulated[person.getId()] = person;
+      return accumulated;
+    }, {}),
+    
+    currentPerson: data.persons[0].getId(),
+    
+    matches: data.persons.reduce((accumulated, person) => {
+      accumulated[person.getId()] = {
         match: null,
         status: 'NOT_REQUESTED',
         copiedFacts: [],
@@ -22,6 +29,7 @@ const store = Redux.createStore(
         overrideFacts: [],
         entries: []
       };
+      return accumulated;
     }, {})
   },
   Redux.applyMiddleware(thunk)
