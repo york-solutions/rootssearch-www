@@ -90,6 +90,13 @@ client.addResponseMiddleware(function(client, request, response, next){
           store.dispatch({
             type: 'FS_AUTH_END'
           });
+          
+          // The current authorization middleware will only add the header if 
+          // it's not already there, i.e. it doesn't override existing values so
+          // delete the header which ensures that it gets reapplied with the new
+          // access token value.
+          delete request.headers['Authorization'];
+          
           client._execute(request, function(error, replayResponse){
             setTimeout(function(){
               request.callback(error, replayResponse);
