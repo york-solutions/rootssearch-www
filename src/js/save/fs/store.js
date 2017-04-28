@@ -16,6 +16,10 @@ const store = Redux.createStore(
         id: person.getId(),
         match: null,
         status: 'NOT_REQUESTED',
+        copiedFacts: [],
+        copiedNames: [],
+        overrideNames: [],
+        overrideFacts: [],
         entries: []
       };
     }, {})

@@ -1,4 +1,7 @@
 module.exports = function(state = [], action){
+  
+  const personIndex = calculatePersonIndex(action);
+  
   switch(action.type){
     
     case 'LOADING_MATCHES':
@@ -16,11 +19,60 @@ module.exports = function(state = [], action){
       return updatePerson(state, action, {
         match: action.matchId
       });
+      
+    case 'COPY_FACT':
+      /*
+      return updatePerson(state, action, {
+        copiedFacts: add(state.copiedFacts, action.factId)
+      });
+      */
+      
+    case 'UNCOPY_FACT':
+      /*
+      return updatePerson(state, action, {
+        copiedFacts: remove(state.copiedFacts, action.factId)
+      });
+      */
+      
+    case 'COPY_NAME':
+    case 'UNCOPY_NAME':
     
     default:
       return state;
   }
 };
+
+function add(list, value){
+  const newList = list.slice();
+  newList.push(value);
+  return newList;
+}
+
+function remove(list, value){
+  const index = list.indexOf(value);
+  return list.filter( (item, i) => i !== index);
+}
+
+function calculatePersonIndex(personList, action){
+  let {personIndex} = action;
+  
+  // Allow the action to specify a personId instead of a personIndex. When a
+  // personId is provided we map that to an index.
+  if(action.personId){
+    for(let i = 0; i < personList.length; i++){
+      if(personList[i].id === action.personId){
+        personIndex = i;
+        break;
+      }
+    }
+  }
+  
+  return personIndex;
+}
+
+function updatePersonI(index, newData){
+  
+}
 
 function updatePerson(personList, action, newData){
   let {personIndex} = action;
