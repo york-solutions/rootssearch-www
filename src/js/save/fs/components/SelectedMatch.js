@@ -7,8 +7,9 @@ const connect = require('react-redux').connect;
 const Vital = require('./Vital');
 const Name = require('./Name');
 
-const RecordPerson = function({ person, gedcomx }){
-  const birth = person.getFact('http://gedcomx.org/Birth'),
+const SelectedMatch = function({ matchId, gedcomx }){
+  const person = gedcomx.getPersonById(matchId),
+        birth = person.getFact('http://gedcomx.org/Birth'),
         death = person.getFact('http://gedcomx.org/Death'),
         parents = gedcomx.getPersonsParents(person),
         father = parents.find(p => p.isMale()),
@@ -20,9 +21,9 @@ const RecordPerson = function({ person, gedcomx }){
       <div className="person">
         <div className="label">Record Person</div>
         <div className="box">
-          <Name name={person.getNames()[0]} copyable={true} />
-          <Vital fact={birth} copyable={true} />
-          <Vital fact={death} copyable={true} />
+          <Name name={person.getNames()[0]} editable={true} />
+          <Vital fact={birth} editable={true} />
+          <Vital fact={death} editable={true} />
         </div>
       </div>
       <Relation person={father} relationship="Father" />
@@ -52,11 +53,13 @@ function Relation({person, relationship}){
 }
 
 const mapStateToProps = state => {
-  const { persons, gedcomx, currentPerson } = state;
+  const { matches, currentPerson } = state,
+        match = matches[currentPerson].match,
+        gedcomx = match.getContent().getGedcomX();
   return {
     gedcomx,
-    person: persons[currentPerson]
+    matchId: match.getId()
   };
 };
 
-module.exports = connect(mapStateToProps)(RecordPerson);
+module.exports = connect(mapStateToProps)(SelectedMatch);

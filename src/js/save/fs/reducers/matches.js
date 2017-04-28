@@ -22,7 +22,7 @@ module.exports = function(state = {}, action){
       
     case 'SELECT_MATCH':
       return updateMatch(state, personId, {
-        match: action.matchId
+        match: match.entries.find(m => m.getId() === action.matchId)
       });
       
     case 'COPY_FACT':
