@@ -4,6 +4,8 @@ const Redux = require('redux'),
       gedx = require('./gedx'),
       data = gedx.load();
 
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || Redux.compose;
+
 // Initialize the store with site settings loaded from cookies
 const store = Redux.createStore(
   reducer, 
@@ -32,7 +34,7 @@ const store = Redux.createStore(
       return accumulated;
     }, {})
   },
-  Redux.applyMiddleware(thunk)
+  composeEnhancers(Redux.applyMiddleware(thunk))
 );
 
 module.exports = store;

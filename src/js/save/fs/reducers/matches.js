@@ -27,16 +27,23 @@ module.exports = function(state = {}, action){
       
     case 'COPY_FACT':
       return updateMatch(state, personId, {
-        copiedFacts: add(match.copiedFacts, action.factId)
+        copiedFacts: add(match.copiedFacts, action.dataId)
       });
       
     case 'UNCOPY_FACT':
       return updateMatch(state, personId, {
-        copiedFacts: remove(match.copiedFacts, action.factId)
+        copiedFacts: remove(match.copiedFacts, action.dataId)
       });
       
     case 'COPY_NAME':
+      return updateMatch(state, personId, {
+        copiedNames: add(match.copiedNames, action.dataId)
+      });
+      
     case 'UNCOPY_NAME':
+      return updateMatch(state, personId, {
+        copiedNames: remove(match.copiedNames, action.dataId)
+      });
     
     default:
       return state;

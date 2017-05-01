@@ -7,7 +7,7 @@ const CopyBox = function({type = '', dataId, currentPerson, dispatch}){
     const actionType = checked ? `COPY_${type.toUpperCase()}` : `UNCOPY_${type.toUpperCase()}`;
     dispatch({
       type: actionType,
-      nameId: dataId,
+      dataId,
       personId: currentPerson
     });
   };
