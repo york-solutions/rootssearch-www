@@ -1,12 +1,14 @@
 const combineReducers = require('redux').combineReducers;
 const auth = require('./auth'),
-      matches = require('./matches'),
+      possibleMatches = require('./possibleMatches'),
+      selectedMatches = require('./selectedMatches'),
       currentPerson = require('./currentPerson'),
       echo = state => state || {};
 
 module.exports = combineReducers({
   auth,
-  matches,
+  possibleMatches,
+  selectedMatches,
   currentPerson,
   gedcomx: echo,
   personOrder: echo,

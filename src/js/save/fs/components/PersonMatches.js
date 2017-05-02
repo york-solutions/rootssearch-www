@@ -22,7 +22,7 @@ const PersonMatches = function({ status, entryIds = [], entries = {} }){
 };
 
 const mapStateToProps = state => {
-  const matches = state.matches[state.currentPerson] || {},
+  const matches = state.possibleMatches[state.currentPerson] || {},
         {status, entries, entryIds} = matches;
   return {
     status,
