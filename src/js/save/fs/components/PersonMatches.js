@@ -7,15 +7,15 @@ const connect = require('react-redux').connect;
 const Loader = require('./Loader');
 const Match = require('./Match');
  
-const PersonMatches = function({ status, entries = [] }){
+const PersonMatches = function({ status, entryIds = [], entries = {} }){
   
   if(status === 'LOADING'){
     return <Loader message="Loading matches..." />;
   }
   
   return (
-    <div>{entries.map(m => {
-      return <Match match={m} key={m.getId()} />;
+    <div>{entryIds.map(id => {
+      return <Match match={entries[id]} key={id} />;
     })}
     </div>
   );
@@ -23,10 +23,11 @@ const PersonMatches = function({ status, entries = [] }){
 
 const mapStateToProps = state => {
   const matches = state.matches[state.currentPerson] || {},
-        {status, entries} = matches;
+        {status, entries, entryIds} = matches;
   return {
     status,
-    entries
+    entries,
+    entryIds
   };
 };
 

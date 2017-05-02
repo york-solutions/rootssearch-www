@@ -17,12 +17,16 @@ module.exports = function(state = {}, action){
     case 'MATCHES_LOADED':
       return updateMatch(state, personId, {
         status: 'LOADED',
-        entries: action.matches
+        entries: action.matches.reduce((accumulator, match) => {
+          accumulator[match.getId()] = match;
+          return accumulator;
+        }, {}),
+        entryIds: action.matches.map(m => m.getId())
       });
       
     case 'SELECT_MATCH':
       return updateMatch(state, personId, {
-        match: match.entries.find(m => m.getId() === action.matchId)
+        selectedMatchId: action.matchId
       });
       
     case 'COPY_FACT':

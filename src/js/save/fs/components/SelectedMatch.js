@@ -1,11 +1,12 @@
 /**
- * RecordPerson displays a person from the POSTed GEDCOM X record data.
+ * SelectedMatch displays the selected match.
  */
 
 const React = require('react');
 const connect = require('react-redux').connect;
 const Vital = require('./Vital');
 const Name = require('./Name');
+const selectedMatchSelector = require('../selectors/selectedMatch');
 
 const SelectedMatch = function({ matchId, gedcomx }){
   const person = gedcomx.getPersonById(matchId),
@@ -53,8 +54,7 @@ function Relation({person, relationship}){
 }
 
 const mapStateToProps = state => {
-  const { matches, currentPerson } = state,
-        match = matches[currentPerson].match,
+  const match = selectedMatchSelector(state),
         gedcomx = match.getContent().getGedcomX();
   return {
     gedcomx,

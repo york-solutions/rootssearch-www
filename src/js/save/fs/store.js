@@ -23,13 +23,14 @@ const store = Redux.createStore(
     
     matches: data.persons.reduce((accumulated, person) => {
       accumulated[person.getId()] = {
-        match: null,
+        selectedMatchId: null,
         status: 'NOT_REQUESTED',
         copiedFacts: [],
         copiedNames: [],
         overrideNames: [],
         overrideFacts: [],
-        entries: []
+        entries: {},
+        entryIds: []
       };
       return accumulated;
     }, {})
