@@ -49,6 +49,7 @@
     "redux": "3.6.0",
     "redux-thunk": "2.2.0",
     "serve-favicon": "2.2.1",
+    "update-immutable": "^1.1.2",
     "webpack": "2.3.3"
   }
 }

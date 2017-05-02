@@ -1,3 +1,5 @@
+const update = require('update-immutable').default;
+
 module.exports = function(state = {}, action){
   
   const {personId} = action,
@@ -10,28 +12,33 @@ module.exports = function(state = {}, action){
   switch(action.type){
     
     case 'LOADING_MATCHES':
-      return updateMatch(state, personId, {
-        status: 'LOADING'
+      return update(state, {
+        [personId]: {
+          status: {
+            $set: 'LOADING'
+          }
+        }
       });
       
     case 'MATCHES_LOADED':
-      return updateMatch(state, personId, {
-        status: 'LOADED',
-        entries: action.matches.reduce((accumulator, match) => {
-          accumulator[match.getId()] = match;
-          return accumulator;
-        }, {}),
-        entryIds: action.matches.map(m => m.getId())
+      return update(state, {
+        [personId]: {
+          status: {
+            $set: 'LOADED'
+          },
+          entries: {
+            $set: action.matches.reduce((accumulator, match) => {
+              accumulator[match.getId()] = match;
+              return accumulator;
+            }, {})
+          },
+          entryIds: {
+            $set: action.matches.map(m => m.getId())
+          }
+        }
       });
     
     default:
       return state;
   }
 };
-
-function updateMatch(state, personId, newData){
-  const match = state[personId];
-  return Object.assign({}, state, {
-    [personId]: Object.assign({}, match, newData)
-  });
-}

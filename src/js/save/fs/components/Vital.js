@@ -5,7 +5,8 @@
 const React = require('react');
 const matched = require('../selectors/matched');
 const connect = require('react-redux').connect;
-const FactCopyBox = require('./FactCopyBox');
+const PlaceCopyBox = require('./PlaceCopyBox');
+const DateCopyBox = require('./DateCopyBox');
 
 const Vital = function({fact, copyable, matched}){
   if(!fact){
@@ -13,10 +14,15 @@ const Vital = function({fact, copyable, matched}){
   }
   return (
     <div className="vital">
-      {copyable && matched && <FactCopyBox fact={fact} />}
       <span className="label">{fact.getType().split('/').pop()}</span>
-      <div>{fact.getDateDisplayString()}</div>
-      <div>{fact.getPlaceDisplayString()}</div>
+      <div>
+        {copyable && matched && <DateCopyBox fact={fact} />}
+        {fact.getDateDisplayString()}
+      </div>
+      <div>
+        {copyable && matched && <PlaceCopyBox fact={fact} />}
+        {fact.getPlaceDisplayString()}
+      </div>
     </div>
   );
 };
