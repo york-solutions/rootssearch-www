@@ -70,6 +70,20 @@
     }
   }
   
+  .vital {
+    
+    input[type="text"] {
+      display: block;
+      padding: $spacingEigth $spacingQuarter;
+      width: 100%;
+      
+      &:not(:first-child){
+        margin-top: $spacingQuarter;
+      }
+    }
+    
+  }
+  
   .modal-fade {
     position: fixed;
     top: 0;

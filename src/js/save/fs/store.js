@@ -1,10 +1,15 @@
 const Redux = require('redux'),
       thunk = require('redux-thunk').default,
       reducer = require('./reducers'),
+      serializer = require('./serializer'),
       gedx = require('./gedx'),
       data = gedx.load();
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || Redux.compose;
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
+  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+    serialize: serializer,
+    shouldCatchErrors: false
+  }) : Redux.compose;
 
 // Initialize the store with site settings loaded from cookies
 const store = Redux.createStore(

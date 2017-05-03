@@ -5,11 +5,13 @@
 const FS = require('../fs');
 
 module.exports = function(person){
-  return function (dispatch){
+  return function (dispatch, getState){
+  
+    const personId = person.getId();
   
     dispatch({
       type: 'LOADING_MATCHES',
-      personId: person.getId()
+      personId: personId
     });
   
     const query = createMatchesQuery(person);
@@ -19,11 +21,18 @@ module.exports = function(person){
       }
     }, function(error, response){
       // TODO: handle error
-      dispatch({
-        type: 'MATCHES_LOADED',
-        matches: response.gedcomx ? response.gedcomx.getEntries() : [],
-        personId: person.getId()
-      });
+      
+      // Check to see that we're still in the LOADING state. Might not be
+      // if using redux-devtools-extension with a persisted state.
+      if(getState().possibleMatches[personId].status === 'LOADING'){
+        dispatch({
+          type: 'MATCHES_LOADED',
+          matches: response.gedcomx ? response.gedcomx.getEntries() : [],
+          personId: person.getId()
+        });
+      } else {
+        console.log('Not in loading state; ignoring matches response');
+      }
     });
   };
 };
