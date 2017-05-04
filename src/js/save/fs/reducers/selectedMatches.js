@@ -25,15 +25,6 @@ module.exports = function(state = {}, action){
         }
       });
       
-    case 'LOADING_MATCH_PERSON':
-      return update(state, {
-        [personId]: {
-          loading: {
-            $set: true
-          }
-        }
-      });
-      
     case 'LOADED_MATCH_PERSON':
       return update(state, {
         [personId]: {
