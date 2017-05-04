@@ -37,7 +37,9 @@ const store = Redux.createStore(
     
     selectedMatches: data.persons.reduce((accumulated, person) => {
       accumulated[person.getId()] = {
-        selectedMatchId: null,
+        matchId: null,
+        gedcomx: null,
+        loading: false,
         copiedDates: {},
         copiedPlaces: {},
         copiedNames: {},

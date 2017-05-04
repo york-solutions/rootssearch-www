@@ -2,10 +2,9 @@ const update = require('update-immutable').default;
 
 module.exports = function(state = {}, action){
   
-  const {personId, dataId} = action,
-        match = state[personId];
+  const {personId, dataId} = action;
         
-  if(match === undefined){
+  if(state[personId] === undefined){
     return state;
   }
   
@@ -14,8 +13,35 @@ module.exports = function(state = {}, action){
     case 'SELECT_MATCH':
       return update(state, {
         [personId]: {
-          selectedMatchId: {
+          matchId: {
             $set: action.matchId
+          },
+          loading: {
+            $set: true
+          },
+          gedcomx: {
+            $set: null
+          }
+        }
+      });
+      
+    case 'LOADING_MATCH_PERSON':
+      return update(state, {
+        [personId]: {
+          loading: {
+            $set: true
+          }
+        }
+      });
+      
+    case 'LOADED_MATCH_PERSON':
+      return update(state, {
+        [personId]: {
+          loading: {
+            $set: false
+          },
+          gedcomx: {
+            $set: action.gedcomx
           }
         }
       });

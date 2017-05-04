@@ -1,6 +1,7 @@
 const React = require('react');
 const connect = require('react-redux').connect;
 const Vital = require('./Vital');
+const selectMatch = require('../actions/selectMatch');
 
 class Match extends React.Component {
   
@@ -15,11 +16,7 @@ class Match extends React.Component {
           mother = parents.find(p => p.isFemale()),
           spouse = data.getPersonsSpouses(person)[0],
           select = () => {
-            dispatch({
-              type: 'SELECT_MATCH',
-              personId: currentPerson,
-              matchId: match.getId()
-            });
+            dispatch(selectMatch(currentPerson, match.getId()));
           };
     return (
       <div className="match box">

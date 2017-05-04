@@ -6,9 +6,14 @@ const React = require('react');
 const connect = require('react-redux').connect;
 const Vital = require('./Vital');
 const Name = require('./Name');
-const selectedMatchSelector = require('../selectors/selectedMatch');
+const Loader = require('./Loader');
 
-const SelectedMatch = function({ matchId, gedcomx }){
+const SelectedMatch = function({ matchId, gedcomx, loading }){
+  
+  if(loading){
+    return <Loader message="Loading match..." />;
+  }
+  
   const person = gedcomx.getPersonById(matchId),
         birth = person.getFact('http://gedcomx.org/Birth'),
         death = person.getFact('http://gedcomx.org/Death'),
@@ -54,12 +59,9 @@ function Relation({person, relationship}){
 }
 
 const mapStateToProps = state => {
-  const match = selectedMatchSelector(state),
-        gedcomx = match.getContent().getGedcomX();
-  return {
-    gedcomx,
-    matchId: match.getId()
-  };
+  const {selectedMatches, currentPerson} = state,
+        match = selectedMatches[currentPerson];
+  return match;
 };
 
 module.exports = connect(mapStateToProps)(SelectedMatch);
