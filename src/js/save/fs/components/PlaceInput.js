@@ -4,24 +4,15 @@
 
 const React = require('react');
 const connect = require('react-redux').connect;
-const selectedMatchSelector = require('../selectors/selectedMatch');
 
 class PlaceInput extends React.Component {
-    
-  constructor(props){
-    super(props);
-    const factId = this.props.fact.getId();
-    this.state = {
-      factId
-    };
-  }
     
   render() {
     return <input type="text" value={this.calculateValue()} placeholder="Place" onChange={this.handleChange.bind(this)} />;
   }
   
   calculateValue() {
-    return this.props.overridePlaces[this.state.factId] || this.props.fact.getPlaceDisplayString();
+    return this.props.override || this.props.fact.getPlaceDisplayString();
   }
   
   handleChange(e){
@@ -35,9 +26,10 @@ class PlaceInput extends React.Component {
   
 }
 
-module.exports = connect(state => {
-  const match = selectedMatchSelector(state);
+module.exports = connect((state, props) => {
+  const match = state.selectedMatches[state.currentPerson],
+        factId = props.fact.getId();
   return {
-    overridePlaces: match.overridePlaces
+    override: match.overridePlaces[factId]
   };
 })(PlaceInput);
