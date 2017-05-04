@@ -102,6 +102,28 @@ module.exports = function(state = {}, action){
           }
         }
       });
+      
+    case 'OVERRIDE_DATE':
+      return update(state, {
+        [personId]: {
+          overrideDates: {
+            [dataId]: {
+              $set: action.value
+            }
+          }
+        }
+      });
+      
+    case 'OVERRIDE_PLACE':
+      return update(state, {
+        [personId]: {
+          overridePlaces: {
+            [dataId]: {
+              $set: action.value
+            }
+          }
+        }
+      });
     
     default:
       return state;

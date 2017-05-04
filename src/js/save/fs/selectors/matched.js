@@ -1,8 +1,8 @@
 /**
  * Return true if a match has been selected for the current person
  */
+const selectedMatchSelector = require('./selectedMatch');
 
 module.exports = function(state){
-  const {selectedMatches, currentPerson} = state;
-  return !!selectedMatches[currentPerson].matchId;
+  return !!selectedMatchSelector(state).matchId;
 };

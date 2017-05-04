@@ -4,25 +4,40 @@
 
 const React = require('react');
 const connect = require('react-redux').connect;
+const selectedMatchSelector = require('../selectors/selectedMatch');
 
 class DateInput extends React.Component {
     
   constructor(props){
     super(props);
+    const factId = this.props.fact.getId();
+    this.state = {
+      factId
+    };
   }
     
   render() {
-    return <input type="text" value={this.props.fact.getDateDisplayString()} placeholder="Date" onChange={this.handleChange.bind(this)} />;
+    return <input type="text" value={this.calculateValue()} placeholder="Date" onChange={this.handleChange.bind(this)} />;
+  }
+  
+  calculateValue() {
+    return this.props.overrideDates[this.state.factId] || this.props.fact.getDateDisplayString();
   }
   
   handleChange(e){
     this.props.dispatch({
       type: 'OVERRIDE_DATE',
       value: e.target.value,
-      factId: this.props.fact.getId()
+      dataId: this.props.fact.getId(),
+      personId: this.props.personId
     });
   }
   
 }
 
-module.exports = connect()(DateInput);
+module.exports = connect(state => {
+  const match = selectedMatchSelector(state);
+  return {
+    overrideDates: match.overrideDates
+  };
+})(DateInput);

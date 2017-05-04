@@ -4,11 +4,11 @@
 
 const React = require('react');
 const connect = require('react-redux').connect;
-const Vital = require('./Vital');
+const EditableVital = require('./EditableVital');
 const Name = require('./Name');
 const Loader = require('./Loader');
 
-const SelectedMatch = function({ matchId, gedcomx, loading }){
+const SelectedMatch = function({ personId, matchId, gedcomx, loading }){
   
   if(loading){
     return <Loader message="Loading match..." />;
@@ -28,8 +28,8 @@ const SelectedMatch = function({ matchId, gedcomx, loading }){
         <div className="label">Record Person</div>
         <div className="box">
           <Name name={person.getNames()[0]} editable={true} />
-          <Vital fact={birth} editable={true} />
-          <Vital fact={death} editable={true} />
+          <EditableVital fact={birth} personId={personId} />
+          <EditableVital fact={death} personId={personId} />
         </div>
       </div>
       <Relation person={father} relationship="Father" />
@@ -60,8 +60,14 @@ function Relation({person, relationship}){
 
 const mapStateToProps = state => {
   const {selectedMatches, currentPerson} = state,
-        match = selectedMatches[currentPerson];
-  return match;
+        match = selectedMatches[currentPerson],
+        {matchId, gedcomx, loading} = match;
+  return {
+    matchId,
+    gedcomx,
+    loading,
+    personId: currentPerson
+  };
 };
 
 module.exports = connect(mapStateToProps)(SelectedMatch);
