@@ -4,6 +4,8 @@
 
 const React = require('react');
 const connect = require('react-redux').connect;
+const placeOverrideSelector = require('../selectors/placeOverride');
+const placeCopySelector = require('../selectors/placeCopy');
 
 class PlaceInput extends React.Component {
     
@@ -12,7 +14,7 @@ class PlaceInput extends React.Component {
   }
   
   calculateValue() {
-    return this.props.override || this.props.fact.getPlaceDisplayString();
+    return this.props.override || this.props.copy || this.props.fact.getPlaceDisplayString();
   }
   
   handleChange(e){
@@ -27,9 +29,11 @@ class PlaceInput extends React.Component {
 }
 
 module.exports = connect((state, props) => {
-  const match = state.selectedMatches[state.currentPerson],
-        factId = props.fact.getId();
+  const factId = props.fact.getId(),
+        override = placeOverrideSelector(state, factId),
+        copy = placeCopySelector(state, props.recordFactId);
   return {
-    override: match.overridePlaces[factId]
+    override,
+    copy
   };
 })(PlaceInput);

@@ -14,8 +14,8 @@ const Vital = function({fact, recordFactId, personId}){
   return (
     <div className="vital">
       <span className="label">{fact.getType().split('/').pop()}</span>
-      <DateInput fact={fact} personId={personId} />
-      <PlaceInput fact={fact} personId={personId} />
+      <DateInput fact={fact} personId={personId} recordFactId={recordFactId} />
+      <PlaceInput fact={fact} personId={personId} recordFactId={recordFactId} />
     </div>
   );
 };

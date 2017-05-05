@@ -31,7 +31,7 @@ class DateInput extends React.Component {
 const mapStateToProps = (state, props) => {
   const factId = props.fact.getId(),
         override = dateOverrideSelector(state, factId),
-        copy = dateCopySelector(state, factId);
+        copy = dateCopySelector(state, props.recordFactId);
   return {
     override,
     copy
