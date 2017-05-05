@@ -14,7 +14,7 @@ const Vital = function({fact, copyable = false, matched = false}){
   }
   return (
     <div className="vital">
-      <span className="label">{fact.getType().split('/').pop()}</span>
+      <span className="label">{fact.getTypeDisplayLabel()}</span>
       <div>
         {copyable && matched && fact.getDateDisplayString() && <DateCopyBox fact={fact} />}
         {fact.getDateDisplayString()}

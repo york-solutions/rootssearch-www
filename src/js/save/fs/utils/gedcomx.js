@@ -313,4 +313,18 @@ GedcomX.Root.prototype.getPersonsSpouses = function(person){
   .filter(Boolean);
 };
 
+/**
+ * Generate a display label for the fact type
+ *
+ * @returns {String}
+ */
+GedcomX.Fact.prototype.getTypeDisplayLabel = function(){
+  const type = this.getType() || '';
+  return type
+    .replace('data:,','') // Remove data uri syntax for custom types
+    .split('/').pop() // For spec type; remove the http://gedcomx.org/ prefix
+    .match(/([A-Z]?[^A-Z]*)/g).slice(0,-1) // Split the string on uppercase letters
+    .join(' '); // Join any split pieces together with a space
+};
+
 module.exports = GedcomX;
