@@ -14,18 +14,24 @@ const GedcomX = require('gedcomx-js');
  */
 FamilySearch.prototype.oauthPopup = function(callback){
   
-  // Open redirect window
-  // TODO: position in the middle of the page horizontally
-  let popup = window.open(this.oauthRedirectURL(), 'FSAUTH', 'height=800,width=600');
+  // Open redirect window vertically and horizontally centered on the screen.
+  // Horizontal centering doesn't work in Chrome when the original window is on
+  // a second monitor: https://bugs.chromium.org/p/chromium/issues/detail?id=137681
+  const width = 300,
+        height = 500,
+        left = Math.round((window.screen.width - width) / 2),
+        top = Math.round((window.screen.height - height) / 2) - 50,
+        features = `height=${height},width=${width},left=${left},top=${top}`;
+  const popup = window.open(this.oauthRedirectURL(), 'FSAUTH', features);
 
   // Poll the window's URL for the auth token response. While the window is
   // open to the login screen on familysearch.org, request the URL will throw
   // a security error so we swallow those and wait for the return to rs.io.
-  let interval = setInterval(() => {
+  const interval = setInterval(() => {
     try {
       
       // Parse the query params of the URL
-      let queryParams = popup.location.search
+      const queryParams = popup.location.search
         .substring(1) // Remove the ?
         .split('&')
         .map(s => s.split('='))
