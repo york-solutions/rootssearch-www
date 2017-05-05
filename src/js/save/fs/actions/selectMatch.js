@@ -3,7 +3,7 @@
  * from the FS api.
  */
 
-const FS = require('../fs');
+const FS = require('../utils/fs');
 
 module.exports = function(personId, matchId){
   return function(dispatch){

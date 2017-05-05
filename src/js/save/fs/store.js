@@ -2,8 +2,8 @@ const Redux = require('redux'),
       thunk = require('redux-thunk').default,
       reducer = require('./reducers'),
       serializer = require('./serializer'),
-      gedx = require('./gedx'),
-      data = gedx.load();
+      gedcomx = require('./utils/gedcomx'),
+      data = gedcomx.load();
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
   window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({

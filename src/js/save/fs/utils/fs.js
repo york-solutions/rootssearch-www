@@ -6,7 +6,7 @@
  */
  
 const FamilySearch = require('fs-js-lite');
-const store = require('./store');
+const store = require('../store');
 const GedcomX = require('gedcomx-js');
 
 /**

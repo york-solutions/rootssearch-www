@@ -2,7 +2,7 @@
  * Manage the state changes for requesting matches from the FS API
  */
 
-const FS = require('../fs');
+const FS = require('../utils/fs');
 
 module.exports = function(person){
   return function (dispatch, getState){

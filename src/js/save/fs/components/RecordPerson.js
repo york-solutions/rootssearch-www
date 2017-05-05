@@ -6,11 +6,10 @@ const React = require('react');
 const connect = require('react-redux').connect;
 const Vital = require('./Vital');
 const Name = require('./Name');
+const slimFacts = require('../selectors/slimFacts');
 
 const RecordPerson = function({ person, gedcomx }){
-  const birth = person.getFact('http://gedcomx.org/Birth'),
-        death = person.getFact('http://gedcomx.org/Death'),
-        parents = gedcomx.getPersonsParents(person),
+  const parents = gedcomx.getPersonsParents(person),
         father = parents.find(p => p.isMale()),
         mother = parents.find(p => p.isFemale()),
         spouse = gedcomx.getPersonsSpouses(person)[0],
@@ -21,8 +20,9 @@ const RecordPerson = function({ person, gedcomx }){
         <div className="label">Record Person</div>
         <div className="box">
           <Name name={person.getNames()[0]} copyable={true} />
-          <Vital fact={birth} copyable={true} />
-          <Vital fact={death} copyable={true} />
+          {slimFacts(person).map(f => {
+            return <Vital key={f.getId()} fact={f} copyable={true} />;
+          })}
         </div>
       </div>
       <Relation person={father} relationship="Father" />

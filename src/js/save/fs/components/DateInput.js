@@ -4,6 +4,8 @@
 
 const React = require('react');
 const connect = require('react-redux').connect;
+const dateOverrideSelector = require('../selectors/dateOverride');
+const dateCopySelector = require('../selectors/dateCopy');
 
 class DateInput extends React.Component {
     
@@ -12,7 +14,7 @@ class DateInput extends React.Component {
   }
   
   calculateValue() {
-    return this.props.override || this.props.fact.getDateDisplayString();
+    return this.props.override || this.props.copy || this.props.fact.getDateDisplayString();
   }
   
   handleChange(e){
@@ -26,10 +28,14 @@ class DateInput extends React.Component {
   
 }
 
-module.exports = connect((state, props) => {
-  const match = state.selectedMatches[state.currentPerson],
-        factId = props.fact.getId();
+const mapStateToProps = (state, props) => {
+  const factId = props.fact.getId(),
+        override = dateOverrideSelector(state, factId),
+        copy = dateCopySelector(state, factId);
   return {
-    override: match.overrideDates[factId]
+    override,
+    copy
   };
-})(DateInput);
+};
+
+module.exports = connect(mapStateToProps)(DateInput);

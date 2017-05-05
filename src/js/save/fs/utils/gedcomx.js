@@ -1,4 +1,6 @@
 /**
+ * Wrapper around gedcomx-js
+ * 
  * Load and configure the gedcomx-js library.
  * Setup extensions to the gedcomx-js library.
  * Expose helper utitilies.
@@ -25,28 +27,31 @@ const months = [
   'December'
 ];
 
-module.exports = {
-  
-  /**
-   * Get the GEDCOM X data off the page, if it exists
-   */
-  load: function(){
-  
-    let data;
+/**
+ * Get the GEDCOM X data off the page, if it exists
+ */
+GedcomX.load = function(){
+  let data;
       
-    // gedxData is supposed to be included on the page but to be safe we're going make sure it's there
-    if(typeof gedxData !== 'undefined'){
-      data = gedxData;
-    } else {
-      data = {};
-    }
-    
-    let gedx = GedcomX(data);
-    clean(gedx);
-    
-    return gedx;
+  // gedxData is supposed to be included on the page but to be safe we're going make sure it's there
+  if(typeof gedxData !== 'undefined'){
+    data = gedxData;
+  } else {
+    data = {};
   }
+  
+  let gedx = GedcomX(data);
+  clean(gedx);
+  
+  return gedx;
 };
+  
+GedcomX.vitals = [
+  'http://gedcomx.org/Birth',
+  'http://gedcomx.org/Christening',
+  'http://gedcomx.org/Death',
+  'http://gedcomx.org/Burial'
+];
   
 /**
  * Massage the GEDCOM X data so that
@@ -71,6 +76,8 @@ function clean(gedx){
       p.setId(id);
     }
   });
+  
+  // TODO: make sure all facts and names have IDs too
 }
 
 /**
@@ -305,3 +312,5 @@ GedcomX.Root.prototype.getPersonsSpouses = function(person){
   // mapping fails to find a matching person.
   .filter(Boolean);
 };
+
+module.exports = GedcomX;

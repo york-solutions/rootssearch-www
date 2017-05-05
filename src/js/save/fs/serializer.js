@@ -1,8 +1,7 @@
 /**
  * Serialize options for redux-devtools-extension
  */
-const GedcomX = require('gedcomx-js');
-require('./gedx'); // Configures GedcomX extensions
+const GedcomX = require('./utils/gedcomx');
  
 module.exports = {
   replacer: (key, value) => {

@@ -7,7 +7,7 @@ const connect = require('react-redux').connect;
 const DateInput = require('./DateInput');
 const PlaceInput = require('./PlaceInput');
 
-const Vital = function({fact, personId}){
+const Vital = function({fact, recordFactId, personId}){
   if(!fact){
     return null;
   }

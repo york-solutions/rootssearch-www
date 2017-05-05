@@ -16,11 +16,11 @@ const Vital = function({fact, copyable = false, matched = false}){
     <div className="vital">
       <span className="label">{fact.getType().split('/').pop()}</span>
       <div>
-        {copyable && matched && <DateCopyBox fact={fact} />}
+        {copyable && matched && fact.getDateDisplayString() && <DateCopyBox fact={fact} />}
         {fact.getDateDisplayString()}
       </div>
       <div>
-        {copyable && matched && <PlaceCopyBox fact={fact} />}
+        {copyable && matched && fact.getPlaceDisplayString() && <PlaceCopyBox fact={fact} />}
         {fact.getPlaceDisplayString()}
       </div>
     </div>
