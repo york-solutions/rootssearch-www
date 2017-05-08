@@ -12,7 +12,7 @@ const selectedMatch = require('../selectors/selectedMatch');
 const EditableFact = function({fact, recordFactId, personId, copiedDate, copiedPlace}){
   
   // If we don't have a matching fact and nothing is copied then display a placeholder
-  if(!(copiedDate || copiedPlace)){
+  if(fact.isEmpty() && !(copiedDate || copiedPlace)){
     return <div className="fact-placeholder" />;
   }
   

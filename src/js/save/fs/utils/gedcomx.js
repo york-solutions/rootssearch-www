@@ -327,4 +327,13 @@ GedcomX.Fact.prototype.getTypeDisplayLabel = function(){
     .join(' '); // Join any split pieces together with a space
 };
 
+/**
+ * Check whether a fact is empty, meaning it has no date or place
+ * 
+ * @return {Boolean}
+ */
+GedcomX.Fact.prototype.isEmpty = function(){
+  return this.getDate() === undefined && this.getPlace() === undefined;
+};
+
 module.exports = GedcomX;
