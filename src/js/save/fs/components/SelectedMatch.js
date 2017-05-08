@@ -8,6 +8,7 @@ const EditableVital = require('./EditableVital');
 const Name = require('./Name');
 const Loader = require('./Loader');
 const GedcomX = require('gedcomx-js');
+const Family = require('./Family');
 const slimFacts = require('../selectors/slimFacts');
 
 const SelectedMatch = function({ person, personId, matchId, gedcomx, loading }){
@@ -16,12 +17,7 @@ const SelectedMatch = function({ person, personId, matchId, gedcomx, loading }){
     return <Loader message="Loading match..." />;
   }
   
-  const matchPerson = gedcomx.getPersonById(matchId),
-        parents = gedcomx.getPersonsParents(matchPerson),
-        father = parents.find(p => p.isMale()),
-        mother = parents.find(p => p.isFemale()),
-        spouse = gedcomx.getPersonsSpouses(matchPerson)[0],
-        children = gedcomx.getPersonsChildren(matchPerson);
+  const matchPerson = gedcomx.getPersonById(matchId);
   return (
     <div>
       <div className="person">
@@ -34,15 +30,7 @@ const SelectedMatch = function({ person, personId, matchId, gedcomx, loading }){
           })}
         </div>
       </div>
-      <Relation person={father} relationship="Father" />
-      <Relation person={mother} relationship="Mother" />
-      <Relation person={spouse} relationship="Spouse" />
-      {children.length === 0 ? null : <div className="person">
-        <div className="label">Children</div>
-        {children.map(child => { 
-          return <Relation person={child} key={child.getId()} />;
-        })}
-      </div>}
+      <Family gedcomx={gedcomx} personId={matchId} />
     </div>
   );
 };
@@ -59,19 +47,6 @@ function getMatchingFact(matchPerson, recordFact){
   return GedcomX.Fact({
     type: recordFact.getType()
   });
-}
-
-function Relation({person, relationship}){
-  if(!person) return null;
-  return (
-    <div className="person relation">
-      {relationship && <div className="label">{relationship}</div>}
-      <div className="box">
-        <Name name={person.getNames()[0]} />
-        <div className="life-span">{person.getLifespan(true)}</div>
-      </div>
-    </div>  
-  );
 }
 
 const mapStateToProps = state => {
