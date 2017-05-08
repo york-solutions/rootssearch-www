@@ -25,8 +25,9 @@ const SelectedMatch = function({ person, personId, matchId, gedcomx, loading }){
         <div className="box">
           <Name name={matchPerson.getNames()[0]} editable={true} />
           {slimFacts(person).map(recordFact => {
-            const fact = getMatchingFact(matchPerson, recordFact);
-            return <EditableFact key={recordFact.getId()} recordFactId={recordFact.getId()} fact={fact} personId={personId} />;
+            const recordFactId = recordFact.getId();
+            let matchFact = getMatchingFact(matchPerson, recordFact);
+            return <EditableFact key={recordFactId} recordFactId={recordFactId} fact={matchFact} personId={personId} />;
           })}
         </div>
       </div>
@@ -35,18 +36,15 @@ const SelectedMatch = function({ person, personId, matchId, gedcomx, loading }){
   );
 };
 
+/**
+ * For vital facts we look for a matching fact by type in the match person.
+ * Returns undefined when a matching fact wasn't found or the fact isn't a vital.
+ */
 function getMatchingFact(matchPerson, recordFact){
   const type = recordFact.getType();
-  
-  // Fot vitals we look for a matching type in the match person
   if(GedcomX.vitals.indexOf(type) !== -1){
     return matchPerson.getFactsByType(type)[0];
   }
-  
-  // A non-vital, create a new empty fact
-  return GedcomX.Fact({
-    type: recordFact.getType()
-  });
 }
 
 const mapStateToProps = state => {
