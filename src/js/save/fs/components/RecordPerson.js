@@ -4,7 +4,7 @@
 
 const React = require('react');
 const connect = require('react-redux').connect;
-const Vital = require('./Vital');
+const Fact = require('./Fact');
 const Name = require('./Name');
 const Family = require('./Family');
 const slimFacts = require('../selectors/slimFacts');
@@ -17,7 +17,7 @@ const RecordPerson = function({ person, gedcomx }){
         <div className="box">
           <Name name={person.getNames()[0]} copyable={true} />
           {slimFacts(person).map(f => {
-            return <Vital key={f.getId()} fact={f} copyable={true} />;
+            return <Fact key={f.getId()} fact={f} copyable={true} />;
           })}
         </div>
       </div>

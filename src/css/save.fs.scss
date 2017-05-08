@@ -61,7 +61,7 @@
       margin-top: $spacing;
     }
     
-    .vital {
+    .fact {
       margin-top: $spacing;
     }
     
@@ -70,12 +70,20 @@
     }
   }
   
-  .vital {
+  .fact {
     
     input[type="text"] {
       display: block;
       padding: $spacingEigth $spacingQuarter;
       width: 100%;
+      
+      &:not(:first-child){
+        margin-top: $spacingQuarter;
+      }
+    }
+    
+    .fact-line {
+      line-height: 33px;
       
       &:not(:first-child){
         margin-top: $spacingQuarter;
@@ -121,7 +129,7 @@
       margin-left: $spacing;
     }
     
-    .vital {
+    .fact {
       margin-top: $spacing;
     }
     

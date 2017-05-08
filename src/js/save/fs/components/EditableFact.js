@@ -1,5 +1,5 @@
 /**
- * Display a vital fact.
+ * Display an editable fact.
  */
 
 const React = require('react');
@@ -7,12 +7,12 @@ const connect = require('react-redux').connect;
 const DateInput = require('./DateInput');
 const PlaceInput = require('./PlaceInput');
 
-const Vital = function({fact, recordFactId, personId}){
+const EditableFact = function({fact, recordFactId, personId}){
   if(!fact){
     return null;
   }
   return (
-    <div className="vital">
+    <div className="fact">
       <span className="label">{fact.getTypeDisplayLabel()}</span>
       <DateInput fact={fact} personId={personId} recordFactId={recordFactId} />
       <PlaceInput fact={fact} personId={personId} recordFactId={recordFactId} />
@@ -20,4 +20,4 @@ const Vital = function({fact, recordFactId, personId}){
   );
 };
 
-module.exports = connect()(Vital);
+module.exports = connect()(EditableFact);

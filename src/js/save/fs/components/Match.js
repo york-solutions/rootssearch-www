@@ -1,6 +1,6 @@
 const React = require('react');
 const connect = require('react-redux').connect;
-const Vital = require('./Vital');
+const Fact = require('./Fact');
 const selectMatch = require('../actions/selectMatch');
 
 class Match extends React.Component {
@@ -24,8 +24,8 @@ class Match extends React.Component {
           <span className="person-name">{person.getDisplayName(true)}</span>
           <span className="person-id label">{person.getId()}</span>
         </div>
-        {birth ? <Vital fact={birth} /> : null}
-        {death ? <Vital fact={death} /> : null}
+        {birth ? <Fact fact={birth} /> : null}
+        {death ? <Fact fact={death} /> : null}
         <div className="relations">
           <Relation person={father} relationship="Father" />
           <Relation person={mother} relationship="Mother" />

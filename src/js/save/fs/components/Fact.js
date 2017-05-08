@@ -8,18 +8,18 @@ const connect = require('react-redux').connect;
 const PlaceCopyBox = require('./PlaceCopyBox');
 const DateCopyBox = require('./DateCopyBox');
 
-const Vital = function({fact, copyable = false, matched = false}){
+const Fact = function({fact, copyable = false, matched = false}){
   if(!fact){
     return null;
   }
   return (
-    <div className="vital">
+    <div className="fact">
       <span className="label">{fact.getTypeDisplayLabel()}</span>
-      <div>
+      <div className="fact-line">
         {copyable && matched && fact.getDateDisplayString() && <DateCopyBox fact={fact} />}
         {fact.getDateDisplayString()}
       </div>
-      <div>
+      <div className="fact-line">
         {copyable && matched && fact.getPlaceDisplayString() && <PlaceCopyBox fact={fact} />}
         {fact.getPlaceDisplayString()}
       </div>
@@ -33,4 +33,4 @@ const mapStateToProps = state => {
   };
 };
 
-module.exports = connect(mapStateToProps)(Vital);
+module.exports = connect(mapStateToProps)(Fact);

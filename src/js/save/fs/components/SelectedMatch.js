@@ -4,7 +4,7 @@
 
 const React = require('react');
 const connect = require('react-redux').connect;
-const EditableVital = require('./EditableVital');
+const EditableFact = require('./EditableFact');
 const Name = require('./Name');
 const Loader = require('./Loader');
 const GedcomX = require('gedcomx-js');
@@ -26,7 +26,7 @@ const SelectedMatch = function({ person, personId, matchId, gedcomx, loading }){
           <Name name={matchPerson.getNames()[0]} editable={true} />
           {slimFacts(person).map(recordFact => {
             const fact = getMatchingFact(matchPerson, recordFact);
-            return <EditableVital key={recordFact.getId()} recordFactId={recordFact.getId()} fact={fact} personId={personId} />;
+            return <EditableFact key={recordFact.getId()} recordFactId={recordFact.getId()} fact={fact} personId={personId} />;
           })}
         </div>
       </div>
