@@ -42,9 +42,22 @@ const SelectedMatch = function({ person, personId, matchId, gedcomx, loading }){
  */
 function getMatchingFact(matchPerson, recordFact){
   const type = recordFact.getType();
+  let fact;
+  
+  // Search for a matching vital
   if(GedcomX.vitals.indexOf(type) !== -1){
-    return matchPerson.getFactsByType(type)[0];
+    fact = matchPerson.getFactsByType(type)[0];
   }
+  
+  // If we found no matching vital or if this isn't a vital, then we create an
+  // empty fact with the same type.
+  if(fact === undefined){
+    fact = GedcomX.Fact({
+      type: recordFact.getType()
+    });
+  }
+  
+  return fact;
 }
 
 const mapStateToProps = state => {

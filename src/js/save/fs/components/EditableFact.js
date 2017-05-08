@@ -12,12 +12,8 @@ const selectedMatch = require('../selectors/selectedMatch');
 const EditableFact = function({fact, recordFactId, personId, copiedDate, copiedPlace}){
   
   // If we don't have a matching fact and nothing is copied then display a placeholder
-  if(!(fact || copiedDate || copiedPlace)){
+  if(!(copiedDate || copiedPlace)){
     return <div className="fact-placeholder" />;
-  }
-  
-  if(!fact){
-    fact = GedcomX.Fact();
   }
   
   return (
