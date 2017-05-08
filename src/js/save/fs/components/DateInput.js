@@ -14,7 +14,7 @@ class DateInput extends React.Component {
   }
   
   calculateValue() {
-    return this.props.override || this.props.copy || this.props.fact.getDateDisplayString();
+    return this.props.override || this.props.copy || this.props.fact.getDateDisplayString() || '';
   }
   
   handleChange(e){

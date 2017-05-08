@@ -257,7 +257,7 @@ GedcomX.PlaceReference.prototype.getDisplayString = function(){
  * COMPARING RESOURCEREFERENCES
  * https://github.com/rootsdev/gedcomx-js/issues/33
  * 
- * Override problematic methods discussed in the above issue. We can better
+ * Override problematic methods discussed in the above issue. We can make better
  * assumptions tied to our specific context (FS API).
  */
  

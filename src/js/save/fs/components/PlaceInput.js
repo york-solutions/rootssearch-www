@@ -14,7 +14,7 @@ class PlaceInput extends React.Component {
   }
   
   calculateValue() {
-    return this.props.override || this.props.copy || this.props.fact.getPlaceDisplayString();
+    return this.props.override || this.props.copy || this.props.fact.getPlaceDisplayString() || '';
   }
   
   handleChange(e){
