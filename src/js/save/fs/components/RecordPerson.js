@@ -8,11 +8,12 @@ const Fact = require('./Fact');
 const Name = require('./Name');
 const Family = require('./Family');
 const slimFacts = require('../selectors/slimFacts');
+const matchedSelector = require('../selectors/matched');
 
-const RecordPerson = function({ person, gedcomx }){
+const RecordPerson = function({ person, gedcomx, matched }){
   return (
     <div>
-      <div className="person">
+      <div className={"person record" + (matched ? ' matched' : '')}>
         <div className="label">Record Person</div>
         <div className="box">
           <Name name={person.getNames()[0]} copyable={true} />
@@ -30,7 +31,8 @@ const mapStateToProps = state => {
   const { persons, gedcomx, currentPerson } = state;
   return {
     gedcomx,
-    person: persons[currentPerson]
+    person: persons[currentPerson],
+    matched: matchedSelector(state)
   };
 };
 
