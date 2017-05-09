@@ -6,7 +6,6 @@ const React = require('react');
 const connect = require('react-redux').connect;
 const DateInput = require('./DateInput');
 const PlaceInput = require('./PlaceInput');
-const GedcomX = require('../utils/gedcomx');
 const selectedMatch = require('../selectors/selectedMatch');
 
 const EditableFact = function({fact, recordFactId, personId, copiedDate, copiedPlace}){

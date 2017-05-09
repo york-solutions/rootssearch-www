@@ -61,10 +61,6 @@
       margin-top: $spacing;
     }
     
-    .fact {
-      margin-top: $spacing;
-    }
-    
     .copy-box {
       margin-right: $spacing;
     }
@@ -75,6 +71,10 @@
   }
   
   .fact {
+    
+    border-top: 1px solid #e5e5e5;
+    padding-top: $spacing;
+    margin-top: $spacing;
     
     input[type="text"] {
       display: block;
@@ -97,8 +97,7 @@
   }
   
   .fact-placeholder {
-    height: 99px;
-    margin-top: $spacing;
+    height: 132px;
   }
   
   .modal-fade {
