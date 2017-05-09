@@ -40,12 +40,20 @@ const store = Redux.createStore(
         matchId: null,
         gedcomx: null,
         loading: false,
+        
+        // copied maps are keyed by record conclusion ID
         copiedDates: {},
         copiedPlaces: {},
         copiedNames: {},
+        
+        // override maps are keyed by match conclusion ID
         overrideNames: {},
         overrideDates: {},
-        overridePlaces: {}
+        overridePlaces: {},
+        
+        // normalized maps are keyed by match conclusion ID
+        normalizedDates: {},
+        normalizedPlaces: {}
       };
       return accumulated;
     }, {})

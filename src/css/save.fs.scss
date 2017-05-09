@@ -151,4 +151,31 @@
     
   }
   
+  .react-autosuggest__container {
+    height: 33px;
+    overflow-y: visible;
+  }
+  
+  .react-autosuggest__suggestions-container {
+    position: relative;
+  }
+  
+  .react-autosuggest__suggestions-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .react-autosuggest__suggestion {
+    background-color: #fff;
+    padding: $spacingQuarter;
+    border: 1px solid #ccc;
+    border-top: 0px;
+    cursor: pointer;
+  }
+  
+  .react-autosuggest__suggestion--highlighted {
+    background-color: $primaryColor;
+    color: #fff;
+  }
+  
 }

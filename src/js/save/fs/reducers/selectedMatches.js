@@ -124,6 +124,17 @@ module.exports = function(state = {}, action){
           }
         }
       });
+      
+    case 'NORMALIZED_DATE':
+      return update(state, {
+        [personId]: {
+          normalizedDates: {
+            [dataId]: {
+              $set: action.value
+            }
+          }
+        }
+      });
     
     default:
       return state;
