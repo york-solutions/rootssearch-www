@@ -80,10 +80,6 @@
       display: block;
       padding: $spacingEigth $spacingQuarter;
       width: 100%;
-      
-      &:not(:first-child){
-        margin-top: $spacingQuarter;
-      }
     }
     
     .fact-line {
@@ -154,6 +150,10 @@
   .react-autosuggest__container {
     height: 33px;
     overflow-y: visible;
+    
+    &:not(:first-child) {
+      margin-top: $spacingQuarter;
+    }
   }
   
   .react-autosuggest__suggestions-container {

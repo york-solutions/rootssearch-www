@@ -135,6 +135,17 @@ module.exports = function(state = {}, action){
           }
         }
       });
+      
+    case 'NORMALIZED_PLACE':
+      return update(state, {
+        [personId]: {
+          normalizedPlaces: {
+            [dataId]: {
+              $set: action.value
+            }
+          }
+        }
+      });
     
     default:
       return state;
