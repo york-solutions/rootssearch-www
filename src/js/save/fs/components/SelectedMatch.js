@@ -25,17 +25,7 @@ const SelectedMatch = function({ person, personId, matchId, gedcomx, loading, di
         <div className="box">
           <Name name={matchPerson.getNames()[0]} editable={true} />
           {factOrder.map(recordFactId => {
-            let matchFact = matchPerson.getFactById(factMap[recordFactId]);
-            
-            // If we don't have a matching fact then create one
-            // TODO: let's stop doing this on the fly
-            if(!matchFact){
-              matchFact = new GedcomX.Fact({
-                type: person.getFactById(recordFactId).getType(),
-                id: factMap[recordFactId]
-              });
-            }
-            
+            let matchFact = factMap[recordFactId];
             return <EditableFact key={recordFactId} recordFactId={recordFactId} fact={matchFact} personId={personId} />;
           })}
           <button className="btn btn-rs btn-lg" onClick={() => dispatch(saveMatchAction(personId))}>Save</button>

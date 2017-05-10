@@ -22,7 +22,7 @@ module.exports = function(personId, matchId){
       
       // TODO: error handling
       
-      // Calculate the mapping of record person fact IDs to match person fact IDs.
+      // Calculate the mapping of record person fact IDs to match person facts.
       // For facts which don't have a match, we must generate IDs. This allows
       // us to track the new fact's state for copying, overrides, normalization, etc.
       // TODO: should this be in the reducer?
@@ -34,23 +34,26 @@ module.exports = function(personId, matchId){
             factMap = recordFactsOrder.reduce(function(accumulator, recordFactId){
               const recordFact = recordFacts[recordFactId],
                     type = recordFact.getType();
-              let matchFactId;
+              let matchFact;
               
               // Search for a matching vital
               if(GedcomX.vitals.indexOf(type) !== -1){
                 let fact = matchPerson.getFactsByType(type)[0];
                 if(fact && fact.getId()){
-                  matchFactId = fact.getId();
+                  matchFact = fact;
                 }
               }
               
               // If we found no matching vital or if this isn't a vital, then we
               // generate a new ID
-              if(matchFactId === undefined){
-                matchFactId = idGenerator();
+              if(matchFact === undefined){
+                matchFact = new GedcomX.Fact({
+                  id: idGenerator(),
+                  type: type
+                });
               }
               
-              accumulator[recordFact.getId()] = matchFactId;
+              accumulator[recordFact.getId()] = matchFact;
               
               return accumulator;
             }, {});

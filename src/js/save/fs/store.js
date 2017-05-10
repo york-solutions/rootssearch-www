@@ -71,7 +71,7 @@ const store = Redux.createStore(
         saving: false,
         saved: false,
         
-        // Map of record person fact IDs to match person fact IDs
+        // Map of record person fact IDs to match person facts
         factMap: {},
         
         // copied maps are keyed by record conclusion ID
