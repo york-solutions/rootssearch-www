@@ -174,6 +174,16 @@ GedcomX.Person.prototype.getFact = function(type){
 };
 
 /**
+ * Get the fact matching the given ID
+ * 
+ * @param {String} id
+ * @returns {Fact}
+ */
+GedcomX.Person.prototype.getFactById = function(id){
+  return this.getFacts().find(f => f.getId() === id);
+};
+
+/**
  * Generate a display version of a string, when possible
  * 
  * @returns {String}

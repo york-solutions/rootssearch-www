@@ -7,18 +7,17 @@ const connect = require('react-redux').connect;
 const Fact = require('./Fact');
 const Name = require('./Name');
 const Family = require('./Family');
-const slimFacts = require('../selectors/slimFacts');
 const matchedSelector = require('../selectors/matched');
 
-const RecordPerson = function({ person, gedcomx, matched }){
+const RecordPerson = function({ person, gedcomx, matched, factOrder, facts }){
   return (
     <div>
       <div className={"person record" + (matched ? ' matched' : '')}>
         <div className="label">Record Person</div>
         <div className="box">
           <Name name={person.getNames()[0]} copyable={true} />
-          {slimFacts(person).map(f => {
-            return <Fact key={f.getId()} fact={f} copyable={true} />;
+          {factOrder.map(id => {
+            return <Fact key={id} fact={facts[id]} copyable={true} />;
           })}
         </div>
       </div>
@@ -28,11 +27,13 @@ const RecordPerson = function({ person, gedcomx, matched }){
 };
 
 const mapStateToProps = state => {
-  const { persons, gedcomx, currentPerson } = state;
+  const { persons, gedcomx, currentPerson, facts, factOrder } = state;
   return {
     gedcomx,
     person: persons[currentPerson],
-    matched: matchedSelector(state)
+    matched: matchedSelector(state),
+    facts: facts[currentPerson],
+    factOrder: factOrder[currentPerson]
   };
 };
 

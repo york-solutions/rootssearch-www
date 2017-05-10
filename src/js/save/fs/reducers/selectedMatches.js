@@ -33,6 +33,9 @@ module.exports = function(state = {}, action){
           },
           gedcomx: {
             $set: action.gedcomx
+          },
+          factMap: {
+            $set: action.factMap
           }
         }
       });
@@ -143,6 +146,15 @@ module.exports = function(state = {}, action){
             [dataId]: {
               $set: action.value
             }
+          }
+        }
+      });
+      
+    case 'SAVE_MATCH':
+      return update(state, {
+        [personId]: {
+          saving: {
+            $set: true
           }
         }
       });

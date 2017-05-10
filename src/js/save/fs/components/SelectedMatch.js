@@ -9,9 +9,9 @@ const Name = require('./Name');
 const Loader = require('./Loader');
 const GedcomX = require('gedcomx-js');
 const Family = require('./Family');
-const slimFacts = require('../selectors/slimFacts');
+const saveMatchAction = require('../actions/saveMatch');
 
-const SelectedMatch = function({ person, personId, matchId, gedcomx, loading }){
+const SelectedMatch = function({ person, personId, matchId, gedcomx, loading, dispatch, factOrder, factMap }){
   
   if(loading){
     return <Loader message="Loading match..." />;
@@ -21,14 +21,24 @@ const SelectedMatch = function({ person, personId, matchId, gedcomx, loading }){
   return (
     <div>
       <div className="person">
-        <div className="label">Record Person</div>
+        <div className="label">Tree Person</div>
         <div className="box">
           <Name name={matchPerson.getNames()[0]} editable={true} />
-          {slimFacts(person).map(recordFact => {
-            const recordFactId = recordFact.getId();
-            let matchFact = getMatchingFact(matchPerson, recordFact);
+          {factOrder.map(recordFactId => {
+            let matchFact = matchPerson.getFactById(factMap[recordFactId]);
+            
+            // If we don't have a matching fact then create one
+            // TODO: let's stop doing this on the fly
+            if(!matchFact){
+              matchFact = new GedcomX.Fact({
+                type: person.getFactById(recordFactId).getType(),
+                id: factMap[recordFactId]
+              });
+            }
+            
             return <EditableFact key={recordFactId} recordFactId={recordFactId} fact={matchFact} personId={personId} />;
           })}
+          <button className="btn btn-rs btn-lg" onClick={() => dispatch(saveMatchAction(personId))}>Save</button>
         </div>
       </div>
       <Family gedcomx={gedcomx} personId={matchId} />
@@ -36,40 +46,18 @@ const SelectedMatch = function({ person, personId, matchId, gedcomx, loading }){
   );
 };
 
-/**
- * For vital facts we look for a matching fact by type in the match person.
- * Returns undefined when a matching fact wasn't found or the fact isn't a vital.
- */
-function getMatchingFact(matchPerson, recordFact){
-  const type = recordFact.getType();
-  let fact;
-  
-  // Search for a matching vital
-  if(GedcomX.vitals.indexOf(type) !== -1){
-    fact = matchPerson.getFactsByType(type)[0];
-  }
-  
-  // If we found no matching vital or if this isn't a vital, then we create an
-  // empty fact with the same type.
-  if(fact === undefined){
-    fact = GedcomX.Fact({
-      type: recordFact.getType()
-    });
-  }
-  
-  return fact;
-}
-
 const mapStateToProps = state => {
-  const {selectedMatches, currentPerson, persons} = state,
+  const {selectedMatches, currentPerson, persons, factOrder} = state,
         match = selectedMatches[currentPerson],
-        {matchId, gedcomx, loading} = match;
+        {matchId, gedcomx, loading, factMap} = match;
   return {
     matchId,
     gedcomx,
     loading,
     personId: currentPerson,
-    person: persons[currentPerson]
+    person: persons[currentPerson],
+    factOrder: factOrder[currentPerson],
+    factMap
   };
 };
 

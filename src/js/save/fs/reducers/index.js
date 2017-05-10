@@ -12,5 +12,7 @@ module.exports = combineReducers({
   currentPerson,
   gedcomx: echo,
   personOrder: echo,
-  persons: echo
+  persons: echo,
+  facts: echo,
+  factOrder: echo
 });
