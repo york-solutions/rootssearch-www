@@ -14,7 +14,7 @@ const App = function({ auth, busy }) {
       { auth.inProgress ? <FSAuthModal /> : null }
       { busy && (
         <div className="modal-fade">
-          <Loader /> 
+          <Loader message="Saving..." /> 
         </div>
       )}
     </div>
