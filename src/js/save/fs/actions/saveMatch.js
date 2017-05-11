@@ -20,9 +20,6 @@ module.exports = function(personId){
     
     const personUpdates = calculatePersonUpdates(state, personId);
     
-    console.log(personUpdates);
-    return;
-    
     // Update the person
     FS.post(`/platform/tree/persons/${matchId}`, {
       body: {
@@ -71,7 +68,8 @@ function calculatePersonUpdates(state, personId){
   .forEach(factId => {
     
     // First we copy the fact so that we don't modify the originals
-    const matchFact = GedcomX.Fact(factMap[factId].toJSON());
+    const matchFact = GedcomX.Fact(factMap[factId].toJSON()),
+          matchFactId = matchFact.getId();
     let date, place;
     
     // Make any adjustments based on the copied dates and places
@@ -86,28 +84,29 @@ function calculatePersonUpdates(state, personId){
     place = matchFact.getPlace();
     
     // Overrides
-    if(match.overrideDates[factId]){
-      date.setOriginal(match.overrideDates[factId]);
+    if(match.overrideDates[matchFactId]){
+      date.setOriginal(match.overrideDates[matchFactId]);
     }
-    if(match.overridePlaces[factId]){
-      place.setOriginal(match.overridePlaces[factId]);
+    if(match.overridePlaces[matchFactId]){
+      place.setOriginal(match.overridePlaces[matchFactId]);
     }
     
     // Add normalized data
-    if(match.normalizedDates[factId]){
-      if(match.normalizedDates[factId].formal){
-        date.setFormal(match.normalizedDates[factId].formal);
+    if(match.normalizedDates[matchFactId]){
+      if(match.normalizedDates[matchFactId].formal){
+        date.setFormal(match.normalizedDates[matchFactId].formal);
       }
-      if(match.normalizedDates[factId].normalized){
+      if(match.normalizedDates[matchFactId].normalized){
         date.setNormalized([{
-          value: match.normalizedDates[factId].normalized
+          value: match.normalizedDates[matchFactId].normalized
         }]);
       }
     }
-    if(match.normalizedPlaces[factId]){
+    if(match.normalizedPlaces[matchFactId]){
       place.setNormalized([{
-        value: match.normalizedPlaces[factId]
+        value: match.normalizedPlaces[matchFactId]
       }]);
+      place.setOriginal(match.normalizedPlaces[matchFactId]);
     }
     
     // Delete IDs on new facts

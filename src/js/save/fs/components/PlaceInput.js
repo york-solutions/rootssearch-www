@@ -5,6 +5,7 @@
 const React = require('react');
 const connect = require('react-redux').connect;
 const placeOverrideSelector = require('../selectors/placeOverride');
+const placeNormalizedSelector = require('../selectors/placeNormalized');
 const placeCopySelector = require('../selectors/placeCopy');
 const Autosuggest = require('react-autosuggest');
 const FS = require('../utils/fs');
@@ -80,7 +81,7 @@ class PlaceInput extends React.Component {
   }
   
   calculateValue() {
-    return this.props.override || this.props.copy || this.props.fact.getPlaceDisplayString() || '';
+    return this.props.normalized || this.props.override || this.props.copy || this.props.fact.getPlaceDisplayString() || '';
   }
   
   handleChange(e){
@@ -97,9 +98,11 @@ class PlaceInput extends React.Component {
 module.exports = connect((state, props) => {
   const factId = props.fact.getId(),
         override = placeOverrideSelector(state, factId),
-        copy = placeCopySelector(state, props.recordFactId);
+        copy = placeCopySelector(state, props.recordFactId),
+        normalized = placeNormalizedSelector(state, factId);
   return {
     override,
-    copy
+    copy,
+    normalized
   };
 })(PlaceInput);

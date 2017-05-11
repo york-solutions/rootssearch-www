@@ -158,6 +158,18 @@ module.exports = function(state = {}, action){
           }
         }
       });
+      
+    case 'MATCH_SAVED':
+      return update(state, {
+        [personId]: {
+          saving: {
+            $set: false
+          },
+          saved: {
+            $set: true
+          }
+        }
+      });
     
     default:
       return state;

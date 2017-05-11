@@ -5,6 +5,7 @@
 const React = require('react');
 const connect = require('react-redux').connect;
 const dateOverrideSelector = require('../selectors/dateOverride');
+const dateNormalizedSelector = require('../selectors/dateNormalized');
 const dateCopySelector = require('../selectors/dateCopy');
 const Autosuggest = require('react-autosuggest');
 const FS = require('../utils/fs');
@@ -83,7 +84,7 @@ class DateInput extends React.Component {
   }
   
   calculateValue() {
-    return this.props.override || this.props.copy || this.props.fact.getDateDisplayString() || '';
+    return this.props.normalized || this.props.override || this.props.copy || this.props.fact.getDateDisplayString() || '';
   }
   
   handleChange(e){
@@ -100,10 +101,12 @@ class DateInput extends React.Component {
 const mapStateToProps = (state, props) => {
   const factId = props.fact.getId(),
         override = dateOverrideSelector(state, factId),
-        copy = dateCopySelector(state, props.recordFactId);
+        copy = dateCopySelector(state, props.recordFactId),
+        normalized = dateNormalizedSelector(state, factId);
   return {
     override,
-    copy
+    copy,
+    normalized
   };
 };
 
