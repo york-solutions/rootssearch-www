@@ -1,6 +1,7 @@
 const React = require('react');
 const connect = require('react-redux').connect;
 const selectedMatchSelector = require('../selectors/selectedMatch');
+const namePartsMap = require('../selectors/namePartsMap');
 
 class EditableName extends React.Component {
   
@@ -50,14 +51,6 @@ const mapStateToProps = (state, props) => {
     overrideParts: match.overrideName,
     personId: state.currentPerson
   };
-};
-
-const namePartsMap = (name) => {
-  return name.getNameForms()[0].getParts().reduce((accumulator, part) => {
-    // TODO: handle multiple parts of the same type
-    accumulator[part.getType()] = part.getValue();
-    return accumulator;
-  }, {});
 };
 
 module.exports = connect(mapStateToProps)(EditableName);
