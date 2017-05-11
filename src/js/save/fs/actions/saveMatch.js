@@ -4,6 +4,7 @@
 
 const FS = require('../utils/fs');
 const GedcomX = require('../utils/gedcomx');
+const nextPersonAction = require('./nextPerson');
 
 module.exports = function(personId){
   return function(dispatch, getState){
@@ -34,6 +35,8 @@ module.exports = function(personId){
         type: 'MATCH_SAVED',
         personId
       });
+      
+      dispatch(nextPersonAction());
     
     });
   };
