@@ -50,12 +50,9 @@ module.exports = function(personId){
  */
 function calculatePersonUpdates(state, personId){
   const updates = {
-          facts: calculateFactUpdates(state, personId)
-        },
-        names = calculateNameUpdates(state, personId);
-  if(names.length){
-    updates.names = names;
-  }
+    facts: calculateFactUpdates(state, personId),
+    names: calculateNameUpdates(state, personId)
+  };
   return updates;
 }
 
@@ -69,14 +66,23 @@ function calculateNameUpdates(state, personId){
         match = state.selectedMatches[personId],
         matchName = match.gedcomx.getPersonById(match.matchId).getPreferredName(),
         matchNameParts = namePartsMap(matchName),
-        copiedParts = match.copyName ? recordNameParts : {},
-        newNamePartsMap = Object.assign({}, matchNameParts, copiedParts, match.overrideName),
+        copiedParts = match.copyName ? recordNameParts : {};
+        
+  // Has anything changed?
+  if(Object.keys(copiedParts).length === 0 && Object.keys(match.overrideName).length === 0) {
+    return [];
+  }
+  
+  // Generate name parts by seeding with original match name parts so that the
+  // user could override just one part but not the others
+  const newNamePartsMap = Object.assign({}, matchNameParts, copiedParts, match.overrideName),
         newNameParts = Object.keys(newNamePartsMap).map(type => {
           return {
             type,
             value: newNamePartsMap[type]
           };
         });
+        
   return [
     GedcomX.Name({
       preferred: true,
