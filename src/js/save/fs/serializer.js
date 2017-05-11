@@ -14,6 +14,9 @@ module.exports = {
     if(GedcomX.Person.isInstance(value)){
       return serialize(value, 'GedcomX.Person');
     }
+    if(GedcomX.Fact.isInstance(value)){
+      return serialize(value, 'GedcomX.Fact');
+    }
     return value;
   },
   reviver: (key, value) => {
@@ -23,6 +26,7 @@ module.exports = {
         case 'GedcomX.Root': return GedcomX(data);
         case 'GedcomX.AtomEntry': return GedcomX.AtomEntry(data);
         case 'GedcomX.Person': return GedcomX.Person(data);
+        case 'GedcomX.Fact': return GedcomX.Fact(data);
         default: return data;
       }
     }
