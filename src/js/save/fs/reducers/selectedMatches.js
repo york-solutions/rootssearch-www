@@ -124,6 +124,17 @@ module.exports = function(state = {}, action){
         }
       });
       
+    case 'OVERRIDE_NAMEPART':
+      return update(state, {
+        [personId]: {
+          overrideName: {
+            [action.partType]: {
+              $set: action.value
+            }
+          }
+        }
+      });
+      
     case 'NORMALIZED_DATE':
       return update(state, {
         [personId]: {
