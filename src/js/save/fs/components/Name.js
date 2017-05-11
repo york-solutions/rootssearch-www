@@ -6,8 +6,11 @@ const NameCopyBox = require('./NameCopyBox');
 const Name = function({name, copyable, matched}){
   return (
     <div className="person-name">
-      { copyable && matched && <NameCopyBox name={name} /> }
-      <div className="name-detail">{name.getFullText()}</div>
+      <div className="label">Name</div>
+      <div className="name-line">
+        { copyable && matched && <NameCopyBox name={name} /> }
+        <div className="name-detail">{name.getFullText()}</div>
+      </div>
     </div>  
   );
 };

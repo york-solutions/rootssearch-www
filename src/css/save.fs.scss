@@ -13,6 +13,10 @@
     margin: $spacing 0;
   }
   
+  input[type="text"] {
+    padding: $spacingEigth $spacingQuarter;
+  }
+  
   .label {
     font-size: .8em;
     color: $textLight;
@@ -58,8 +62,25 @@
   }
   
   .person-name {
-    font-weight: bold;
-    font-size: 1.1em;
+    
+    .name-line {
+      overflow: auto;
+      font-weight: bold;
+      font-size: 1.1em;
+    }
+    
+    .name-parts-line {
+      display: flex;
+      justify-content: space-between;
+      
+      input {
+        flex: 1;
+      }
+      
+      input + input {
+        margin-left: $spacing;
+      }
+    }
   }
   
   .person {
@@ -92,7 +113,6 @@
     
     input[type="text"] {
       display: block;
-      padding: $spacingEigth $spacingQuarter;
       width: 100%;
     }
     

@@ -4,9 +4,10 @@
 
 const React = require('react');
 const connect = require('react-redux').connect;
-const EditableFact = require('./EditableFact');
 const Fact = require('./Fact');
+const EditableFact = require('./EditableFact');
 const Name = require('./Name');
+const EditableName = require('./EditableName');
 const Loader = require('./Loader');
 const Family = require('./Family');
 const saveMatchAction = require('../actions/saveMatch');
@@ -24,7 +25,10 @@ const SelectedMatch = function({ person, personId, matchId, gedcomx, loading, sa
       <div className="person">
         <div className="label">Tree Person</div>
         <div className="box">
-          <Name name={matchPerson.getNames()[0]} editable={true} />
+          { saved ? 
+            <Name name={matchPerson.getNames()[0]} editable={true} /> :
+            <EditableName name={matchPerson.getNames()[0]} editable={true} />
+          }
           {factOrder.map(recordFactId => {
             let matchFact = factMap[recordFactId];
             return (
@@ -38,8 +42,9 @@ const SelectedMatch = function({ person, personId, matchId, gedcomx, loading, sa
             );
           })}
           <hr />
-          { saved && <button className="btn btn-lg disabled" disabled>Saved</button> }
-          { !saved && <button className="btn btn-rs btn-lg" onClick={() => dispatch(saveMatchAction(personId))}>Save</button> }
+          { saved ? 
+            <button className="btn btn-lg disabled" disabled>Saved</button> :
+            <button className="btn btn-rs btn-lg" onClick={() => dispatch(saveMatchAction(personId))}>Save</button> }
         </div>
       </div>
       <Family gedcomx={gedcomx} personId={matchId} />
