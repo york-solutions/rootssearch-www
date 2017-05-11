@@ -98,7 +98,7 @@ GedcomX.Person.prototype.getDisplayName = function(calculateIfMissing){
   if(!displayName && calculateIfMissing){
     
     // Choose the preferred name or the first name
-    let name = this.getPreferredName() || this.getNames()[0];
+    let name = this.getPreferredName();
     
     // Calculate the name
     if(name){
@@ -181,6 +181,16 @@ GedcomX.Person.prototype.getFact = function(type){
  */
 GedcomX.Person.prototype.getFactById = function(id){
   return this.getFacts().find(f => f.getId() === id);
+};
+
+/**
+ * Get the person's preferred name, or the first one if a preferred name doesn't exist.
+ * 
+ * @returns {Name}
+ */
+GedcomX.Person.prototype._getPreferredName = GedcomX.Person.prototype.getPreferredName;
+GedcomX.Person.prototype.getPreferredName = function(){
+  return this._getPreferredName() || this.getNames()[0];
 };
 
 /**

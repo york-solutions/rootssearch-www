@@ -87,10 +87,8 @@ module.exports = function(state = {}, action){
     case 'COPY_NAME':
       return update(state, {
         [personId]: {
-          copiedNames: {
-            [dataId]: {
-              $set: true
-            }
+          copyName: {
+            $set: true
           }
         }
       });
@@ -98,10 +96,8 @@ module.exports = function(state = {}, action){
     case 'UNCOPY_NAME':
       return update(state, {
         [personId]: {
-          copiedNames: {
-            [dataId]: {
-              $set: undefined
-            }
+          copyName: {
+            $set: false
           }
         }
       });

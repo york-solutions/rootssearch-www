@@ -17,7 +17,7 @@ const RecordPerson = function({ person, gedcomx, matched = false, saved = false,
       <div className="person record">
         <div className="label">Record Person</div>
         <div className="box">
-          <Name name={person.getNames()[0]} copyable={copyable} />
+          <Name name={person.getPreferredName()} copyable={copyable} />
           {factOrder.map(id => {
             return (
               <div key={id}>

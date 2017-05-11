@@ -75,16 +75,19 @@ const store = Redux.createStore(
         
         // Map of record person fact IDs to match person facts
         factMap: {},
+
+        copyName: false,
         
-        // copied maps are keyed by record conclusion ID
+        // copied maps are keyed by record fact ID; values are boolean
         copiedDates: {},
         copiedPlaces: {},
-        copiedNames: {},
         
-        // override maps are keyed by match conclusion ID
-        overrideNames: {},
-        overrideDates: {},
-        overridePlaces: {},
+        // values are a map of {NamePartType => value}
+        overrideName: {},
+        
+        // override maps are keyed by match conclusion ID; are the new input value
+        overrideDates: {}, // values are the new input value
+        overridePlaces: {}, // values are the new input value
         
         // normalized maps are keyed by match conclusion ID
         normalizedDates: {},

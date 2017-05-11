@@ -26,8 +26,8 @@ const SelectedMatch = function({ person, personId, matchId, gedcomx, loading, sa
         <div className="label">Tree Person</div>
         <div className="box">
           { saved ? 
-            <Name name={matchPerson.getNames()[0]} editable={true} /> :
-            <EditableName name={matchPerson.getNames()[0]} editable={true} />
+            <Name name={matchPerson.getPreferredName()} editable={true} /> :
+            <EditableName name={matchPerson.getPreferredName()} editable={true} />
           }
           {factOrder.map(recordFactId => {
             let matchFact = factMap[recordFactId];
