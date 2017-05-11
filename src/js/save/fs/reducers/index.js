@@ -1,5 +1,6 @@
 const combineReducers = require('redux').combineReducers;
 const auth = require('./auth'),
+      busy = require('./busy'),
       possibleMatches = require('./possibleMatches'),
       selectedMatches = require('./selectedMatches'),
       currentPerson = require('./currentPerson'),
@@ -7,6 +8,7 @@ const auth = require('./auth'),
 
 module.exports = combineReducers({
   auth,
+  busy,
   possibleMatches,
   selectedMatches,
   currentPerson,

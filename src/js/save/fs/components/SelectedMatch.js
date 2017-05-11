@@ -7,7 +7,6 @@ const connect = require('react-redux').connect;
 const EditableFact = require('./EditableFact');
 const Name = require('./Name');
 const Loader = require('./Loader');
-const GedcomX = require('gedcomx-js');
 const Family = require('./Family');
 const saveMatchAction = require('../actions/saveMatch');
 

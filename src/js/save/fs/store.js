@@ -28,6 +28,8 @@ const store = Redux.createStore(
     // Record data
     gedcomx: data,
     
+    busy: false,
+    
     // List of person IDs
     personOrder: personIds,
     
