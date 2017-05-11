@@ -7,7 +7,7 @@ const Name = function({name, copyable, matched}){
   return (
     <div className="person-name">
       { copyable && matched && <NameCopyBox name={name} /> }
-      {name.getFullText()}
+      <div className="name-detail">{name.getFullText()}</div>
     </div>  
   );
 };

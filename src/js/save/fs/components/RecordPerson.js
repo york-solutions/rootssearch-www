@@ -8,16 +8,23 @@ const Fact = require('./Fact');
 const Name = require('./Name');
 const Family = require('./Family');
 const matchedSelector = require('../selectors/matched');
+const savedSelector = require('../selectors/saved');
 
-const RecordPerson = function({ person, gedcomx, matched, factOrder, facts }){
+const RecordPerson = function({ person, gedcomx, matched = false, saved = false, factOrder, facts }){
+  const copyable = matched && !saved;
   return (
     <div>
-      <div className={"person record" + (matched ? ' matched' : '')}>
+      <div className="person record">
         <div className="label">Record Person</div>
         <div className="box">
-          <Name name={person.getNames()[0]} copyable={true} />
+          <Name name={person.getNames()[0]} copyable={copyable} />
           {factOrder.map(id => {
-            return <Fact key={id} fact={facts[id]} copyable={true} />;
+            return (
+              <div key={id}>
+                <hr />
+                <Fact fact={facts[id]} copyable={copyable} />
+              </div>
+            );
           })}
         </div>
       </div>
@@ -32,6 +39,7 @@ const mapStateToProps = state => {
     gedcomx,
     person: persons[currentPerson],
     matched: matchedSelector(state),
+    saved: savedSelector(state),
     facts: facts[currentPerson],
     factOrder: factOrder[currentPerson]
   };
