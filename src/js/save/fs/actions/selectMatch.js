@@ -19,7 +19,15 @@ module.exports = function(personId, matchId){
     // Fetch the person
     FS.get(`/platform/tree/persons/${matchId}?relatives=true`, function(error, response){
       
-      // TODO: error handling
+      // When we fail to load the person, cancel the match and show an error
+      if(error || response.statusCode !== 200){
+        dispatch({
+          type: 'LOAD_MATCH_ERROR',
+          personId,
+          message: `Unable to load person ${matchId}.`
+        });
+        return;
+      }
       
       // Calculate the mapping of record person fact IDs to match person facts.
       // For facts which don't have a match, we must generate IDs. This allows

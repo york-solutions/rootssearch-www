@@ -8,29 +8,33 @@ const Loader = require('./Loader');
 const Match = require('./Match');
 const selectMatchAction = require('../actions/selectMatch');
  
-const MatchesList = function({ currentPerson, status, dispatch, entryIds = [], entries = {} }){
+const MatchesList = function({ currentPerson, status, error, dispatch, manualId, entryIds = [], entries = {} }){
   
   if(status === 'LOADING'){
     return <Loader message="Loading matches..." />;
   }
-  
-  let pidInput = null;
-  
+  console.log('render MatchesList');
   return (
     <div className="matches-list">
       <div className="label">Possible Matches</div>
       {entryIds.length === 0 ? 
         (
-          <p>No matches were found.</p>
+          error ? <p className="text-danger">{error}</p> : <p>No matches were found.</p>
         ) : entryIds.map(id => {
           return <Match match={entries[id]} key={id} />;
         })
       }
       <p>Enter a person ID 
         <span className="input-group">
-          <input type="text" className="manual-pid form-control" ref={(input) => { pidInput = input; }} />
+          <input type="text" className="manual-pid form-control" value={manualId} onChange={e => {
+            dispatch({
+              type: 'MANUAL_ID',
+              value: e.target.value,
+              personId: currentPerson
+            });
+          }} />
           <button className="btn btn-rs" onClick={() => {
-            dispatch(selectMatchAction(currentPerson, pidInput.value));
+            dispatch(selectMatchAction(currentPerson, manualId));
           }}>Select</button>
         </span>
       </p>
@@ -41,11 +45,13 @@ const MatchesList = function({ currentPerson, status, dispatch, entryIds = [], e
 
 const mapStateToProps = state => {
   const matches = state.possibleMatches[state.currentPerson] || {},
-        {status, entries, entryIds} = matches;
+        {status, entries, entryIds, manualId, error} = matches;
   return {
     status,
     entries,
     entryIds,
+    manualId,
+    error,
     currentPerson: state.currentPerson
   };
 };

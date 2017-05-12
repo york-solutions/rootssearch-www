@@ -45,7 +45,39 @@ module.exports = function(state = {}, action){
             }
           }
         });
+      } else {
+        return state;
       }
+      
+    case 'MANUAL_ID':
+      return update(state, {
+        [personId]: {
+          manualId: {
+            $set: action.value
+          }
+        }
+      });
+      
+    case 'LOAD_MATCH_ERROR':
+      return update(state, {
+        [personId]: {
+          error: {
+            $set: action.message
+          },
+          status: {
+            $set: 'NOT_REQUESTED'
+          }
+        }
+      });
+      
+    case 'LOADED_MATCH_PERSON':
+      return update(state, {
+        [personId]: {
+          error: {
+            $set: ''
+          }
+        }
+      });
     
     default:
       return state;

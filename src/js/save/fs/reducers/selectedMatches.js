@@ -25,7 +25,8 @@ module.exports = function(state = {}, action){
           }
         }
       });
-      
+    
+    case 'LOAD_MATCH_ERROR':  
     case 'CANCEL_MATCH':
       return update(state, {
         [personId]: {

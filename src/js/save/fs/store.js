@@ -61,7 +61,9 @@ const store = Redux.createStore(
       accumulated[person.getId()] = {
         status: 'NOT_REQUESTED',
         entries: {},
-        entryIds: []
+        entryIds: [],
+        manualId: '',
+        error: ''
       };
       return accumulated;
     }, {}),
