@@ -14,9 +14,11 @@ const PersonMatches = function({ status, entryIds = [], entries = {} }){
   }
   
   return (
-    <div>{entryIds.map(id => {
-      return <Match match={entries[id]} key={id} />;
-    })}
+    <div>
+      <div className="label">Possible Matches</div>
+      {entryIds.map(id => {
+        return <Match match={entries[id]} key={id} />;
+      })}
     </div>
   );
 };
