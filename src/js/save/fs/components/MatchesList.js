@@ -38,7 +38,11 @@ const MatchesList = function({ currentPerson, status, error, dispatch, manualId,
           }}>Select</button>
         </span>
       </p>
-      <p>Or &nbsp;<button className="btn" disabled>Create A Person</button></p>
+      <p>Or &nbsp;<button className="btn btn-rs" onClick={() => {
+        dispatch({
+          type: 'CREATE_PERSON'
+        });
+      }}>Create A Person</button></p>
     </div>
   );
 };

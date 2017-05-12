@@ -4,6 +4,7 @@ module.exports = function(state = {}, action){
     case 'FS_AUTH_BEGIN':
       return Object.assign({}, state, {
         inProgress: true,
+        // TODO: can we avoid storying an event handler in the store?
         onClick: action.onClick
       });
     

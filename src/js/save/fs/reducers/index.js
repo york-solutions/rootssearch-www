@@ -4,11 +4,13 @@ const auth = require('./auth'),
       possibleMatches = require('./possibleMatches'),
       selectedMatches = require('./selectedMatches'),
       currentPerson = require('./currentPerson'),
+      modal = require('./modal'),
       echo = state => state || {};
 
 module.exports = combineReducers({
   auth,
   busy,
+  modal,
   possibleMatches,
   selectedMatches,
   currentPerson,

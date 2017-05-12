@@ -78,6 +78,15 @@ module.exports = function(state = {}, action){
           }
         }
       });
+      
+    case 'CREATE_PERSON':
+      return update(state, {
+        [personId]: {
+          status: {
+            $set: 'CREATE_PERSON'
+          }
+        }
+      });
     
     default:
       return state;

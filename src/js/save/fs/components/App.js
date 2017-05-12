@@ -2,7 +2,7 @@ const React = require('react');
 const connect = require('react-redux').connect;
 const StatusBar = require('./StatusBar');
 const PersonContainer = require('./PersonContainer');
-const FSAuthModal = require('./FSAuthModal');
+const ModalRouter = require('./modals/ModalRouter');
 const Loader = require('./Loader');
 
 const App = function({ auth, busy }) {
@@ -11,7 +11,7 @@ const App = function({ auth, busy }) {
     <div>
       <StatusBar />
       <PersonContainer />
-      { auth.inProgress ? <FSAuthModal /> : null }
+      <ModalRouter />
       { busy && (
         <div className="modal-fade">
           <Loader message="Saving..." /> 

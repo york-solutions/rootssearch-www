@@ -29,6 +29,8 @@ const store = Redux.createStore(
     // Record data
     gedcomx: data,
     
+    modal: null,
+    
     busy: false,
     
     // List of person IDs
