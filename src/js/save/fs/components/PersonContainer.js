@@ -1,7 +1,7 @@
 const React = require('react');
 const connect = require('react-redux').connect;
 const RecordPerson = require('./RecordPerson');
-const PersonMatches = require('./PersonMatches');
+const MatchesList = require('./MatchesList');
 const SelectedMatch = require('./SelectedMatch');
 const matchedSelector = require('../selectors/matched');
 
@@ -12,7 +12,7 @@ const PersonContainer = function({ matched }){
         <RecordPerson />
       </div>
       <div className="col-md-6">
-        { matched ? <SelectedMatch /> : <PersonMatches /> }
+        { matched ? <SelectedMatch /> : <MatchesList /> }
       </div>
     </div>
   );

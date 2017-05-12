@@ -5,7 +5,6 @@
 
 const FS = require('../utils/fs');
 const GedcomX = require('../utils/gedcomx');
-const slimFacts = require('../selectors/slimFacts');
 
 module.exports = function(personId, matchId){
   return function(dispatch, getState){

@@ -189,6 +189,24 @@
     
   }
   
+  .matches-list {
+    
+    & > p {
+      margin: $spacing 0 0 0;
+      text-align: center;
+    }
+    
+    .input-group {
+      display: inline-table;
+      margin-left: $spacingHalf;
+    }
+    
+  }
+  
+  .manual-pid {
+    width: 100px;
+  }
+  
   .react-autosuggest__container {
     height: 33px;
     overflow-y: visible;
