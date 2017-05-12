@@ -25,6 +25,22 @@ module.exports = function(state = {}, action){
         }
       });
       
+    case 'CANCEL_MATCH':
+      // TODO: reset override, normalized fields, and other fields
+      return update(state, {
+        [personId]: {
+          matchId: {
+            $set: undefined
+          },
+          loading: {
+            $set: false
+          },
+          gedcomx: {
+            $set: null
+          }
+        }
+      });
+      
     case 'LOADED_MATCH_PERSON':
       return update(state, {
         [personId]: {

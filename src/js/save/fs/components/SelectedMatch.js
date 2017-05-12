@@ -44,7 +44,20 @@ const SelectedMatch = function({ person, personId, matchId, gedcomx, loading, sa
           <hr />
           { saved ? 
             <button className="btn btn-lg disabled" disabled>Saved</button> :
-            <button className="btn btn-rs btn-lg" onClick={() => dispatch(saveMatchAction(personId))}>Save</button> }
+            (
+              <div className="match-toolbar">
+                <button className="btn btn-rs btn-lg" onClick={() => dispatch(saveMatchAction(personId))}>Save</button>
+                <a href onClick={(e) => {
+                  dispatch({
+                    type: 'CANCEL_MATCH',
+                    personId: personId
+                  });
+                  e.preventDefault(); 
+                  return false; 
+                }}>Cancel</a>
+              </div>
+            )
+          }
         </div>
       </div>
       <Family gedcomx={gedcomx} personId={matchId} />
