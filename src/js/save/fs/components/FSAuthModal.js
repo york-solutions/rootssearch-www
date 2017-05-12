@@ -6,17 +6,14 @@
 
 const React = require('react');
 const connect = require('react-redux').connect;
+const ModalWrapper = require('./ModalWrapper');
 
 const FSAuthModal = function(props){
   return (
-    <div className="modal-fade fs-auth">
-      <div className="modal-container">
-        <div className="modal-body">
-          <p>Please sign in to FamilySearch.</p>
-          <button className="btn btn-rs btn-lg" onClick={props.onClick}>Sign In</button>
-        </div>
-      </div>
-    </div>
+    <ModalWrapper>
+      <p>Please sign in to FamilySearch.</p>
+      <button className="btn btn-rs btn-lg" onClick={props.onClick}>Sign In</button>
+    </ModalWrapper>
   );
 };
 
