@@ -7,7 +7,7 @@ module.exports = function(personId){
   return function(dispatch, getState){
 
     const state = getState(),
-          { persons, possibleMatches, personOrder } = state;
+          { possibleMatches, personOrder } = state;
           
     if(personId === undefined){
       personId = personOrder[0];
@@ -20,7 +20,7 @@ module.exports = function(personId){
     
     // Only request matches if they haven't already been requested
     if(possibleMatches[personId].status === 'NOT_REQUESTED'){
-      dispatch(getMatches(persons[personId]));
+      dispatch(getMatches(personId));
     }
   };
 };

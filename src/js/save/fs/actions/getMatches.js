@@ -4,17 +4,15 @@
 
 const FS = require('../utils/fs');
 
-module.exports = function(person){
+module.exports = function(personId){
   return function (dispatch, getState){
-  
-    const personId = person.getId();
   
     dispatch({
       type: 'LOADING_MATCHES',
-      personId: personId
+      personId
     });
   
-    const query = createMatchesQuery(person);
+    const query = createMatchesQuery(getState().gedcomx, personId);
     FS.get(`/platform/tree/matches?${query}`, {
       headers: {
         Accept: 'application/x-gedcomx-atom+json'
@@ -26,15 +24,16 @@ module.exports = function(person){
       dispatch({
         type: 'MATCHES_LOADED',
         matches: response && response.gedcomx ? response.gedcomx.getEntries() : [],
-        personId: person.getId()
+        personId
       });
     });
   };
 };
 
-function createMatchesQuery(person){
+function createMatchesQuery(gedcomx, personId){
   
-  const birth = person.getFact('http://gedcomx.org/Birth'),
+  const person = gedcomx.getPersonById(personId),
+        birth = person.getFact('http://gedcomx.org/Birth'),
         death = person.getFact('http://gedcomx.org/Death');
   
   const params = {
@@ -52,7 +51,23 @@ function createMatchesQuery(person){
     params.deathPlace = death.getPlaceDisplayString();
   }
   
-  // TODO: process relationships
+  // Spouse
+  let spouse = gedcomx.getPersonsSpouses(personId)[0];
+  if(spouse){
+    params.spouseName = spouse.getDisplayName(true);
+  }
+  
+  // Father
+  let father = gedcomx.getPersonsParents(personId).filter(p => p.isMale())[0];
+  if(father){
+    params.fatherName = father.getDisplayName(true);
+  }
+  
+  // Mother
+  let mother = gedcomx.getPersonsParents(personId).filter(p => p.isFemale())[0];
+  if(mother){
+    params.fatherName = mother.getDisplayName(true);
+  }
   
   // Turn the params object into a valid match query string
   // https://familysearch.org/developers/docs/api/tree/Person_Matches_Query_resource

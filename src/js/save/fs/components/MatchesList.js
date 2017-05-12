@@ -13,7 +13,7 @@ const MatchesList = function({ currentPerson, status, error, dispatch, manualId,
   if(status === 'LOADING'){
     return <Loader message="Loading matches..." />;
   }
-  console.log('render MatchesList');
+  
   return (
     <div className="matches-list">
       <div className="label">Possible Matches</div>
