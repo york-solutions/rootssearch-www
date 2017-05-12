@@ -5,6 +5,6 @@ module.exports = function({person, onClick, selected = false, saved = false}){
         lifespan = person.getLifespan(true);
   return <div 
     className={'circle' + (selected ? ' selected' : '') + (saved ? ' saved' : '')} 
-    title={`${name} — ${lifespan}`} 
+    title={name + (lifespan ? ` — ${lifespan}` : '')} 
     onClick={onClick} />;
 };
