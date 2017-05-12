@@ -8,12 +8,16 @@ const React = require('react');
 const connect = require('react-redux').connect;
 
 const FSAuthModal = require('./FSAuthModal');
+const CreatePersonModal = require('./CreatePersonModal');
 
 const ModalRouter = function(props){
   switch(props.modal){
     
     case 'FS_AUTH':
       return <FSAuthModal />;
+      
+    case 'CREATE_PERSON':
+      return <CreatePersonModal />;
     
     default:
       return null;
