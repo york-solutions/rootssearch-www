@@ -20,19 +20,14 @@ module.exports = function(person){
         Accept: 'application/x-gedcomx-atom+json'
       }
     }, function(error, response){
-      // TODO: handle error
       
-      // Check to see that we're still in the LOADING state. Might not be
-      // if using redux-devtools-extension with a persisted state.
-      if(getState().possibleMatches[personId].status === 'LOADING'){
-        dispatch({
-          type: 'MATCHES_LOADED',
-          matches: response.gedcomx ? response.gedcomx.getEntries() : [],
-          personId: person.getId()
-        });
-      } else {
-        console.log('Not in loading state; ignoring matches response');
-      }
+      // Here we don't examine the errors directly. If we don't have a response
+      // or data then we treat as though the query returned no results.
+      dispatch({
+        type: 'MATCHES_LOADED',
+        matches: response && response.gedcomx ? response.gedcomx.getEntries() : [],
+        personId: person.getId()
+      });
     });
   };
 };
@@ -44,12 +39,18 @@ function createMatchesQuery(person){
   
   const params = {
     name: person.getDisplayName(true),
-    gender: person.getGender().getType() === 'http://gedcomx.org/Female' ? 'female' : 'male',
-    birthDate: birth.getDateDisplayString(),
-    birthPlace: birth.getPlaceDisplayString(),
-    deathDate: death.getDateDisplayString(),
-    deathPlace: death.getPlaceDisplayString()
+    gender: person.getGender().getType() === 'http://gedcomx.org/Female' ? 'female' : 'male'
   };
+  
+  if(birth){
+    params.birthDate = birth.getDateDisplayString();
+    params.birthPlace = birth.getPlaceDisplayString();
+  }
+  
+  if(death){
+    params.deathDate = death.getDateDisplayString();
+    params.deathPlace = death.getPlaceDisplayString();
+  }
   
   // TODO: process relationships
   

@@ -21,22 +21,31 @@ module.exports = function(state = {}, action){
       });
       
     case 'MATCHES_LOADED':
-      return update(state, {
-        [personId]: {
-          status: {
-            $set: 'LOADED'
-          },
-          entries: {
-            $set: action.matches.reduce((accumulator, match) => {
-              accumulator[match.getId()] = match;
-              return accumulator;
-            }, {})
-          },
-          entryIds: {
-            $set: action.matches.map(m => m.getId())
+      
+      // Only save entries if the status is LOADING.
+      // When using redux-devtools-extension with a persisted state you can have
+      // the situation where an initial match request is sent before devtools
+      // loads the persisted state, then when the request returns matches may
+      // have already been loaded form the persisted state. In that case we
+      // want to ignore the matches response.
+      if(state[personId].status === 'LOADING'){
+        return update(state, {
+          [personId]: {
+            status: {
+              $set: 'LOADED'
+            },
+            entries: {
+              $set: action.matches.reduce((accumulator, match) => {
+                accumulator[match.getId()] = match;
+                return accumulator;
+              }, {})
+            },
+            entryIds: {
+              $set: action.matches.map(m => m.getId())
+            }
           }
-        }
-      });
+        });
+      }
     
     default:
       return state;
