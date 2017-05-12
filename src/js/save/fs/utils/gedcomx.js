@@ -6,6 +6,8 @@
  * Expose helper utitilies.
  */
 
+const uuid = require('./uuid');
+
 const GedcomX = require('gedcomx-js');
 GedcomX.enableRsExtensions();
 GedcomX.enableRecordsExtensions();
@@ -55,30 +57,34 @@ GedcomX.vitals = [
   
 /**
  * Massage the GEDCOM X data so that
- * - all persons have IDs (the only case where persons could have no ID is when
+ * 
+ * - all persons have an ID (the only case where persons could have no ID is when
  *   they aren't part of a relationship; don't need an ID if nothing references you)
+ * - all facts have an ID
+ * - all names have an ID
  */
 function clean(gedx){
   
-  // Make sure all persons have IDs. Get a list of existing IDs to make sure
-  // any of our generated IDs don't conflict with existing IDs.
-  let ids = gedx.getPersons().filter(p => p.getId() !== undefined).map(p => p.getId()),
-      id = 0;
-  gedx.getPersons().forEach(p => {
-    
-    // If a person doesn't have an ID...
-    if(!p.getId()){
-      
-      // Loop until we find an ID that's not being used
-      while(ids.indexOf(++id) !== -1){ }
-      
-      // Set and increment the ID
-      p.setId(id);
+  const ensureID = (obj) => {
+    if(!obj.getId()){
+      obj.setId(uuid());
     }
-  });
+  };
   
-  // TODO: make sure all facts and names have IDs too
+  // Make sure all persons have an ID
+  gedx.getPersons().forEach(person => {
+    
+    ensureID(person);
+    
+    // Make sure all their facts have IDs
+    person.getFacts().forEach(ensureID);
+    
+    // Make sure all their names have IDs
+    person.getNames().forEach(ensureID);
+  });
 }
+
+// TODO: split GedcomX extensions into separate files by entity type
 
 /**
  * Get a person's display name. Optionally calculate a display name if one
