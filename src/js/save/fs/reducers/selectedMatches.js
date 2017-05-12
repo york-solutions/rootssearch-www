@@ -1,4 +1,5 @@
 const update = require('update-immutable').default;
+const initialSelectedMatch = require('../selectors/initialSelectedMatch');
 
 module.exports = function(state = {}, action){
   
@@ -26,18 +27,9 @@ module.exports = function(state = {}, action){
       });
       
     case 'CANCEL_MATCH':
-      // TODO: reset override, normalized fields, and other fields
       return update(state, {
         [personId]: {
-          matchId: {
-            $set: undefined
-          },
-          loading: {
-            $set: false
-          },
-          gedcomx: {
-            $set: null
-          }
+          $set: initialSelectedMatch()
         }
       });
       
