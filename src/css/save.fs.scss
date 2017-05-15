@@ -149,10 +149,18 @@
   }
   
   .modal-container {
-    border: 1px solid $primaryColorDark;
-    padding: $spacing;
-    text-align: center;
+    border: 1px solid $primaryColor;
     background-color: #fff;
+  }
+  
+  .modal-title {
+    background-color: $primaryColor;
+    color: #fff;
+    padding: $spacingQuarter $spacing;
+  }
+  
+  .modal-body {
+    padding: $spacing;
   }
   
   .loader {
