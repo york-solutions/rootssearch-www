@@ -9,6 +9,7 @@ module.exports = function(state = {}, action){
     
     case 'FS_AUTH_END':
     case 'CANCEL_CREATE_PERSON':
+    case 'PERSON_CREATED':
       return null;
     
     default:

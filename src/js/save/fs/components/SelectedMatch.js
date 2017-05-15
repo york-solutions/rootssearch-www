@@ -23,7 +23,7 @@ class SelectedMatch extends React.Component {
           <div className="label">Tree Person</div>
           <div className="box">
             { this.props.saved ? 
-              <Name name={this.props.matchPerson.getPreferredName()} editable={true} /> :
+              <Name name={this.props.matchPerson.getPreferredName()} /> :
               <EditableName nameParts={this.props.nameParts} onChange={this.nameChangeHandler.bind(this)} />
             }
             {this.props.factOrder.map(recordFactId => {
@@ -79,7 +79,6 @@ const mapStateToProps = state => {
   const {selectedMatches, currentPerson, factOrder} = state,
         match = selectedMatches[currentPerson],
         {matchId, gedcomx, factMap, copyName} = match;
-  console.log(match, gedcomx);
   return {
     matchId,
     matchPerson: gedcomx.getPersonById(matchId),

@@ -79,7 +79,7 @@ class CreatePersonModal extends React.Component {
   createPerson(){
     const nameParts = this.state.nameParts;
     this.props.dispatch(
-      createPersonAction({
+      createPersonAction(this.props.personId, {
         gender: {
           type: this.state.gender
         },
