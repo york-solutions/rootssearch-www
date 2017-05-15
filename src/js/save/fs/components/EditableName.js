@@ -1,5 +1,4 @@
 const React = require('react');
-const connect = require('react-redux').connect;
 
 const EditableName = function({nameParts, onChange}){
   // TODO: edit Prefix and Suffix parts
@@ -18,4 +17,4 @@ const EditableName = function({nameParts, onChange}){
   );
 };
 
-module.exports = connect()(EditableName);
+module.exports = EditableName;

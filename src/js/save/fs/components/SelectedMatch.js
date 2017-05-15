@@ -24,7 +24,7 @@ class SelectedMatch extends React.Component {
           <div className="box">
             { this.props.saved ? 
               <Name name={this.props.matchPerson.getPreferredName()} editable={true} /> :
-              <EditableName nameParts={this.props.nameParts} editable={true} onChange={this.nameChangeHandler.bind(this)} />
+              <EditableName nameParts={this.props.nameParts} onChange={this.nameChangeHandler.bind(this)} />
             }
             {this.props.factOrder.map(recordFactId => {
               let matchFact = this.props.factMap[recordFactId];

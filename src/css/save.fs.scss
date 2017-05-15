@@ -17,6 +17,10 @@
     padding: $spacingEigth $spacingQuarter;
   }
   
+  label {
+    font-weight: normal;
+  }
+  
   .label {
     font-size: .8em;
     color: $textLight;
@@ -134,6 +138,18 @@
   
   .fact-placeholder {
     height: 99px;
+  }
+  
+  .person-gender {
+    
+    label:not(:first-child) {
+      margin-left: $spacing;
+    }
+    
+    input {
+      margin-right: $spacingQuarter;
+    }
+    
   }
   
   .modal-fade {

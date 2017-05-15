@@ -14,30 +14,61 @@
 
 const React = require('react');
 const connect = require('react-redux').connect;
+const update = require('update-immutable').default;
 const ModalWrapper = require('./ModalWrapper');
+const EditableName = require('../EditableName');
+const EditableGender = require('../EditableGender');
+const namePartsMap = require('../../selectors/namePartsMap');
 
 class CreatePersonModal extends React.Component {
   
   constructor(props){
     super(props);
+    
+    this.state = {
+      nameParts: props.nameParts,
+      gender: props.gender
+    };
   }
   
   render(){
     return (
       <ModalWrapper title="Create A New Person">
-        <div>
-          <div className="label">Name</div>
-          
-        </div>
-        <p>Create A Person</p>
+        <EditableName nameParts={this.state.nameParts} onChange={this.nameChangeHandler.bind(this)} />
+        <hr />
+        <EditableGender gender={this.state.gender} onChange={this.genderChangeHandler.bind(this)} />
       </ModalWrapper>
     );
+  }
+  
+  nameChangeHandler(type){
+    return (event) => {
+      this.setState(update(this.state, {
+        nameParts: {
+          [type]: {
+            $set: event.target.value
+          }
+        }
+      }));
+    };
+  }
+  
+  genderChangeHandler(gender){
+    this.setState(update(this.state, {
+      gender: {
+        $set: gender
+      }
+    }));
   }
 
 }
 
 const mapStateToProps = state => {
-  return {};
+  const person = state.persons[state.currentPerson];
+  return {
+    nameParts: namePartsMap(person.getPreferredName()),
+    gender: person.getGender().getType()
+  };
 };
 
 module.exports = connect(mapStateToProps)(CreatePersonModal);
