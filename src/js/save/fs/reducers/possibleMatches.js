@@ -87,6 +87,15 @@ module.exports = function(state = {}, action){
           }
         }
       });
+      
+    case 'CANCEL_CREATE_PERSON':
+      return update(state, {
+        [personId]: {
+          status: {
+            $set: 'LOADED'
+          }
+        }
+      });
     
     default:
       return state;

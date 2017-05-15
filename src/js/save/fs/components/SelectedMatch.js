@@ -42,9 +42,10 @@ class SelectedMatch extends React.Component {
             { this.props.saved ? 
               <button className="btn btn-lg disabled" disabled>Saved</button> :
               (
-                <div className="match-toolbar">
+                <div className="toolbar">
                   <button className="btn btn-rs btn-lg" onClick={() => this.props.dispatch(saveMatchAction(this.props.personId))}>Save</button>
                   <a href onClick={(e) => {
+                    // TODO: move this to a class method
                     this.props.dispatch({
                       type: 'CANCEL_MATCH',
                       personId: this.props.personId

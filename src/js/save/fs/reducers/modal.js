@@ -3,12 +3,13 @@ module.exports = function(state = {}, action){
     
     case 'FS_AUTH_BEGIN':
       return 'FS_AUTH';
-    
-    case 'FS_AUTH_END':
-      return null;
       
     case 'CREATE_PERSON':
       return 'CREATE_PERSON';
+    
+    case 'FS_AUTH_END':
+    case 'CANCEL_CREATE_PERSON':
+      return null;
     
     default:
       return state;  

@@ -19,6 +19,7 @@ const ModalWrapper = require('./ModalWrapper');
 const EditableName = require('../EditableName');
 const EditableGender = require('../EditableGender');
 const namePartsMap = require('../../selectors/namePartsMap');
+const createPersonAction = require('../../actions/createPerson');
 
 class CreatePersonModal extends React.Component {
   
@@ -57,7 +58,44 @@ class CreatePersonModal extends React.Component {
             Deceased
           </label>
         </div>
+        <hr />
+        <div className="toolbar">
+          <button className="btn btn-rs btn-lg" onClick={this.createPerson.bind(this)}>Save</button>
+          <a href onClick={this.cancel.bind(this)}>Cancel</a>
+        </div>
       </ModalWrapper>
+    );
+  }
+  
+  cancel(e) {
+    this.props.dispatch({
+      type: 'CANCEL_CREATE_PERSON',
+      personId: this.props.personId
+    });
+    e.preventDefault(); 
+    return false; 
+  }
+  
+  createPerson(){
+    const nameParts = this.state.nameParts;
+    this.props.dispatch(
+      createPersonAction({
+        gender: {
+          type: this.state.gender
+        },
+        living: this.state.living,
+        names: [{
+          preferred: true,
+          nameForms: [{
+            parts: Object.keys(nameParts).map(type => {
+              return {
+                type,
+                value: nameParts[type]
+              };
+            })
+          }]
+        }]
+      })
     );
   }
   
@@ -96,7 +134,8 @@ const mapStateToProps = state => {
   return {
     nameParts: namePartsMap(person.getPreferredName()),
     gender: person.getGender().getType(),
-    living: person.getFact('http://gedcomx.org/Death') ? true : null
+    living: person.getFact('http://gedcomx.org/Death') ? true : null,
+    personId: state.currentPerson
   };
 };
 

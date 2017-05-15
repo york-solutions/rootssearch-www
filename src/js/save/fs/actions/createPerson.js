@@ -1,14 +1,10 @@
 /**
- * Create a new person in FS that represents a record person.
- * We don't set any facts; only name, gender, and living or deceased.
- * We will walk the user through the match/update flow as normal after the
- * person is created.
+ * Create a new person in FS.
  */
  
-module.exports = function(personId){
-  return function(dispatch, getState){
-    
-    // Calculate payload of the request
+module.exports = function(person){
+  console.log(person);
+  return function(dispatch){
     
     // Show loading status 
     
