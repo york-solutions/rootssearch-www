@@ -140,7 +140,8 @@
     height: 99px;
   }
   
-  .person-gender {
+  .person-gender,
+  .person-living {
     
     label:not(:first-child) {
       margin-left: $spacing;

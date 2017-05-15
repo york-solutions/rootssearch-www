@@ -27,7 +27,8 @@ class CreatePersonModal extends React.Component {
     
     this.state = {
       nameParts: props.nameParts,
-      gender: props.gender
+      gender: props.gender,
+      living: props.living
     };
   }
   
@@ -37,6 +38,25 @@ class CreatePersonModal extends React.Component {
         <EditableName nameParts={this.state.nameParts} onChange={this.nameChangeHandler.bind(this)} />
         <hr />
         <EditableGender gender={this.state.gender} onChange={this.genderChangeHandler.bind(this)} />
+        <hr />
+        <div className="person-living">
+          <label>
+            <input type="radio"
+              name="living"
+              value="living"
+              checked={this.state.living === true}
+              onChange={this.livingChangeHandler.bind(this)} />
+            Living
+          </label>
+          <label>
+            <input type="radio"
+              name="living"
+              value="deceased"
+              checked={this.state.living === false}
+              onChange={this.livingChangeHandler.bind(this)} />
+            Deceased
+          </label>
+        </div>
       </ModalWrapper>
     );
   }
@@ -60,6 +80,14 @@ class CreatePersonModal extends React.Component {
       }
     }));
   }
+  
+  livingChangeHandler(event){
+    this.setState(update(this.state, {
+      living: {
+        $set: event.target.value === 'living'
+      }
+    }));
+  }
 
 }
 
@@ -67,7 +95,8 @@ const mapStateToProps = state => {
   const person = state.persons[state.currentPerson];
   return {
     nameParts: namePartsMap(person.getPreferredName()),
-    gender: person.getGender().getType()
+    gender: person.getGender().getType(),
+    living: person.getFact('http://gedcomx.org/Death') ? true : null
   };
 };
 
