@@ -10,7 +10,7 @@ const Family = require('./Family');
 const matchedSelector = require('../selectors/matched');
 const savedSelector = require('../selectors/saved');
 
-const RecordPerson = function({ person, gedcomx, matched = false, saved = false, factOrder, facts }){
+const RecordPerson = function({ person, record, matched = false, saved = false, factOrder, facts }){
   const copyable = matched && !saved;
   return (
     <div>
@@ -28,15 +28,15 @@ const RecordPerson = function({ person, gedcomx, matched = false, saved = false,
           })}
         </div>
       </div>
-      <Family gedcomx={gedcomx} personId={person.getId()} />
+      <Family gedcomx={record} personId={person.getId()} />
     </div>
   );
 };
 
 const mapStateToProps = state => {
-  const { persons, gedcomx, currentPerson, facts, factOrder } = state;
+  const { persons, record, currentPerson, facts, factOrder } = state;
   return {
-    gedcomx,
+    record,
     person: persons[currentPerson],
     matched: matchedSelector(state),
     saved: savedSelector(state),

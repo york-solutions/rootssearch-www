@@ -22,7 +22,7 @@ const StatusBar = function({persons, currentPerson, dispatch, saved}){
 
 const mapStateToProps = state => {
   return {
-    persons: state.gedcomx.persons,
+    persons: state.record.getPersons(),
     currentPerson: state.currentPerson,
     saved: state.personOrder.reduce((accumulator, personId) => {
       accumulator[personId] = state.selectedMatches[personId].saved;

@@ -14,7 +14,7 @@ module.exports = combineReducers({
   possibleMatches,
   selectedMatches,
   currentPerson,
-  gedcomx: echo,
+  record: echo,
   personOrder: echo,
   persons: echo,
   facts: echo,

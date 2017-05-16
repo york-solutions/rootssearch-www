@@ -12,7 +12,8 @@ module.exports = function(personId){
       personId
     });
   
-    const query = createMatchesQuery(getState().gedcomx, personId);
+    const query = createMatchesQuery(getState().record, personId);
+    
     FS.get(`/platform/tree/matches?${query}`, {
       headers: {
         Accept: 'application/x-gedcomx-atom+json'

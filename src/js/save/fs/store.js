@@ -26,8 +26,7 @@ const personIds = data.persons.map(p => p.getId());
 const store = Redux.createStore(
   reducer, 
   {
-    // Record data
-    gedcomx: data,
+    record: data,
     
     modal: null,
     
