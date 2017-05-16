@@ -11,8 +11,10 @@ const ModalWrapper = require('./ModalWrapper');
 const FSAuthModal = function(props){
   return (
     <ModalWrapper>
-      <p>Please sign in to FamilySearch.</p>
-      <button className="btn btn-rs btn-lg" onClick={props.onClick}>Sign In</button>
+      <div className="fs-auth-modal">
+        <p>Please sign in to FamilySearch.</p>
+        <button className="btn btn-rs btn-lg" onClick={props.onClick}>Sign In</button>
+      </div>
     </ModalWrapper>
   );
 };
