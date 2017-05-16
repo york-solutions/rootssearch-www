@@ -12,11 +12,11 @@ const Family = require('./Family');
 const saveMatchAction = require('../actions/saveMatch');
 const savedSelector = require('../selectors/saved');
 const updatedNamePartsSelector = require('../selectors/updatedNameParts');
+const matchFactsSelector = require('../selectors/displayedMatchFacts');
 
 class SelectedMatch extends React.Component {
 
   render(){
-    
     return (
       <div>
         <div className="person">
@@ -26,14 +26,19 @@ class SelectedMatch extends React.Component {
               <Name name={this.props.matchPerson.getPreferredName()} /> :
               <EditableName nameParts={this.props.nameParts} onChange={this.nameChangeHandler.bind(this)} />
             }
-            {this.props.factOrder.map(recordFactId => {
-              let matchFact = this.props.factMap[recordFactId];
+            {this.props.matchFacts.map(({fact, display}) => {
               return (
-                <div key={recordFactId}>
+                <div key={fact.getId()}>
                   <hr />
                   { this.props.saved ?
-                    <Fact fact={matchFact} /> :
-                    <EditableFact recordFactId={recordFactId} fact={matchFact} personId={this.props.personId} />
+                    <Fact fact={fact} /> :
+                    (display ?
+                      <EditableFact 
+                        fact={fact} 
+                        onDateChange={this.dateChangeHandler(fact.getId()).bind(this)} 
+                        onPlaceChange={this.placeChangeHandler(fact.getId()).bind(this)} /> :
+                      <div className="fact-placeholder" />
+                    )
                   }
                 </div>
               );
@@ -44,15 +49,7 @@ class SelectedMatch extends React.Component {
               (
                 <div className="toolbar">
                   <button className="btn btn-rs btn-lg" onClick={() => this.props.dispatch(saveMatchAction(this.props.personId))}>Save</button>
-                  <a href onClick={(e) => {
-                    // TODO: move this to a class method
-                    this.props.dispatch({
-                      type: 'CANCEL_MATCH',
-                      personId: this.props.personId
-                    });
-                    e.preventDefault(); 
-                    return false; 
-                  }}>Cancel</a>
+                  <a href onClick={this.cancelMatch.bind(this)}>Cancel</a>
                 </div>
               )
             }
@@ -73,22 +70,52 @@ class SelectedMatch extends React.Component {
       });
     };
   }
+  
+  dateChangeHandler(factId){
+    return (date) => {
+      this.props.dispatch({
+        type: 'OVERRIDE_DATE',
+        value: date,
+        dataId: factId,
+        personId: this.props.personId
+      });
+    };
+  }
+  
+  placeChangeHandler(factId){
+    return (place) => {
+      this.props.dispatch({
+        type: 'OVERRIDE_PLACE',
+        value: place,
+        dataId: factId,
+        personId: this.props.personId
+      });
+    };
+  }
+  
+  cancelMatch(e) {
+    this.props.dispatch({
+      type: 'CANCEL_MATCH',
+      personId: this.props.personId
+    });
+    e.preventDefault(); 
+    return false; 
+  }
 }
 
 const mapStateToProps = state => {
-  const {selectedMatches, currentPerson, factOrder} = state,
+  const {selectedMatches, currentPerson} = state,
         match = selectedMatches[currentPerson],
-        {matchId, gedcomx, factMap, copyName} = match;
+        {matchId, gedcomx, copyName} = match;
   return {
     matchId,
     matchPerson: gedcomx.getPersonById(matchId),
     gedcomx,
     personId: currentPerson,
-    factOrder: factOrder[currentPerson],
-    factMap,
     saved: savedSelector(state),
     copyName,
-    nameParts: updatedNamePartsSelector(state)
+    nameParts: updatedNamePartsSelector(state),
+    matchFacts: matchFactsSelector(state)
   };
 };
 

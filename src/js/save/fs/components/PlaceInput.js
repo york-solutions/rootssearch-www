@@ -3,10 +3,6 @@
  */
 
 const React = require('react');
-const connect = require('react-redux').connect;
-const placeOverrideSelector = require('../selectors/placeOverride');
-const placeNormalizedSelector = require('../selectors/placeNormalized');
-const placeCopySelector = require('../selectors/placeCopy');
 const Autosuggest = require('react-autosuggest');
 const FS = require('../utils/fs');
 
@@ -26,7 +22,7 @@ class PlaceInput extends React.Component {
     
   render() {
     const inputProps = {
-      value: this.calculateValue(),
+      value: this.props.place.getDisplayString(),
       onChange: this.handleChange.bind(this),
       placeholder: 'Place'
     };
@@ -72,37 +68,17 @@ class PlaceInput extends React.Component {
   }
   
   suggestionSelected(event, {suggestion}) {
-    this.props.dispatch({
-      type: 'NORMALIZED_PLACE',
-      value: suggestion,
-      dataId: this.props.fact.getId(),
-      personId: this.props.personId 
+    this.props.onChange({
+      original: suggestion
     });
   }
   
-  calculateValue() {
-    return this.props.normalized || this.props.override || this.props.copy || this.props.fact.getPlaceDisplayString() || '';
-  }
-  
   handleChange(e){
-    this.props.dispatch({
-      type: 'OVERRIDE_PLACE',
-      value: e.target.value,
-      dataId: this.props.fact.getId(),
-      personId: this.props.personId
+    this.props.onChange({
+      original: e.target.value,
     });
   }
   
 }
 
-module.exports = connect((state, props) => {
-  const factId = props.fact.getId(),
-        override = placeOverrideSelector(state, factId),
-        copy = placeCopySelector(state, props.recordFactId),
-        normalized = placeNormalizedSelector(state, factId);
-  return {
-    override,
-    copy,
-    normalized
-  };
-})(PlaceInput);
+module.exports = PlaceInput;

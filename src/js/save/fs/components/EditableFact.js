@@ -3,33 +3,17 @@
  */
 
 const React = require('react');
-const connect = require('react-redux').connect;
 const DateInput = require('./DateInput');
 const PlaceInput = require('./PlaceInput');
-const selectedMatch = require('../selectors/selectedMatch');
 
-const EditableFact = function({fact, recordFactId, personId, copiedDate, copiedPlace}){
-  
-  // If we don't have a matching fact and nothing is copied then display a placeholder
-  if(fact.isEmpty() && !(copiedDate || copiedPlace)){
-    return <div className="fact-placeholder" />;
-  }
-  
+const EditableFact = function({fact, onDateChange, onPlaceChange}){
   return (
     <div className="fact">
       <span className="label">{fact.getTypeDisplayLabel()}</span>
-      <DateInput fact={fact} personId={personId} recordFactId={recordFactId} />
-      <PlaceInput fact={fact} personId={personId} recordFactId={recordFactId} />
+      <DateInput date={fact.getDate()} onChange={onDateChange} />
+      <PlaceInput place={fact.getPlace()} onChange={onPlaceChange} />
     </div>
   );
 };
 
-const mapStateToProps = (state, props) => {
-  const match = selectedMatch(state);
-  return {
-    copiedDate: match.copiedDates[props.recordFactId],
-    copiedPlace: match.copiedPlaces[props.recordFactId]
-  };
-};
-
-module.exports = connect(mapStateToProps)(EditableFact);
+module.exports = EditableFact;

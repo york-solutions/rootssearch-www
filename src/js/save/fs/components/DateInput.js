@@ -3,10 +3,6 @@
  */
 
 const React = require('react');
-const connect = require('react-redux').connect;
-const dateOverrideSelector = require('../selectors/dateOverride');
-const dateNormalizedSelector = require('../selectors/dateNormalized');
-const dateCopySelector = require('../selectors/dateCopy');
 const Autosuggest = require('react-autosuggest');
 const FS = require('../utils/fs');
 
@@ -27,7 +23,7 @@ class DateInput extends React.Component {
     
   render() {
     const inputProps = {
-      value: this.calculateValue(),
+      value: this.props.date.getDisplayString(),
       onChange: this.handleChange.bind(this),
       placeholder: 'Date'
     };
@@ -66,7 +62,7 @@ class DateInput extends React.Component {
           suggestions: [
             {
               formal: response.headers.location.replace('gedcomx-date:', ''),
-              normalized: response.body
+              normalized: [{value: response.body}]
             }  
           ]
         });
@@ -75,39 +71,15 @@ class DateInput extends React.Component {
   }
   
   suggestionSelected(event, {suggestion}) {
-    this.props.dispatch({
-      type: 'NORMALIZED_DATE',
-      value: suggestion,
-      dataId: this.props.fact.getId(),
-      personId: this.props.personId 
-    });
-  }
-  
-  calculateValue() {
-    return this.props.normalized || this.props.override || this.props.copy || this.props.fact.getDateDisplayString() || '';
+    this.props.onChange(suggestion);
   }
   
   handleChange(e){
-    this.props.dispatch({
-      type: 'OVERRIDE_DATE',
-      value: e.target.value,
-      dataId: this.props.fact.getId(),
-      personId: this.props.personId
+    this.props.onChange({
+      original: e.target.value
     });
   }
   
 }
 
-const mapStateToProps = (state, props) => {
-  const factId = props.fact.getId(),
-        override = dateOverrideSelector(state, factId),
-        copy = dateCopySelector(state, props.recordFactId),
-        normalized = dateNormalizedSelector(state, factId);
-  return {
-    override,
-    copy,
-    normalized
-  };
-};
-
-module.exports = connect(mapStateToProps)(DateInput);
+module.exports = DateInput;

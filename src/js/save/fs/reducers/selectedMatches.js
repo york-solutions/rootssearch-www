@@ -144,28 +144,6 @@ module.exports = function(state = {}, action){
         }
       });
       
-    case 'NORMALIZED_DATE':
-      return update(state, {
-        [personId]: {
-          normalizedDates: {
-            [dataId]: {
-              $set: action.value
-            }
-          }
-        }
-      });
-      
-    case 'NORMALIZED_PLACE':
-      return update(state, {
-        [personId]: {
-          normalizedPlaces: {
-            [dataId]: {
-              $set: action.value
-            }
-          }
-        }
-      });
-      
     case 'SAVE_MATCH':
       return update(state, {
         [personId]: {

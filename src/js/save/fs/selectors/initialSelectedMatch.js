@@ -24,9 +24,5 @@ module.exports = function(){
     // override maps are keyed by match conclusion ID; are the new input value
     overrideDates: {}, // values are the new input value
     overridePlaces: {}, // values are the new input value
-    
-    // normalized maps are keyed by match conclusion ID
-    normalizedDates: {},
-    normalizedPlaces: {}
   };
 };

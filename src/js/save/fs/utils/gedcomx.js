@@ -208,19 +208,19 @@ GedcomX.Date.prototype.getDisplayString = function(){
   
   // Check for a normalized date
   if(this.getNormalized().length > 0){
-    return this.getNormalized()[0].getValue();
+    return this.getNormalized()[0].getValue() || '';
   }
   
   // Parse the formal value if set
   if(this.getFormal()){
     let date = new Date(this.getFormal().replace('+',''));
     if(!isNaN(date.getTime())){
-      return [date.getDate(), months[date.getMonth()], date.getFullYear()].join(' ');
+      return [date.getDate(), months[date.getMonth()], date.getFullYear()].join(' ') || '';
     }
   }
   
   // Just return what we have if nothing else works
-  return this.getOriginal();
+  return this.getOriginal() || '';
 };
 
 /**
@@ -273,9 +273,9 @@ GedcomX.Fact.prototype.getPlaceDisplayString = function(){
  */
 GedcomX.PlaceReference.prototype.getDisplayString = function(){
   if(this.getNormalized().length > 0){
-    return this.getNormalized()[0].getValue();
+    return this.getNormalized()[0].getValue() || '';
   } else {
-    return this.getOriginal();
+    return this.getOriginal() || '';
   }
 };
 
@@ -360,6 +360,24 @@ GedcomX.Fact.prototype.getTypeDisplayLabel = function(){
  */
 GedcomX.Fact.prototype.isEmpty = function(){
   return this.getDate() === undefined && this.getPlace() === undefined;
+};
+
+/**
+ * Make sure fact place has at least an empty PlaceReference
+ */
+GedcomX.Fact.prototype.ensurePlace = function(){
+  if(!this.getPlace()){
+    this.setPlace(GedcomX.PlaceReference());
+  }
+};
+
+/**
+ * Make sure fact date has at least an empty Date
+ */
+GedcomX.Fact.prototype.ensureDate = function(){
+  if(!this.getDate()){
+    this.setDate(GedcomX.Date());
+  }
 };
 
 module.exports = GedcomX;
