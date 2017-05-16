@@ -110,14 +110,16 @@ function calculateFactUpdates(state, personId){
         factMap = match.factMap;
   
   // Filter fact ID list to just those facts that are being copied
-  // TODO: allow the user to modify matched vitals without copying
-  factOrder.filter(factId => {
+  // TODO: allow the user to modify matched vitals without copying. Right now
+  // vitals are matched and can be modified without copying but the code here 
+  // ignores facts that aren't marked for copying
+  return factOrder.filter(factId => {
     return match.copiedDates[factId] || match.copiedPlaces[factId];
   })
   
   // Assemble fact updates
   .map(factId => {
-    
+
     // First we copy the fact so that we don't modify the originals
     const matchFact = GedcomX.Fact(factMap[factId].toJSON()),
           matchFactId = matchFact.getId();
