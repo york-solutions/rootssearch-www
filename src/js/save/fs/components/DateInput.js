@@ -22,8 +22,9 @@ class DateInput extends React.Component {
   }  
     
   render() {
+    const {date} = this.props;
     const inputProps = {
-      value: this.props.date.getDisplayString(),
+      value: date ? date.getDisplayString() : '',
       onChange: this.handleChange.bind(this),
       placeholder: 'Date'
     };

@@ -123,7 +123,6 @@ function calculateFactUpdates(state, personId){
     // First we copy the fact so that we don't modify the originals
     const matchFact = GedcomX.Fact(factMap[factId].toJSON()),
           matchFactId = matchFact.getId();
-    let date, place;
     
     // Make any adjustments based on the copied dates and places
     if(match.copiedDates[factId]){
@@ -133,33 +132,12 @@ function calculateFactUpdates(state, personId){
       matchFact.setPlace(facts[factId].getPlace().toJSON());
     }
     
-    date = matchFact.getDate();
-    place = matchFact.getPlace();
-    
     // Overrides
     if(match.overrideDates[matchFactId]){
-      date.setOriginal(match.overrideDates[matchFactId]);
+      matchFact.getDate().setOriginal(match.overrideDates[matchFactId]);
     }
     if(match.overridePlaces[matchFactId]){
-      place.setOriginal(match.overridePlaces[matchFactId]);
-    }
-    
-    // Add normalized data
-    if(match.normalizedDates[matchFactId]){
-      if(match.normalizedDates[matchFactId].formal){
-        date.setFormal(match.normalizedDates[matchFactId].formal);
-      }
-      if(match.normalizedDates[matchFactId].normalized){
-        date.setNormalized([{
-          value: match.normalizedDates[matchFactId].normalized
-        }]);
-      }
-    }
-    if(match.normalizedPlaces[matchFactId]){
-      place.setNormalized([{
-        value: match.normalizedPlaces[matchFactId]
-      }]);
-      place.setOriginal(match.normalizedPlaces[matchFactId]);
+      matchFact.getPlace().setOriginal(match.overridePlaces[matchFactId]);
     }
     
     // Delete IDs on new facts

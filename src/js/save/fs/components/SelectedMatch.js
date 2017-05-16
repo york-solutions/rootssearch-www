@@ -12,7 +12,7 @@ const Family = require('./Family');
 const saveMatchAction = require('../actions/saveMatch');
 const savedSelector = require('../selectors/saved');
 const updatedNamePartsSelector = require('../selectors/updatedNameParts');
-const matchFactsSelector = require('../selectors/displayedMatchFacts');
+const matchFactsSelector = require('../selectors/updatedMatchFacts');
 
 class SelectedMatch extends React.Component {
 

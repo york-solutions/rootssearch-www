@@ -21,8 +21,9 @@ class PlaceInput extends React.Component {
   }   
     
   render() {
+    const {place} = this.props;
     const inputProps = {
-      value: this.props.place.getDisplayString(),
+      value: place ? place.getDisplayString() : '',
       onChange: this.handleChange.bind(this),
       placeholder: 'Place'
     };

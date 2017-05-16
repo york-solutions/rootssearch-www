@@ -363,21 +363,12 @@ GedcomX.Fact.prototype.isEmpty = function(){
 };
 
 /**
- * Make sure fact place has at least an empty PlaceReference
+ * Check whether a fact is a vital.
+ * 
+ * @returns {Boolean}
  */
-GedcomX.Fact.prototype.ensurePlace = function(){
-  if(!this.getPlace()){
-    this.setPlace(GedcomX.PlaceReference());
-  }
-};
-
-/**
- * Make sure fact date has at least an empty Date
- */
-GedcomX.Fact.prototype.ensureDate = function(){
-  if(!this.getDate()){
-    this.setDate(GedcomX.Date());
-  }
+GedcomX.Fact.prototype.isVital = function(){
+  return GedcomX.vitals.indexOf(this.getType()) !== -1;
 };
 
 module.exports = GedcomX;
