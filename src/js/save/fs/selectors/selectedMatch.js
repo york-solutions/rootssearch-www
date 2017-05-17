@@ -1,7 +1,8 @@
 /**
  * Retrieve the selected match data for the current person
  */
+const currentPersonSelector = require('./currentPerson') ;
+ 
 module.exports = function(state){
-  const {selectedMatches, currentPerson} = state;
-  return selectedMatches[currentPerson];
+  return currentPersonSelector(state).selectedMatch;
 };

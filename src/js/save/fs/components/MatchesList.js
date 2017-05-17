@@ -7,6 +7,7 @@ const connect = require('react-redux').connect;
 const Loader = require('./Loader');
 const Match = require('./Match');
 const selectMatchAction = require('../actions/selectMatch');
+const possibleMatchesSelector = require('../selectors/possibleMatches');
  
 const MatchesList = function({ currentPerson, status, error, dispatch, manualId, entryIds = [], entries = {} }){
   
@@ -48,7 +49,7 @@ const MatchesList = function({ currentPerson, status, error, dispatch, manualId,
 };
 
 const mapStateToProps = state => {
-  const matches = state.possibleMatches[state.currentPerson] || {},
+  const matches = possibleMatchesSelector(state) || {},
         {status, entries, entryIds, manualId, error} = matches;
   return {
     status,
@@ -56,6 +57,7 @@ const mapStateToProps = state => {
     entryIds,
     manualId,
     error,
+    // TODO: get rid of currentPerson
     currentPerson: state.currentPerson
   };
 };

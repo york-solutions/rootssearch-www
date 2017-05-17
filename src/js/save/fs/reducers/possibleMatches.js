@@ -2,21 +2,12 @@ const update = require('update-immutable').default;
 
 module.exports = function(state = {}, action){
   
-  const {personId} = action,
-        match = state[personId];
-        
-  if(match === undefined){
-    return state;
-  }
-  
   switch(action.type){
     
     case 'LOADING_MATCHES':
       return update(state, {
-        [personId]: {
-          status: {
-            $set: 'LOADING'
-          }
+        status: {
+          $set: 'LOADING'
         }
       });
       
@@ -28,21 +19,19 @@ module.exports = function(state = {}, action){
       // loads the persisted state, then when the request returns matches may
       // have already been loaded form the persisted state. In that case we
       // want to ignore the matches response.
-      if(state[personId].status === 'LOADING'){
+      if(state.status === 'LOADING'){
         return update(state, {
-          [personId]: {
-            status: {
-              $set: 'LOADED'
-            },
-            entries: {
-              $set: action.matches.reduce((accumulator, match) => {
-                accumulator[match.getId()] = match;
-                return accumulator;
-              }, {})
-            },
-            entryIds: {
-              $set: action.matches.map(m => m.getId())
-            }
+          status: {
+            $set: 'LOADED'
+          },
+          entries: {
+            $set: action.matches.reduce((accumulator, match) => {
+              accumulator[match.getId()] = match;
+              return accumulator;
+            }, {})
+          },
+          entryIds: {
+            $set: action.matches.map(m => m.getId())
           }
         });
       } else {
@@ -51,49 +40,39 @@ module.exports = function(state = {}, action){
       
     case 'MANUAL_ID':
       return update(state, {
-        [personId]: {
-          manualId: {
-            $set: action.value
-          }
+        manualId: {
+          $set: action.value
         }
       });
       
     case 'LOAD_MATCH_ERROR':
       return update(state, {
-        [personId]: {
-          error: {
-            $set: action.message
-          },
-          status: {
-            $set: 'NOT_REQUESTED'
-          }
+        error: {
+          $set: action.message
+        },
+        status: {
+          $set: 'NOT_REQUESTED'
         }
       });
       
     case 'LOADED_MATCH_PERSON':
       return update(state, {
-        [personId]: {
-          error: {
-            $set: ''
-          }
+        error: {
+          $set: ''
         }
       });
       
     case 'CREATE_PERSON':
       return update(state, {
-        [personId]: {
-          status: {
-            $set: 'CREATE_PERSON'
-          }
+        status: {
+          $set: 'CREATE_PERSON'
         }
       });
       
     case 'CANCEL_CREATE_PERSON':
       return update(state, {
-        [personId]: {
-          status: {
-            $set: 'LOADED'
-          }
+        status: {
+          $set: 'LOADED'
         }
       });
     

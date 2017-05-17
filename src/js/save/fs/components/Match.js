@@ -6,7 +6,7 @@ const selectMatch = require('../actions/selectMatch');
 class Match extends React.Component {
   
   render(){
-    const {match, dispatch, currentPerson} = this.props,
+    const {match, dispatch, currentPersonId} = this.props,
           data = match.getContent().getGedcomX(),
           person = data.getPersonById(match.getId()),
           birth = person.getFact('http://gedcomx.org/Birth'),
@@ -16,7 +16,7 @@ class Match extends React.Component {
           mother = parents.find(p => p.isFemale()),
           spouse = data.getPersonsSpouses(person)[0],
           select = () => {
-            dispatch(selectMatch(currentPerson, match.getId()));
+            dispatch(selectMatch(currentPersonId, match.getId()));
           };
     return (
       <div className="match box">
@@ -39,7 +39,7 @@ class Match extends React.Component {
 }
 
 module.exports = connect(state => {
-  return { currentPerson: state.currentPerson };
+  return { currentPersonId: state.currentPersonId };
 })(Match);
 
 function Relation({person, relationship}){

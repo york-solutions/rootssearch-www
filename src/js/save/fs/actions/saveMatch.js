@@ -11,8 +11,8 @@ module.exports = function(personId){
   return function(dispatch, getState){
     
     const state = getState(),
-          match = state.selectedMatches[personId],
-          matchId = match.matchId;
+          person = state.persons[personId],
+          matchId = person.selectedMatch.matchId;
     
     // Set the state to saving
     dispatch({
@@ -20,7 +20,7 @@ module.exports = function(personId){
       personId
     });
     
-    const personUpdates = calculatePersonUpdates(state, personId);
+    const personUpdates = calculatePersonUpdates(person);
     
     // Update the person
     FS.post(`/platform/tree/persons/${matchId}`, {
@@ -48,10 +48,10 @@ module.exports = function(personId){
  * 
  * TODO: technically this is a selector, right?
  */
-function calculatePersonUpdates(state, personId){
+function calculatePersonUpdates(person){
   const updates = {
-    facts: calculateFactUpdates(state, personId),
-    names: calculateNameUpdates(state, personId)
+    facts: calculateFactUpdates(person),
+    names: calculateNameUpdates(person)
   };
   return updates;
 }
@@ -59,11 +59,11 @@ function calculatePersonUpdates(state, personId){
 /**
  * Generate the list of changed names
  */
-function calculateNameUpdates(state, personId){
-  const recordPerson = state.persons[personId],
+function calculateNameUpdates(person){
+  const recordPerson = person.gedcomx,
         recordName = recordPerson.getPreferredName(),
         recordNameParts = namePartsMap(recordName),
-        match = state.selectedMatches[personId],
+        match = person.selectedMatch,
         matchName = match.gedcomx.getPersonById(match.matchId).getPreferredName(),
         matchNameParts = namePartsMap(matchName),
         copiedParts = match.copyName ? recordNameParts : {};
@@ -103,10 +103,10 @@ function calculateNameUpdates(state, personId){
  * to construct the resulting fact data.
  * If the fact is new then we delete the ID so that FS knows it's new.
  */
-function calculateFactUpdates(state, personId){
-  const factOrder = state.factOrder[personId],
-        facts = state.facts[personId],
-        match = state.selectedMatches[personId],
+function calculateFactUpdates(person){
+  const factOrder = person.factOrder,
+        facts = person.facts,
+        match = person.selectedMatch,
         factMap = match.factMap;
   
   // Filter fact ID list to just those facts that are being copied

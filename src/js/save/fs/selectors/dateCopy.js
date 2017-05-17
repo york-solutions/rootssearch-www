@@ -1,9 +1,7 @@
-const selectedMatchSelector = require('./selectedMatch');
+const currentPersonSelector = require('./currentPerson');
 
 module.exports = function(state, factId){
-  const isCopied = !!selectedMatchSelector(state).copiedDates[factId];
-  return isCopied ? state.persons[state.currentPerson]
-    .getFacts()
-    .find(f => f.getId() === factId)
-    .getDateDisplayString() : undefined;
+  const currentPerson = currentPersonSelector(state),
+        isCopied = !!currentPerson.selectedMatch.copiedDates[factId];
+  return isCopied ? currentPerson.facts[factId].getDateDisplayString() : undefined;
 };

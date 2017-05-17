@@ -3,29 +3,30 @@ const connect = require('react-redux').connect;
 const StatusCircle = require('./StatusCircle');
 const changeFocusPerson = require('../actions/changeFocusPerson');
 
-const StatusBar = function({persons, currentPerson, dispatch, saved}){
+const StatusBar = function({personOrder, persons, currentPersonId, dispatch, saved}){
   const generateClickHandler = (i) => {
     return () => {
       dispatch(changeFocusPerson(i));
     };
   };
-  const circles = persons.map((p) => {
+  const circles = personOrder.map(personId => {
     return <StatusCircle 
-      person={p} 
-      key={p.getId()} 
-      selected={p.getId() === currentPerson}
-      saved={saved[p.getId()]}
-      onClick={generateClickHandler(p.getId())} />;
+      person={persons[personId].gedcomx} 
+      key={personId} 
+      selected={personId === currentPersonId}
+      saved={saved[personId]}
+      onClick={generateClickHandler(personId)} />;
   });
   return <ul className="status-list">{circles}</ul>;
 };
 
 const mapStateToProps = state => {
   return {
-    persons: state.record.getPersons(),
-    currentPerson: state.currentPerson,
+    personOrder: state.personOrder,
+    persons: state.persons,
+    currentPersonId: state.currentPersonId,
     saved: state.personOrder.reduce((accumulator, personId) => {
-      accumulator[personId] = state.selectedMatches[personId].saved;
+      accumulator[personId] = state.persons[personId].selectedMatch.saved;
       return accumulator;
     }, {})
   };

@@ -10,10 +10,10 @@ module.exports = function(){
     const state = getState();
     
     // Get current person ID
-    const currentPerson = state.currentPerson;
+    const {currentPersonId} = state;
     
     // Calculate current person index
-    const currentIndex = state.personOrder.indexOf(currentPerson);
+    const currentIndex = state.personOrder.indexOf(currentPersonId);
     
     // Get person ID of index + 1
     const nextPerson = state.personOrder[currentIndex + 1];

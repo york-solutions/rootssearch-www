@@ -63,6 +63,7 @@ class DateInput extends React.Component {
         this.setState({
           suggestions: [
             GedcomX.Date({
+              original: response.body,
               formal: response.headers.location.replace('gedcomx-date:', ''),
               normalized: [{value: response.body}]
             })

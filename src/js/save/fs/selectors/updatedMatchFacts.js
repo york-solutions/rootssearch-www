@@ -3,13 +3,13 @@
  * 
  * @returns [{fact, recordFactId, display}]
  */
-const selectedMatch = require('./selectedMatch');
 const GedcomX = require('../utils/gedcomx');
+const currentPersonSelector = require('./currentPerson');
  
 module.exports = function(state){
-  const factOrder = state.factOrder[state.currentPerson],
-        facts = state.facts[state.currentPerson],
-        match = selectedMatch(state),
+  const currentPerson = currentPersonSelector(state),
+        {factOrder, facts} = currentPerson,
+        match = currentPerson.selectedMatch,
         {factMap, copiedDates, copiedPlaces, overrideDates, overridePlaces} = match;
         
   return factOrder.map(recordFactId => {

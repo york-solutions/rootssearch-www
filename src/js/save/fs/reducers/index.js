@@ -1,22 +1,17 @@
-const combineReducers = require('redux').combineReducers;
 const auth = require('./auth'),
       busy = require('./busy'),
-      possibleMatches = require('./possibleMatches'),
-      selectedMatches = require('./selectedMatches'),
-      currentPerson = require('./currentPerson'),
+      currentPersonId = require('./currentPersonId'),
       modal = require('./modal'),
-      echo = state => state || {};
+      persons = require('./persons');
 
-module.exports = combineReducers({
-  auth,
-  busy,
-  modal,
-  possibleMatches,
-  selectedMatches,
-  currentPerson,
-  record: echo,
-  personOrder: echo,
-  persons: echo,
-  facts: echo,
-  factOrder: echo
-});
+module.exports = function(state = {}, action){
+  return {
+    auth: auth(state.auth, action),
+    busy: busy(state.busy, action),
+    modal: modal(state.modal, action),
+    currentPersonId: currentPersonId(state.currentPersonId, action),
+    record: state.record,
+    personOrder: state.personOrder,
+    persons: persons(state, action)
+  };
+};

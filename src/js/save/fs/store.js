@@ -35,44 +35,41 @@ const store = Redux.createStore(
     // List of person IDs
     personOrder: personIds,
     
+    currentPersonId: data.persons[0].getId(),
+    
     // Map of person IDs to GedcomX Person objects
     persons: data.persons.reduce((accumulated, person) => {
-      accumulated[person.getId()] = person;
-      return accumulated;
-    }, {}),
-    
-    // Map of person IDs to a list of fact IDs
-    factOrder: personIds.reduce((accumulated, id) => {
-      accumulated[id] = personsSlimFacts[id].map(f => f.getId());
-      return accumulated;
-    }, {}),
-    
-    // Map of person IDs to maps of relevant (slimmed) facts
-    facts: personIds.reduce((accumulated, id) => {
-      accumulated[id] = personsSlimFacts[id].reduce((accumulated, fact) => {
-        accumulated[fact.getId()] = fact;
-        return accumulated;
-      }, {});
-      return accumulated;
-    }, {}),
-    
-    currentPerson: data.persons[0].getId(),
-    
-    possibleMatches: data.persons.reduce((accumulated, person) => {
-      accumulated[person.getId()] = {
-        status: 'NOT_REQUESTED',
-        entries: {},
-        entryIds: [],
-        manualId: '',
-        error: ''
+      const personId = person.getId();
+      
+      accumulated[personId] = {
+        
+        // GedcomX.Person object
+        gedcomx: person,
+        
+        // List of fact IDs
+        factOrder: personsSlimFacts[personId].map(f => f.getId()),
+        
+        // Map of relevant (slimmed) facts
+        facts: personsSlimFacts[personId].reduce((accumulated, fact) => {
+          accumulated[fact.getId()] = fact;
+          return accumulated;
+        }, {}),
+        
+        possibleMatches: {
+          status: 'NOT_REQUESTED',
+          entries: {},
+          entryIds: [],
+          manualId: '',
+          error: ''
+        },
+        
+        selectedMatch: initialSelectedMatch()
+        
       };
-      return accumulated;
-    }, {}),
-    
-    selectedMatches: data.persons.reduce((accumulated, person) => {
-      accumulated[person.getId()] = initialSelectedMatch();
+      
       return accumulated;
     }, {})
+
   },
   composeEnhancers(Redux.applyMiddleware(thunk))
 );

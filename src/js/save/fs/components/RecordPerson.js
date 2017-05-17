@@ -9,6 +9,7 @@ const Name = require('./Name');
 const Family = require('./Family');
 const matchedSelector = require('../selectors/matched');
 const savedSelector = require('../selectors/saved');
+const currentPersonSelector = require('../selectors/currentPerson');
 
 const RecordPerson = function({ person, record, matched = false, saved = false, factOrder, facts }){
   const copyable = matched && !saved;
@@ -34,14 +35,14 @@ const RecordPerson = function({ person, record, matched = false, saved = false, 
 };
 
 const mapStateToProps = state => {
-  const { persons, record, currentPerson, facts, factOrder } = state;
+  const currentPerson = currentPersonSelector(state);
   return {
-    record,
-    person: persons[currentPerson],
+    record: state.record,
+    person: currentPerson.gedcomx,
     matched: matchedSelector(state),
     saved: savedSelector(state),
-    facts: facts[currentPerson],
-    factOrder: factOrder[currentPerson]
+    facts: currentPerson.facts,
+    factOrder: currentPerson.factOrder
   };
 };
 

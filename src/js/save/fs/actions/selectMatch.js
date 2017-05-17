@@ -5,6 +5,7 @@
 
 const FS = require('../utils/fs');
 const GedcomX = require('../utils/gedcomx');
+const currentPersonSelector = require('../selectors/currentPerson');
 
 module.exports = function(personId, matchId){
   return function(dispatch, getState){
@@ -35,8 +36,9 @@ module.exports = function(personId, matchId){
       // TODO: should this be in the reducer?
       const idGenerator = IDGenerator(),
             state = getState(),
-            recordFacts = state.facts[personId],
-            recordFactsOrder = state.factOrder[personId],
+            currentPerson = currentPersonSelector(state),
+            recordFacts = currentPerson.facts,
+            recordFactsOrder = currentPerson.factOrder,
             matchPerson = response.gedcomx.getPersonById(matchId),
             factMap = recordFactsOrder.reduce(function(accumulator, recordFactId){
               const recordFact = recordFacts[recordFactId],

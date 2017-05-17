@@ -13,6 +13,7 @@ const saveMatchAction = require('../actions/saveMatch');
 const savedSelector = require('../selectors/saved');
 const updatedNamePartsSelector = require('../selectors/updatedNameParts');
 const matchFactsSelector = require('../selectors/updatedMatchFacts');
+const currentPersonSelector = require('../selectors/currentPerson');
 
 class SelectedMatch extends React.Component {
 
@@ -104,14 +105,14 @@ class SelectedMatch extends React.Component {
 }
 
 const mapStateToProps = state => {
-  const {selectedMatches, currentPerson} = state,
-        match = selectedMatches[currentPerson],
-        {matchId, gedcomx, copyName} = match;
+  const currentPerson = currentPersonSelector(state),
+        {selectedMatch} = currentPerson,
+        {matchId, gedcomx, copyName} = selectedMatch;
   return {
     matchId,
     matchPerson: gedcomx.getPersonById(matchId),
     gedcomx,
-    personId: currentPerson,
+    personId: state.currentPersonId,
     saved: savedSelector(state),
     copyName,
     nameParts: updatedNamePartsSelector(state),

@@ -20,6 +20,7 @@ const EditableName = require('../EditableName');
 const EditableGender = require('../EditableGender');
 const namePartsMap = require('../../selectors/namePartsMap');
 const createPersonAction = require('../../actions/createPerson');
+const currentPersonSelector = require('../../selectors/currentPerson');
 
 class CreatePersonModal extends React.Component {
   
@@ -130,7 +131,7 @@ class CreatePersonModal extends React.Component {
 }
 
 const mapStateToProps = state => {
-  const person = state.persons[state.currentPerson];
+  const person = currentPersonSelector(state).gedcomx;
   return {
     nameParts: namePartsMap(person.getPreferredName()),
     gender: person.getGender().getType(),
