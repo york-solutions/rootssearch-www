@@ -31,11 +31,11 @@ module.exports = function(state){
     
     // Overrides
     if(overrideDates[factId]){
-      fact.getDate().setOriginal(overrideDates[factId]);
+      fact.setDate(overrideDates[factId]);
       display = true;
     }
     if(overridePlaces[factId]){
-      fact.getPlace().setOriginal(overridePlaces[factId]);
+      fact.setPlace(overridePlaces[factId]);
       display = true;
     }
     

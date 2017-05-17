@@ -5,12 +5,13 @@
 const React = require('react');
 const Autosuggest = require('react-autosuggest');
 const FS = require('../utils/fs');
+const GedcomX = require('../utils/gedcomx');
 
 const renderSuggestion = suggestion => (
-  <div>{suggestion.normalized}</div>
+  <div>{suggestion.getDisplayString()}</div>
 );
 
-const getSuggestionValue = suggestion => suggestion.normalized;
+const getSuggestionValue = suggestion => suggestion.getDisplayString();
 
 class DateInput extends React.Component {
     
@@ -61,10 +62,10 @@ class DateInput extends React.Component {
       if(response){
         this.setState({
           suggestions: [
-            {
+            GedcomX.Date({
               formal: response.headers.location.replace('gedcomx-date:', ''),
               normalized: [{value: response.body}]
-            }  
+            })
           ]
         });
       }
