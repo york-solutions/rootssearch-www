@@ -75,6 +75,10 @@
       &.selected {
         border: 2px solid $primaryColor;
       }
+      
+      &:hover {
+        border: 2px solid $secondaryColor;
+      }
     }
   }
   
