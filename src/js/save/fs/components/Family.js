@@ -4,7 +4,6 @@
 
 const React = require('react');
 const connect = require('react-redux').connect;
-const Name = require('./Name');
 
 const Family = function({gedcomx, personId}){
   if(!(gedcomx && personId)){
@@ -13,34 +12,44 @@ const Family = function({gedcomx, personId}){
   
   const person = gedcomx.getPersonById(personId),
         parents = gedcomx.getPersonsParents(person),
-        father = parents.find(p => p.isMale()),
-        mother = parents.find(p => p.isFemale()),
-        spouse = gedcomx.getPersonsSpouses(person)[0],
+        spouses = gedcomx.getPersonsSpouses(person),
         children = gedcomx.getPersonsChildren(person);
   
-  return (<div>
-    <Relation person={father} relationship="Father" />
-    <Relation person={mother} relationship="Mother" />
-    <Relation person={spouse} relationship="Spouse" />
-    {children.length === 0 ? null : <div className="person">
-      <div className="label">Children</div>
-      {children.map(child => { 
-        return <Relation person={child} key={child.getId()} />;
-      })}
-    </div>}
-  </div>);
+  return (
+    <div>
+      <div className="label">Family</div>
+      <div className="box">
+        <PersonList label="Parents" persons={parents} />
+        {parents.length > 0 && <hr />}
+        <PersonList label="Spouses" persons={spouses} />
+        {(parents.length || spouses.length) && <hr />}
+        <PersonList label="Children" persons={children} />
+      </div>
+    </div>
+  );
 };
 
-function Relation({person, relationship}){
-  if(!person) return null;
+function PersonList({label, persons}){
+  if(persons.length === 0){
+    return null;
+  }
   return (
-    <div className="person relation">
-      {relationship && <div className="label">{relationship}</div>}
-      <div className="box">
-        <Name name={person.getNames()[0]} />
-        <div className="life-span">{person.getLifespan(true)}</div>
-      </div>
-    </div>  
+    <div>
+      <div className="label">{label}</div>
+      {persons.map(person => {
+        return <PersonSummary person={person} key={person.getId()} />;
+      })}
+    </div>
+  );
+}
+
+function PersonSummary({person}){
+  return (
+    <div className="person-summary">
+      <span className="display-name">{person.getPreferredName().getFullText()}</span>
+      &nbsp;&ndash;&nbsp;
+      <span className="life-span">{person.getLifespan(true)}</span>
+    </div>
   );
 }
 
