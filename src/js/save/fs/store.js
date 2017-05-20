@@ -20,7 +20,8 @@ const personsSlimFacts = data.getPersons().reduce((accumulated, person) => {
   return accumulated;
 }, {});
 
-const personIds = data.persons.map(p => p.getId());
+const persons = data.getPersons();
+const personIds = persons.map(p => p.getId());
 
 // Initialize the store with site settings loaded from cookies
 const store = Redux.createStore(
@@ -32,13 +33,17 @@ const store = Redux.createStore(
     
     busy: false,
     
+    // URL of the source description for this record that will get attached to
+    // all updated persons during the match session
+    sourceDescriptionUrl: null,
+    
     // List of person IDs
     personOrder: personIds,
     
-    currentPersonId: data.persons[0].getId(),
+    currentPersonId: persons[0].getId(),
     
     // Map of person IDs to GedcomX Person objects
-    persons: data.persons.reduce((accumulated, person) => {
+    persons: persons.reduce((accumulated, person) => {
       const personId = person.getId();
       
       accumulated[personId] = {

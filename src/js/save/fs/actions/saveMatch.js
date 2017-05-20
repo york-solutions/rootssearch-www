@@ -22,22 +22,40 @@ module.exports = function(personId){
     
     const personUpdates = calculatePersonUpdates(person);
     
-    // Update the person
-    FS.post(`/platform/tree/persons/${matchId}`, {
-      body: {
-        persons: [ personUpdates ]
-      }
-    }, function(error, response){
+    // Create a source, if we haven't already created one
+    getSourceDescriptionUrl(state, function(error, sourceDescriptionUrl){
       
       // TODO: error handling
       
-      // Save the person and set the state to loaded
       dispatch({
-        type: 'MATCH_SAVED',
-        personId
+        type: 'SOURCE_DESCRIPTION_URL',
+        url: sourceDescriptionUrl
       });
       
-      dispatch(nextPersonAction());
+      // Setup the source reference
+      personUpdates.sources = [{
+        description: sourceDescriptionUrl
+        // TODO: tags, changeMessage
+      }];
+    
+      // Update the person
+      FS.post(`/platform/tree/persons/${matchId}`, {
+        body: {
+          persons: [ personUpdates ]
+        }
+      }, function(error, response){
+        
+        // TODO: error handling
+            
+        // Save the person and set the state to loaded
+        dispatch({
+          type: 'MATCH_SAVED',
+          personId
+        });
+        
+        dispatch(nextPersonAction());
+            
+      });
     
     });
   };
@@ -166,5 +184,43 @@ function calculateFactUpdates(person){
     }
     
     return fact;
+  });
+}
+
+/**
+ * Create a source description (if we haven't already)
+ * and return the source description's URL.
+ * 
+ * @param {Function} callback function(error, sourceDescriptionUrl)
+ */
+function getSourceDescriptionUrl(state, callback){
+  
+  // Return the source description URL if we already have it
+  if(state.sourceDescriptionUrl){
+    setTimeout(function(){
+      callback(null, state.sourceDescriptionUrl);
+    });
+  } 
+  
+  // Create a source description if we don't already have one
+  else {
+    FS.post('/platform/sources/descriptions', {
+      body: {
+        sourceDescriptions: [ calculateSourceDescription(state) ]
+      }
+    }, function(error, response){
+      callback(error, response ? response.headers.location : undefined);
+    });
+  }
+}
+
+/**
+ * Get the source description for the record.
+ */
+function calculateSourceDescription(state){
+  const gedcomx = state.record,
+        aboutId = gedcomx.getDescription().replace('#', '');
+  return gedcomx.getSourceDescriptions().find(sd => {
+    return sd.getId() === aboutId;
   });
 }
