@@ -1,24 +1,16 @@
 const React = require('react');
-const connect = require('react-redux').connect;
-const matched = require('../selectors/matched');
-const NameCopyBox = require('./NameCopyBox');
+const CopyBox = require('./CopyBox');
 
-const Name = function({name, copyable, matched}){
+const Name = function({name, copyable, onCopyChange}){
   return (
     <div className="person-name">
       <div className="label">Name</div>
       <div className="name-line">
-        { copyable && matched && <NameCopyBox name={name} /> }
+        { copyable && <CopyBox dataId={name.getId()} onChange={onCopyChange} /> }
         <div className="name-detail">{name.getFullText()}</div>
       </div>
     </div>  
   );
 };
 
-const mapStateToProps = state => {
-  return {
-    matched: matched(state)
-  };
-};
-
-module.exports = connect(mapStateToProps)(Name);
+module.exports = Name;
