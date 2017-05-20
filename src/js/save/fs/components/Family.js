@@ -14,6 +14,11 @@ const Family = function({gedcomx, personId}){
         parents = gedcomx.getPersonsParents(person),
         spouses = gedcomx.getPersonsSpouses(person),
         children = gedcomx.getPersonsChildren(person);
+        
+  // Don't display the Family box when there is no family
+  if(parents.length === 0 && spouses.length === 0 && children.length === 0){
+    return null;
+  }      
   
   return (
     <div>
@@ -23,7 +28,7 @@ const Family = function({gedcomx, personId}){
           <PersonList label="Parents" persons={parents} />
           {parents.length > 0 && <hr />}
           <PersonList label="Spouses" persons={spouses} />
-          {(parents.length || spouses.length) && <hr />}
+          {(parents.length > 0 || spouses.length > 0) && <hr />}
           <PersonList label="Children" persons={children} />
         </div>
       </div>
