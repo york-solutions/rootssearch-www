@@ -108,6 +108,19 @@ footer {
   }
 }
 
+.btn-orange {
+  background-color: $secondaryColor;
+  color: #fff;
+  
+  &:hover {
+    background-color: $secondaryColorDark;
+    color: #fff;
+  }
+  &:focus {
+    color: #fff;
+  }
+}
+
 .btn-xl {
   padding: 10px 16px;
   font-size: 24px;

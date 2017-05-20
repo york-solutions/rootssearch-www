@@ -230,7 +230,7 @@ GedcomX.Date.prototype.getDisplayString = function(){
  */
 GedcomX.Date.prototype.getYear = function(){
   if(this.normalized){
-    let matches = this.normalized.match(/\+(\d{4})/);
+    let matches = this.normalized[0].value.match(/\+(\d{4})/);
     if(matches){
       return matches[1];
     }

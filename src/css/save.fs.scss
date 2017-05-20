@@ -32,8 +32,21 @@
 
   .box {
     border: 1px solid $borderColor;
-    padding: $spacing;
     background-color: #fff;
+  }
+  
+  .box-title {
+    background-color: $primaryColor;
+    color: #fff;
+    padding: $spacing;
+  }
+  
+  .box-body {
+    padding: $spacing;
+    
+    & + .box-body {
+      border-top: 1px solid $borderColor;
+    }
   }
 
   .status-list {
@@ -71,8 +84,6 @@
     
     .name-line {
       overflow: auto;
-      font-weight: bold;
-      font-size: 1.1em;
     }
     
     .name-parts-line {
@@ -87,6 +98,11 @@
         margin-left: $spacing;
       }
     }
+    
+    &.large {
+      font-weight: bold;
+      font-size: 1.1em;
+    }
   }
   
   .person {
@@ -99,7 +115,7 @@
     
   }
   
-  .record .box {
+  .record .box-body {
 
     .name-detail,
     .fact-piece,
@@ -191,15 +207,19 @@
       margin-top: $spacing;
     }
   }
+    
+  .person-id {
+    margin-left: $spacing;
+  }
+  
+  .box-title .person-id {
+    color: #fff;
+  }
   
   .match {
     
     &:not(:first-child){
       margin-top: $spacing;
-    }
-    
-    .person-id {
-      margin-left: $spacing;
     }
     
     .fact {

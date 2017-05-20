@@ -17,13 +17,15 @@ const Family = function({gedcomx, personId}){
   
   return (
     <div>
-      <div className="label">Family</div>
       <div className="box">
-        <PersonList label="Parents" persons={parents} />
-        {parents.length > 0 && <hr />}
-        <PersonList label="Spouses" persons={spouses} />
-        {(parents.length || spouses.length) && <hr />}
-        <PersonList label="Children" persons={children} />
+        <div className="box-title">Family</div>
+        <div className="box-body">
+          <PersonList label="Parents" persons={parents} />
+          {parents.length > 0 && <hr />}
+          <PersonList label="Spouses" persons={spouses} />
+          {(parents.length || spouses.length) && <hr />}
+          <PersonList label="Children" persons={children} />
+        </div>
       </div>
     </div>
   );

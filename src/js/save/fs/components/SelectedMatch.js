@@ -4,6 +4,7 @@
 
 const React = require('react');
 const connect = require('react-redux').connect;
+const PersonBoxTitle = require('./PersonBoxTitle');
 const Fact = require('./Fact');
 const EditableFact = require('./EditableFact');
 const Name = require('./Name');
@@ -23,37 +24,40 @@ class SelectedMatch extends React.Component {
         <div className="person">
           <div className="label">Tree Person</div>
           <div className="box">
-            { this.props.saved ? 
-              <Name name={this.props.matchPerson.getPreferredName()} /> :
-              <EditableName nameParts={this.props.nameParts} onChange={this.nameChangeHandler.bind(this)} />
-            }
-            {this.props.matchFacts.map(({fact, display}) => {
-              return (
-                <div key={fact.getId()}>
-                  <hr />
-                  { this.props.saved ?
-                    <Fact fact={fact} /> :
-                    (display ?
-                      <EditableFact 
-                        fact={fact} 
-                        onDateChange={this.dateChangeHandler(fact.getId()).bind(this)} 
-                        onPlaceChange={this.placeChangeHandler(fact.getId()).bind(this)} /> :
-                      <div className="fact-placeholder" />
-                    )
-                  }
-                </div>
-              );
-            })}
-            <hr />
-            { this.props.saved ? 
-              <button className="btn btn-lg disabled" disabled>Saved</button> :
-              (
-                <div className="toolbar">
-                  <button className="btn btn-rs btn-lg" onClick={() => this.props.dispatch(saveMatchAction(this.props.personId))}>Save</button>
-                  <a href onClick={this.cancelMatch.bind(this)}>Cancel</a>
-                </div>
-              )
-            }
+            <PersonBoxTitle person={this.props.matchPerson} />
+            <div className="box-body">
+              { this.props.saved ? 
+                <Name name={this.props.matchPerson.getPreferredName()} /> :
+                <EditableName nameParts={this.props.nameParts} onChange={this.nameChangeHandler.bind(this)} />
+              }
+              {this.props.matchFacts.map(({fact, display}) => {
+                return (
+                  <div key={fact.getId()}>
+                    <hr />
+                    { this.props.saved ?
+                      <Fact fact={fact} /> :
+                      (display ?
+                        <EditableFact 
+                          fact={fact} 
+                          onDateChange={this.dateChangeHandler(fact.getId()).bind(this)} 
+                          onPlaceChange={this.placeChangeHandler(fact.getId()).bind(this)} /> :
+                        <div className="fact-placeholder" />
+                      )
+                    }
+                  </div>
+                );
+              })}
+              <hr />
+              { this.props.saved ? 
+                <button className="btn btn-lg disabled" disabled>Saved</button> :
+                (
+                  <div className="toolbar">
+                    <button className="btn btn-orange btn-lg" onClick={() => this.props.dispatch(saveMatchAction(this.props.personId))}>Save</button>
+                    <a href onClick={this.cancelMatch.bind(this)}>Cancel</a>
+                  </div>
+                )
+              }
+            </div>
           </div>
         </div>
         <Family gedcomx={this.props.gedcomx} personId={this.props.matchId} />

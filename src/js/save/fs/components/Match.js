@@ -1,6 +1,8 @@
 const React = require('react');
 const connect = require('react-redux').connect;
+const Name = require('./Name');
 const Fact = require('./Fact');
+const PersonBoxTitle = require('./PersonBoxTitle');
 const selectMatch = require('../actions/selectMatch');
 
 class Match extends React.Component {
@@ -20,18 +22,18 @@ class Match extends React.Component {
           };
     return (
       <div className="match box">
-        <div>
-          <span className="person-name">{person.getDisplayName(true)}</span>
-          <span className="person-id label">{person.getId()}</span>
+        <PersonBoxTitle person={person} />
+        <div className="box-body">
+          <Name name={person.getPreferredName()} />
+          {birth ? <Fact fact={birth} /> : null}
+          {death ? <Fact fact={death} /> : null}
+          <div className="relations">
+            <Relation person={father} relationship="Father" />
+            <Relation person={mother} relationship="Mother" />
+            <Relation person={spouse} relationship="Spouse" />
+          </div>
+          <button className="btn btn-orange btn-lg" onClick={select}>Select</button>
         </div>
-        {birth ? <Fact fact={birth} /> : null}
-        {death ? <Fact fact={death} /> : null}
-        <div className="relations">
-          <Relation person={father} relationship="Father" />
-          <Relation person={mother} relationship="Mother" />
-          <Relation person={spouse} relationship="Spouse" />
-        </div>
-        <button className="btn btn-rs btn-lg" onClick={select}>Select</button>
       </div>
     );
   }

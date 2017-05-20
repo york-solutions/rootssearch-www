@@ -4,6 +4,7 @@
 
 const React = require('react');
 const connect = require('react-redux').connect;
+const PersonBoxTitle = require('./PersonBoxTitle');
 const Fact = require('./Fact');
 const Name = require('./Name');
 const Family = require('./Family');
@@ -28,15 +29,18 @@ class RecordPerson extends React.Component {
         <div className="person record">
           <div className="label">Record Person</div>
           <div className="box">
-            <Name name={person.getPreferredName()} copyable={copyable} onCopyChange={this.onNameCopyChange} />
-            {factOrder.map(id => {
-              return (
-                <div key={id}>
-                  <hr />
-                  <Fact fact={facts[id]} copyable={copyable} onDateCopyChange={this.onDateCopyChange} onPlaceCopyChange={this.onPlaceCopyChange} />
-                </div>
-              );
-            })}
+            <PersonBoxTitle person={person} />
+            <div className="box-body">
+              <Name name={person.getPreferredName()} copyable={copyable} onCopyChange={this.onNameCopyChange} />
+              {factOrder.map(id => {
+                return (
+                  <div key={id}>
+                    <hr />
+                    <Fact fact={facts[id]} copyable={copyable} onDateCopyChange={this.onDateCopyChange} onPlaceCopyChange={this.onPlaceCopyChange} />
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
         <Family gedcomx={record} personId={person.getId()} />
