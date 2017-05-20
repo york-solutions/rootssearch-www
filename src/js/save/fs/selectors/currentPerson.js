@@ -1,3 +1,5 @@
+const personSelector = require('./person');
+
 module.exports = function(state){
-  return state.persons[state.currentPersonId];
+  return personSelector(state, state.currentPersonId);
 };
