@@ -29,7 +29,7 @@ class RecordPerson extends React.Component {
         <div className="person record">
           <div className="label">Record Person</div>
           <div className="box">
-            <PersonBoxTitle person={person} />
+            <PersonBoxTitle person={person} displayId={false} />
             <div className="box-body">
               <Name name={person.getPreferredName()} copyable={copyable} onCopyChange={this.onNameCopyChange} />
               {factOrder.map(id => {

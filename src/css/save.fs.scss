@@ -214,6 +214,10 @@
     
   .person-id {
     margin-left: $spacing;
+    
+    &:hover {
+      text-decoration: underline;
+    }
   }
   
   .box-title .person-id {
