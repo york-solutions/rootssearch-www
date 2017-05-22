@@ -1,8 +1,5 @@
 /**
  * Setup the FS SDK client singleton
- * 
- * TODO: refactor so that state is handled by Redux and this component
- * doesn't do any React rendering.
  */
  
 const FamilySearch = require('fs-js-lite');
@@ -55,11 +52,7 @@ FamilySearch.prototype.oauthPopup = function(callback){
   }, 1000);
 };
 
-const client = new FamilySearch({
-  appKey: 'a02f100000PUcPnAAL',
-  redirectUri: `${window.location.origin}/save/fs/oauth-redirect`,
-  saveAccessToken: true
-});
+const client = new FamilySearch(calculateConfig());
 
 // Hydrate response data
 client.addResponseMiddleware(function(client, request, response, next){
@@ -150,5 +143,18 @@ client.supportedFactTypes = [
   'http://familysearch.org/v1/TitleOfNobility',
   'http://familysearch.org/v1/TribeName',
 ];
+
+/**
+ * Calculate SDK client configuration parameters
+ */
+function calculateConfig(){
+  const config = {
+    redirectUri: `${window.location.origin}/save/fs/oauth-redirect`,
+    saveAccessToken: true,
+    appKey: 'a02f100000PUcPnAAL'
+  };
+  config.environment = window.location.hostname === 'rootssearch.io' ? 'production' : 'integration';
+  return config;
+}
 
 module.exports = client;

@@ -1,4 +1,5 @@
 const React = require('react');
+const FS = require('../utils/fs');
 
 class PersonBoxTitle extends React.Component {
   
@@ -20,9 +21,9 @@ class PersonBoxTitle extends React.Component {
   }
   
   personUrl(){
-    const domain = 'integration.familysearch.org',
+    const domain = FS.platformHost(),
           personId = this.props.person.getId();
-    return `https://${domain}/platform/redirect?person=${personId}`;
+    return `${domain}/platform/redirect?person=${personId}`;
   }
 }
 
