@@ -7,27 +7,13 @@
  */
 
 const uuid = require('./uuid');
+const dateUtils = require('./date');
 
 const GedcomX = require('gedcomx-js');
 GedcomX.enableRsExtensions();
 GedcomX.enableRecordsExtensions();
 GedcomX.enableAtomExtensions();
 GedcomX.addExtensions(require('gedcomx-fs-js'));
-
-const months = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December'
-];
 
 /**
  * Get the GEDCOM X data off the page, if it exists
@@ -215,7 +201,7 @@ GedcomX.Date.prototype.getDisplayString = function(){
   if(this.getFormal()){
     let date = new Date(this.getFormal().replace('+',''));
     if(!isNaN(date.getTime())){
-      return [date.getDate(), months[date.getMonth()], date.getFullYear()].join(' ') || '';
+      return dateUtils.displayString(date);
     }
   }
   

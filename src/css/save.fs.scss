@@ -154,6 +154,12 @@
       text-overflow: ellipsis;
     }
     
+    .attribution {
+      margin-top: $spacingQuarter;
+      font-size: .8em;
+      padding: $spacingQuarter + 2;
+    }
+    
   }
   
   .fact-placeholder {
