@@ -154,10 +154,19 @@
     
   }
     
-  .attribution {
+  .attribution,
+  .reason {
     margin-top: $spacingQuarter;
     font-size: .8em;
-    padding: $spacingQuarter + 2;
+    color: $textLight;
+  }
+  
+  .reason {
+    
+    textarea {
+      width: 100%;
+      color: $textColor;
+    }
   }
   
   .fact-placeholder {

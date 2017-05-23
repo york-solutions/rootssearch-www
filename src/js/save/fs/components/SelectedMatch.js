@@ -21,7 +21,7 @@ class SelectedMatch extends React.Component {
   render(){
     return (
       <div>
-        <div className="person">
+        <div className="person matched">
           <div className="label">Tree Person</div>
           <div className="box">
             <PersonBoxTitle person={this.props.matchPerson} />
@@ -33,7 +33,7 @@ class SelectedMatch extends React.Component {
                   attribution={this.props.matchPerson.getPreferredName().getAttribution()} 
                   onChange={this.nameChangeHandler.bind(this)} />
               }
-              {this.props.matchFacts.map(({fact, display}) => {
+              {this.props.matchFacts.map(({fact, display, modified, originalAttribution}) => {
                 return (
                   <div key={fact.getId()}>
                     <hr />
@@ -41,9 +41,12 @@ class SelectedMatch extends React.Component {
                       <Fact fact={fact} /> :
                       (display ?
                         <EditableFact 
-                          fact={fact} 
+                          fact={fact}
+                          modified={modified}
+                          originalAttribution={originalAttribution}
                           onDateChange={this.dateChangeHandler(fact.getId()).bind(this)} 
-                          onPlaceChange={this.placeChangeHandler(fact.getId()).bind(this)} /> :
+                          onPlaceChange={this.placeChangeHandler(fact.getId()).bind(this)} 
+                          onReasonChange={this.reasonChangeHandler(fact.getId()).bind(this)} /> :
                         <div className="fact-placeholder" />
                       )
                     }
@@ -95,6 +98,17 @@ class SelectedMatch extends React.Component {
       this.props.dispatch({
         type: 'OVERRIDE_PLACE',
         value: place,
+        dataId: factId,
+        personId: this.props.personId
+      });
+    };
+  }
+  
+  reasonChangeHandler(factId){
+    return (event) => {
+      this.props.dispatch({
+        type: 'REASON',
+        value: event.target.value,
         dataId: factId,
         personId: this.props.personId
       });

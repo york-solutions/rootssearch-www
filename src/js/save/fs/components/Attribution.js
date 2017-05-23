@@ -11,16 +11,16 @@ const Attribution = function({attribution}){
   }
   return (
     <div className="attribution">
-      <div className="contributor">{contributorDisplay(attribution)}</div>
-      <div className="reason">Reason: {attribution && attribution.getChangeMessage()}</div>
+      {contributorDisplay(attribution)}. Reason: {attribution && attribution.getChangeMessage()}
     </div>
   );
 };
 
 function contributorDisplay(attribution){
   if(attribution){
-    const date = dateUtils.displayString(new Date(attribution.getModified()));
-    return `Last modified ${date} by ${attribution.getContributor().getResourceId()}.`;
+    const date = dateUtils.displayString(new Date(attribution.getModified())),
+          contributor = attribution.getContributor();
+    return `Last modified ${date} ${contributor ? ' by ' + contributor.getResourceId() : ''}`;
   }
   return null;
 }

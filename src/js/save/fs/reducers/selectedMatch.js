@@ -116,6 +116,15 @@ module.exports = function(state = {}, action){
         }
       });
       
+    case 'REASON':
+      return update(state, {
+        reasons: {
+          [dataId]: {
+            $set: action.value
+          }
+        }
+      });
+      
     case 'SAVE_MATCH':
       return update(state, {
         saving: {

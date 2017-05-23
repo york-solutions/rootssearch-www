@@ -10,39 +10,49 @@ module.exports = function(state){
   const currentPerson = currentPersonSelector(state),
         {factOrder, facts} = currentPerson,
         match = currentPerson.selectedMatch,
-        {factMap, copiedDates, copiedPlaces, overrideDates, overridePlaces} = match;
+        {factMap, copiedDates, copiedPlaces, overrideDates, overridePlaces, reasons} = match;
         
   return factOrder.map(recordFactId => {
     
     // Copy so that we can make modifications; i.e. be immutable
     const fact = GedcomX.Fact(factMap[recordFactId].toJSON()),
-          factId = fact.getId();
-    let display = fact.isVital();
+          factId = fact.getId(),
+          originalAttribution = fact.getAttribution();
+    let display = fact.isVital(),
+        modified = false;
     
     // Make any adjustments based on the copied dates and places
     if(copiedDates[recordFactId]){
       fact.setDate(facts[recordFactId].getDate().toJSON());
-      display = true;
+      modified = display = true;
     }
     if(copiedPlaces[recordFactId]){
       fact.setPlace(facts[recordFactId].getPlace().toJSON());
-      display = true;
+      modified = display = true;
     }
     
     // Overrides
     if(overrideDates[factId]){
       fact.setDate(overrideDates[factId]);
-      display = true;
+      modified = display = true;
     }
     if(overridePlaces[factId]){
       fact.setPlace(overridePlaces[factId]);
-      display = true;
+      modified = display = true;
+    }
+    
+    if(reasons[factId]){
+      fact.setAttribution({
+        changeMessage: reasons[factId]
+      });
     }
     
     return {
       recordFactId, 
       fact,
-      display
+      display,
+      modified,
+      originalAttribution
     };
   });
 };
