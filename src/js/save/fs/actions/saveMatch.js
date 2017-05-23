@@ -82,6 +82,7 @@ function calculateNameUpdates(person){
         recordName = recordPerson.getPreferredName(),
         recordNameParts = namePartsMap(recordName),
         match = person.selectedMatch,
+        reason = match.nameReason,
         matchName = match.gedcomx.getPersonById(match.matchId).getPreferredName(),
         matchNameParts = namePartsMap(matchName),
         copiedParts = match.copyName ? recordNameParts : {};
@@ -107,7 +108,10 @@ function calculateNameUpdates(person){
       id: matchName.getId(),
       nameForms: [{
         parts: newNameParts
-      }]
+      }],
+      attribution: {
+        changeMessage: reason
+      }
     }) 
   ];
 }
@@ -125,7 +129,7 @@ function calculateFactUpdates(person){
   const factOrder = person.factOrder,
         facts = person.facts,
         match = person.selectedMatch,
-        factMap = match.factMap;
+        {factMap, factReasons} = match;
   
   // Filter fact ID list to just those facts that are being copied
   // TODO: allow the user to modify matched vitals without copying. Right now
@@ -161,6 +165,12 @@ function calculateFactUpdates(person){
     // Delete IDs on new facts
     if(matchFact.getId().substring(0, 4) === 'NEW_'){
       matchFact.setId();
+    }
+    
+    if(factReasons[matchFactId]){
+      matchFact.setAttribution({
+        changeMessage: factReasons[matchFactId]
+      });
     }
     
     // Add to the update object

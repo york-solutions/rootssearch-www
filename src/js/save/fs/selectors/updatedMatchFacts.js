@@ -41,11 +41,9 @@ module.exports = function(state){
       modified = display = true;
     }
     
-    if(factReasons[factId]){
-      fact.setAttribution({
-        changeMessage: factReasons[factId]
-      });
-    }
+    fact.setAttribution({
+      changeMessage: factReasons[factId] ? factReasons[factId] : ''
+    });
     
     return {
       recordFactId, 
