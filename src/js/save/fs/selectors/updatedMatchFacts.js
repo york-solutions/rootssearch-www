@@ -10,7 +10,7 @@ module.exports = function(state){
   const currentPerson = currentPersonSelector(state),
         {factOrder, facts} = currentPerson,
         match = currentPerson.selectedMatch,
-        {factMap, copiedDates, copiedPlaces, overrideDates, overridePlaces, reasons} = match;
+        {factMap, copiedDates, copiedPlaces, overrideDates, overridePlaces, factReasons} = match;
         
   return factOrder.map(recordFactId => {
     
@@ -41,9 +41,9 @@ module.exports = function(state){
       modified = display = true;
     }
     
-    if(reasons[factId]){
+    if(factReasons[factId]){
       fact.setAttribution({
-        changeMessage: reasons[factId]
+        changeMessage: factReasons[factId]
       });
     }
     

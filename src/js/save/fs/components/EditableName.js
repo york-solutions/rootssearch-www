@@ -1,7 +1,8 @@
 const React = require('react');
 const Attribution = require('./Attribution');
+const Reason = require('./Reason');
 
-const EditableName = function({nameParts, attribution, onChange}){
+const EditableName = function({nameParts, attribution, modified = false, reason, onChange, onReasonChange}){
   // TODO: edit Prefix and Suffix parts
   return (
     <div className="person-name">
@@ -15,6 +16,9 @@ const EditableName = function({nameParts, attribution, onChange}){
           onChange={onChange('http://gedcomx.org/Surname')} />
       </div>
       <Attribution attribution={attribution} />
+      {modified && 
+        <Reason reason={reason} 
+          onChange={onReasonChange} />}
     </div>  
   );
 };

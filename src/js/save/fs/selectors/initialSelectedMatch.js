@@ -25,7 +25,10 @@ module.exports = function(){
     overrideDates: {}, // values are the new input value
     overridePlaces: {}, // values are the new input value
     
-    // map of {factId => reason statements}
-    reasons: {},
+    // map of {factId => reason statement}
+    factReasons: {},
+    
+    // reason statement
+    nameReason: '',
   };
 };

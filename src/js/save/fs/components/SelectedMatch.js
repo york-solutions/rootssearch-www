@@ -15,6 +15,7 @@ const savedSelector = require('../selectors/saved');
 const updatedNamePartsSelector = require('../selectors/updatedNameParts');
 const matchFactsSelector = require('../selectors/updatedMatchFacts');
 const currentPersonSelector = require('../selectors/currentPerson');
+const nameModifiedSelector = require('../selectors/nameModified');
 
 class SelectedMatch extends React.Component {
 
@@ -30,8 +31,11 @@ class SelectedMatch extends React.Component {
                 <Name name={this.props.matchPerson.getPreferredName()} /> :
                 <EditableName   
                   nameParts={this.props.nameParts} 
-                  attribution={this.props.matchPerson.getPreferredName().getAttribution()} 
-                  onChange={this.nameChangeHandler.bind(this)} />
+                  attribution={this.props.matchPerson.getPreferredName().getAttribution()}
+                  reason={this.props.nameReason}
+                  modified={this.props.nameModified}
+                  onChange={this.nameChangeHandler.bind(this)}
+                  onReasonChange={this.nameReasonChangeHandler.bind(this)} />
               }
               {this.props.matchFacts.map(({fact, display, modified, originalAttribution}) => {
                 return (
@@ -46,7 +50,7 @@ class SelectedMatch extends React.Component {
                           originalAttribution={originalAttribution}
                           onDateChange={this.dateChangeHandler(fact.getId()).bind(this)} 
                           onPlaceChange={this.placeChangeHandler(fact.getId()).bind(this)} 
-                          onReasonChange={this.reasonChangeHandler(fact.getId()).bind(this)} /> :
+                          onReasonChange={this.factReasonChangeHandler(fact.getId()).bind(this)} /> :
                         <div className="fact-placeholder" />
                       )
                     }
@@ -104,15 +108,23 @@ class SelectedMatch extends React.Component {
     };
   }
   
-  reasonChangeHandler(factId){
+  factReasonChangeHandler(factId){
     return (event) => {
       this.props.dispatch({
-        type: 'REASON',
+        type: 'FACT_REASON',
         value: event.target.value,
         dataId: factId,
         personId: this.props.personId
       });
     };
+  }
+  
+  nameReasonChangeHandler(event) {
+    this.props.dispatch({
+      type: 'NAME_REASON',
+      value: event.target.value,
+      personId: this.props.personId
+    });
   }
   
   cancelMatch(e) {
@@ -128,7 +140,7 @@ class SelectedMatch extends React.Component {
 const mapStateToProps = state => {
   const currentPerson = currentPersonSelector(state),
         {selectedMatch} = currentPerson,
-        {matchId, gedcomx, copyName} = selectedMatch;
+        {matchId, gedcomx, copyName, nameReason} = selectedMatch;
   return {
     matchId,
     matchPerson: gedcomx.getPersonById(matchId),
@@ -136,6 +148,8 @@ const mapStateToProps = state => {
     personId: state.currentPersonId,
     saved: savedSelector(state),
     copyName,
+    nameReason,
+    nameModified: nameModifiedSelector(state),
     nameParts: updatedNamePartsSelector(state),
     matchFacts: matchFactsSelector(state)
   };

@@ -116,12 +116,19 @@ module.exports = function(state = {}, action){
         }
       });
       
-    case 'REASON':
+    case 'FACT_REASON':
       return update(state, {
-        reasons: {
+        factReasons: {
           [dataId]: {
             $set: action.value
           }
+        }
+      });
+      
+    case 'NAME_REASON':
+      return update(state, {
+        nameReason: {
+          $set: action.value
         }
       });
       
