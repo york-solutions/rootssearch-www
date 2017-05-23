@@ -1,5 +1,6 @@
 const React = require('react');
 const FS = require('../utils/fs');
+const BoxTitle = require('./BoxTitle');
 
 class PersonBoxTitle extends React.Component {
   
@@ -11,12 +12,12 @@ class PersonBoxTitle extends React.Component {
   render(){
     const {person, displayId = true} = this.props;
     return (
-      <div className="box-title">
+      <BoxTitle>
         <span className="person-name large">{person.getDisplayName(true)}</span>
         {displayId && <a className="person-id label" href={this.personUrl()} target="_blank">{person.getId()}</a>}
         <br />
         <span className="life-span">{person.getLifespan(true)}</span>
-      </div>  
+      </BoxTitle>  
     );
   }
   

@@ -131,17 +131,25 @@
     
   }
   
-  .record .box-body {
-
-    .name-detail,
-    .fact-piece,
-    .label {
-      margin-left: $spacingDouble;
+  .record {
+    .record-title {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     
-    .copy-box {
-      float: left;
-      margin-top: 10px;
+    .box-body {
+    
+      .name-detail,
+      .fact-piece,
+      .label {
+        margin-left: $spacingDouble;
+      }
+      
+      .copy-box {
+        float: left;
+        margin-top: 10px;
+      }
     }
   }
   

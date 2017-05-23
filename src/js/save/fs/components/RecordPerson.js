@@ -4,13 +4,14 @@
 
 const React = require('react');
 const connect = require('react-redux').connect;
-const PersonBoxTitle = require('./PersonBoxTitle');
+const BoxTitle = require('./BoxTitle');
 const Fact = require('./Fact');
 const Name = require('./Name');
 const Family = require('./Family');
 const matchedSelector = require('../selectors/matched');
 const savedSelector = require('../selectors/saved');
 const currentPersonSelector = require('../selectors/currentPerson');
+const sourceDescriptionSelector = require('../selectors/sourceDescription');
 
 class RecordPerson extends React.Component {
   
@@ -22,14 +23,17 @@ class RecordPerson extends React.Component {
   }
   
   render(){
-    const { person, record, matched = false, saved = false, factOrder, facts, nameCopied, copiedDates, copiedPlaces } = this.props,
+    const { person, record, matched = false, saved = false, factOrder, facts, nameCopied, copiedDates, copiedPlaces, sourceDescription } = this.props,
           copyable = matched && !saved;
     return (
       <div>
         <div className={'person record' + (matched ? ' matched' : '') + (saved ? ' saved' : '')}>
           <div className="label">Record Person</div>
           <div className="box">
-            <PersonBoxTitle person={person} displayId={false} />
+            <BoxTitle>
+              <div className="person-name large">{person.getDisplayName(true)}</div>
+              <div className="record-title">{sourceDescription.getTitles()[0].getValue()}</div>
+            </BoxTitle>
             <div className="box-body">
               <Name 
                 name={person.getPreferredName()} 
@@ -84,7 +88,8 @@ const mapStateToProps = state => {
     factOrder: currentPerson.factOrder,
     nameCopied: match.copyName,
     copiedDates: match.copiedDates,
-    copiedPlaces: match.copiedPlaces
+    copiedPlaces: match.copiedPlaces,
+    sourceDescription: sourceDescriptionSelector(state)
   };
 };
 

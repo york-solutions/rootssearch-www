@@ -6,6 +6,7 @@ const FS = require('../utils/fs');
 const GedcomX = require('../utils/gedcomx');
 const nextPersonAction = require('./nextPerson');
 const namePartsMap = require('../selectors/namePartsMap');
+const sourceDescriptionSelector = require('../selectors/sourceDescription');
 
 module.exports = function(personId){
   return function(dispatch, getState){
@@ -222,21 +223,10 @@ function getSourceDescriptionUrl(state, callback){
   else {
     FS.post('/platform/sources/descriptions', {
       body: {
-        sourceDescriptions: [ calculateSourceDescription(state) ]
+        sourceDescriptions: [ sourceDescriptionSelector(state) ]
       }
     }, function(error, response){
       callback(error, response ? response.headers.location : undefined);
     });
   }
-}
-
-/**
- * Get the source description for the record.
- */
-function calculateSourceDescription(state){
-  const gedcomx = state.record,
-        aboutId = gedcomx.getDescription().replace('#', '');
-  return gedcomx.getSourceDescriptions().find(sd => {
-    return sd.getId() === aboutId;
-  });
 }
