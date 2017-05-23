@@ -11,6 +11,12 @@ module.exports = function(person){
       death = false,
       burial = false;
   return person.getFacts().filter(f => {
+    
+    // TODO: stop ignoring facts that just have a value
+    if(!(f.getDate() || f.getPlace())){
+      return false;
+    }
+    
     switch(f.getType()){
       case 'http://gedcomx.org/Birth':
         if(birth){
