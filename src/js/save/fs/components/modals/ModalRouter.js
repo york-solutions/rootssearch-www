@@ -9,6 +9,7 @@ const connect = require('react-redux').connect;
 
 const FSAuthModal = require('./FSAuthModal');
 const CreatePersonModal = require('./CreatePersonModal');
+const ReviewUpdatesModal = require('./ReviewUpdatesModal');
 
 const ModalRouter = function(props){
   switch(props.modal){
@@ -18,6 +19,9 @@ const ModalRouter = function(props){
       
     case 'CREATE_PERSON':
       return <CreatePersonModal />;
+      
+    case 'REVIEW_UPDATES':
+      return <ReviewUpdatesModal />;
     
     default:
       return null;

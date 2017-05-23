@@ -16,8 +16,7 @@ module.exports = function(state){
     
     // Copy so that we can make modifications; i.e. be immutable
     const fact = GedcomX.Fact(factMap[recordFactId].toJSON()),
-          factId = fact.getId(),
-          originalAttribution = fact.getAttribution();
+          factId = fact.getId();
     let display = fact.isVital(),
         modified = false;
     
@@ -41,16 +40,11 @@ module.exports = function(state){
       modified = display = true;
     }
     
-    fact.setAttribution({
-      changeMessage: factReasons[factId] ? factReasons[factId] : ''
-    });
-    
     return {
       recordFactId, 
       fact,
       display,
-      modified,
-      originalAttribution
+      modified
     };
   });
 };

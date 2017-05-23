@@ -357,4 +357,23 @@ GedcomX.Fact.prototype.isVital = function(){
   return GedcomX.vitals.indexOf(this.getType()) !== -1;
 };
 
+/**
+ * Create a Name from a map of name parts.
+ * 
+ * @param {Object} nameParts {namePartType => value}
+ * @returns {Name}
+ */
+GedcomX.Name.fromParts = function(nameParts){
+  return GedcomX.Name({
+    nameForms: [{
+      parts: Object.keys(nameParts).map(type => {
+        return {
+          type: type,
+          value: nameParts[type]
+        };
+      })
+    }]
+  });
+};
+
 module.exports = GedcomX;

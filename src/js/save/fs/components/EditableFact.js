@@ -8,17 +8,13 @@ const Reason = require('./Reason');
 const DateInput = require('./DateInput');
 const PlaceInput = require('./PlaceInput');
 
-const EditableFact = function({fact, modified, originalAttribution, onDateChange, onPlaceChange, onReasonChange}){
-  const attribution = fact.getAttribution();
+const EditableFact = function({fact, onDateChange, onPlaceChange, onReasonChange}){
   return (
     <div className="fact">
       <span className="label">{fact.getTypeDisplayLabel()}</span>
       <DateInput date={fact.getDate()} onChange={onDateChange} />
       <PlaceInput place={fact.getPlace()} onChange={onPlaceChange} />
-      <Attribution attribution={originalAttribution} />
-      {modified && 
-        <Reason reason={attribution ? attribution.getChangeMessage() : ''} 
-          onChange={onReasonChange} />}
+      <Attribution attribution={fact.getAttribution()} />
     </div>
   );
 };

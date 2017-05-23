@@ -10,8 +10,14 @@ const namePartsMap = require('../selectors/namePartsMap');
 module.exports = function(personId){
   return function(dispatch, getState){
     
-    const state = getState(),
-          person = state.persons[personId],
+    const state = getState();
+    
+    // Default to current person
+    if(!personId){
+      personId = state.currentPersonId;
+    }
+    
+    const person = state.persons[personId],
           matchId = person.selectedMatch.matchId;
     
     // Set the state to saving

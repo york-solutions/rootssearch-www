@@ -6,10 +6,15 @@ module.exports = function(state = {}, action){
       
     case 'CREATE_PERSON':
       return 'CREATE_PERSON';
+      
+    case 'REVIEW_UPDATES':
+      return 'REVIEW_UPDATES';
     
     case 'FS_AUTH_END':
     case 'CANCEL_CREATE_PERSON':
     case 'PERSON_CREATED':
+    case 'CANCEL_REVIEW':
+    case 'SAVE_MATCH':
       return null;
     
     default:

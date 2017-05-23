@@ -115,6 +115,20 @@
       margin-top: $spacing;
     }
     
+    .fact-piece {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  
+    .conclusion-line {
+      line-height: 33px;
+      
+      &:not(:first-child){
+        margin-top: $spacingQuarter;
+      }
+    }
+    
   }
   
   .record .box-body {
@@ -138,20 +152,11 @@
       width: 100%;
     }
     
-    .fact-line {
-      line-height: 33px;
-      
-      &:not(:first-child){
-        margin-top: $spacingQuarter;
-      }
-    }
-    
-    .fact-piece {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    
+  }
+  
+  /* Make space for Attribution in SelectedMatch conclusions */
+  .record.matched:not(.saved) .conclusion {
+    padding-bottom: 22px;
   }
     
   .attribution,
@@ -166,11 +171,16 @@
     textarea {
       width: 100%;
       color: $textColor;
+      height: 70px;
     }
   }
   
+  .review-updates-modal {
+    min-width: 400px;
+  }
+  
   .fact-placeholder {
-    height: 99px;
+    height: 123px;
   }
   
   .person-gender,
@@ -206,7 +216,8 @@
   .modal-title {
     background-color: $primaryColor;
     color: #fff;
-    padding: $spacingQuarter $spacing;
+    font-size: 1.2em;
+    padding: $spacingHalf $spacing;
   }
   
   .modal-body {

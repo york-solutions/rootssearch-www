@@ -10,7 +10,6 @@ const EditableFact = require('./EditableFact');
 const Name = require('./Name');
 const EditableName = require('./EditableName');
 const Family = require('./Family');
-const saveMatchAction = require('../actions/saveMatch');
 const savedSelector = require('../selectors/saved');
 const updatedNamePartsSelector = require('../selectors/updatedNameParts');
 const matchFactsSelector = require('../selectors/updatedMatchFacts');
@@ -34,8 +33,7 @@ class SelectedMatch extends React.Component {
                   attribution={this.props.matchPerson.getPreferredName().getAttribution()}
                   reason={this.props.nameReason}
                   modified={this.props.nameModified}
-                  onChange={this.nameChangeHandler.bind(this)}
-                  onReasonChange={this.nameReasonChangeHandler.bind(this)} />
+                  onChange={this.nameChangeHandler.bind(this)} />
               }
               {this.props.matchFacts.map(({fact, display, modified, originalAttribution}) => {
                 return (
@@ -49,8 +47,7 @@ class SelectedMatch extends React.Component {
                           modified={modified}
                           originalAttribution={originalAttribution}
                           onDateChange={this.dateChangeHandler(fact.getId()).bind(this)} 
-                          onPlaceChange={this.placeChangeHandler(fact.getId()).bind(this)} 
-                          onReasonChange={this.factReasonChangeHandler(fact.getId()).bind(this)} /> :
+                          onPlaceChange={this.placeChangeHandler(fact.getId()).bind(this)} /> :
                         <div className="fact-placeholder" />
                       )
                     }
@@ -62,7 +59,7 @@ class SelectedMatch extends React.Component {
                 <button className="btn btn-lg disabled" disabled>Saved</button> :
                 (
                   <div className="toolbar">
-                    <button className="btn btn-orange btn-lg" onClick={() => this.props.dispatch(saveMatchAction(this.props.personId))}>Save</button>
+                    <button className="btn btn-orange btn-lg" onClick={() => this.props.dispatch({ type: 'REVIEW_UPDATES' })}>Save</button>
                     <a href onClick={this.cancelMatch.bind(this)}>Cancel</a>
                   </div>
                 )
@@ -108,32 +105,13 @@ class SelectedMatch extends React.Component {
     };
   }
   
-  factReasonChangeHandler(factId){
-    return (event) => {
-      this.props.dispatch({
-        type: 'FACT_REASON',
-        value: event.target.value,
-        dataId: factId,
-        personId: this.props.personId
-      });
-    };
-  }
-  
-  nameReasonChangeHandler(event) {
-    this.props.dispatch({
-      type: 'NAME_REASON',
-      value: event.target.value,
-      personId: this.props.personId
-    });
-  }
-  
   cancelMatch(e) {
     this.props.dispatch({
       type: 'CANCEL_MATCH',
       personId: this.props.personId
     });
     e.preventDefault(); 
-    return false; 
+    return false;
   }
 }
 

@@ -14,13 +14,13 @@ const Fact = function({fact, copyable = false, onDateCopyChange=()=>{}, onPlaceC
   const factId = fact.getId();
   
   return (
-    <div className="fact">
+    <div className="fact conclusion">
       <span className="label">{fact.getTypeDisplayLabel()}</span>
-      <div className="fact-line">
+      <div className="fact-line conclusion-line">
         {copyable && fact.getDateDisplayString() && <CopyBox dataId={factId} onChange={onDateCopyChange} />}
         <div className="fact-piece">{fact.getDateDisplayString()}</div>
       </div>
-      <div className="fact-line">
+      <div className="fact-line conclusion-line">
         {copyable && fact.getPlaceDisplayString() && <CopyBox dataId={factId} onChange={onPlaceCopyChange} />}
         <div className="fact-piece">{fact.getPlaceDisplayString()}</div>
       </div>

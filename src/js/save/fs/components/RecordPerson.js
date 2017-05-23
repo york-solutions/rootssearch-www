@@ -26,7 +26,7 @@ class RecordPerson extends React.Component {
           copyable = matched && !saved;
     return (
       <div>
-        <div className="person record">
+        <div className={'person record' + (matched ? ' matched' : '') + (saved ? ' saved' : '')}>
           <div className="label">Record Person</div>
           <div className="box">
             <PersonBoxTitle person={person} displayId={false} />

@@ -33,7 +33,7 @@
     "express": "4.15.2",
     "fs-js-lite": "2.2.0",
     "gedcomx-fs-js": "2.0.0",
-    "gedcomx-js": "2.7.0",
+    "gedcomx-js": "2.8.0",
     "gensearch": "2.4.0",
     "gensites": "0.1.1",
     "gulp": "3.9.1",
