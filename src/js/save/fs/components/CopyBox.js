@@ -4,7 +4,7 @@ class CopyBox extends React.Component {
   
   render(){
     return (
-      <input type="checkbox" className="copy-box" onChange={this.onChange.bind(this)} />
+      <input type="checkbox" checked={this.props.copied} className="copy-box" onChange={this.onChange.bind(this)} />
     );
   }
   

@@ -22,7 +22,7 @@ class RecordPerson extends React.Component {
   }
   
   render(){
-    const { person, record, matched = false, saved = false, factOrder, facts } = this.props,
+    const { person, record, matched = false, saved = false, factOrder, facts, nameCopied, copiedDates, copiedPlaces } = this.props,
           copyable = matched && !saved;
     return (
       <div>
@@ -31,12 +31,22 @@ class RecordPerson extends React.Component {
           <div className="box">
             <PersonBoxTitle person={person} displayId={false} />
             <div className="box-body">
-              <Name name={person.getPreferredName()} copyable={copyable} onCopyChange={this.onNameCopyChange} />
+              <Name 
+                name={person.getPreferredName()} 
+                copied={nameCopied} 
+                copyable={copyable} 
+                onCopyChange={this.onNameCopyChange} />
               {factOrder.map(id => {
                 return (
                   <div key={id}>
                     <hr />
-                    <Fact fact={facts[id]} copyable={copyable} onDateCopyChange={this.onDateCopyChange} onPlaceCopyChange={this.onPlaceCopyChange} />
+                    <Fact 
+                      fact={facts[id]} 
+                      copyable={copyable}
+                      dateCopied={!!copiedDates[id]}
+                      placeCopied={!!copiedPlaces[id]}
+                      onDateCopyChange={this.onDateCopyChange} 
+                      onPlaceCopyChange={this.onPlaceCopyChange} />
                   </div>
                 );
               })}
@@ -62,7 +72,8 @@ class RecordPerson extends React.Component {
 }
 
 const mapStateToProps = state => {
-  const currentPerson = currentPersonSelector(state);
+  const currentPerson = currentPersonSelector(state),
+        match = currentPerson.selectedMatch;
   return {
     record: state.record,
     person: currentPerson.gedcomx,
@@ -70,7 +81,10 @@ const mapStateToProps = state => {
     matched: matchedSelector(state),
     saved: savedSelector(state),
     facts: currentPerson.facts,
-    factOrder: currentPerson.factOrder
+    factOrder: currentPerson.factOrder,
+    nameCopied: match.copyName,
+    copiedDates: match.copiedDates,
+    copiedPlaces: match.copiedPlaces
   };
 };
 
