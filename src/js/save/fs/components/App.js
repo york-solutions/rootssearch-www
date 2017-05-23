@@ -1,16 +1,18 @@
 const React = require('react');
 const connect = require('react-redux').connect;
 const StatusBar = require('./StatusBar');
-const PersonContainer = require('./PersonContainer');
 const ModalRouter = require('./modals/ModalRouter');
 const Loader = require('./Loader');
+const MatchContainer = require('./MatchContainer');
+const MatchesContainer = require('./MatchesContainer');
+const matchedSelector = require('../selectors/matched');
 
-const App = function({ auth, busy }) {
+const App = function({ auth, busy, matched }) {
   // TODO: if we have no persons then show an error
   return (
     <div>
       <StatusBar />
-      <PersonContainer />
+      { matched ? <MatchContainer /> : <MatchesContainer /> }
       <ModalRouter />
       { busy && (
         <div className="modal-fade">
@@ -24,6 +26,7 @@ const App = function({ auth, busy }) {
 module.exports = connect(state => {
   return {
     auth: state.auth,
-    busy: state.busy
+    busy: state.busy,
+    matched: matchedSelector(state)
   };
 })(App);
