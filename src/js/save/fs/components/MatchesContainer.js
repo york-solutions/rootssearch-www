@@ -5,6 +5,9 @@ const Fact = require('./Fact');
 const Name = require('./Name');
 const Family = require('./Family');
 const MatchesList = require('./MatchesList');
+const PersonBoxTitle = require('./PersonBoxTitle');
+const EditableFact = require('./EditableFact');
+const EditableName = require('./EditableName');
 
 const matchedSelector = require('../selectors/matched');
 const savedSelector = require('../selectors/saved');
@@ -57,12 +60,12 @@ class MatchesContainer extends React.Component {
         sourceDescription
       } = this.props,
       copyable = matched && !saved;
-    return [<div className="label">Record Person</div>,
-      <BoxTitle>
+    return [<div className="label left">Record Person</div>,
+      <div className="box-title left">
         <div className="person-name large">{person.getDisplayName(true)}</div>
         <div className="record-title">{sourceDescription.getTitles()[0].getValue()}</div>
-      </BoxTitle>,
-      <div className="box-row">
+      </div>,
+      <div className="box-row left">
         <Name 
           name={person.getPreferredName()} 
           copied={nameCopied} 
@@ -71,7 +74,7 @@ class MatchesContainer extends React.Component {
       </div>,
       ...(factOrder.map(id => {
         return (
-          <div className="box-row">
+          <div className="box-row left">
             <Fact
               fact={facts[id]} 
               copyable={copyable}
@@ -82,8 +85,10 @@ class MatchesContainer extends React.Component {
           </div>
         );
       })),
-      <div className="box-end"></div>,
-      <Family gedcomx={record} personId={person.getId()} />];
+      <div className="box-end left"></div>,
+      <div className="left">
+        <Family className="left" gedcomx={record} personId={person.getId()} />
+      </div>];
   }
   
   renderSelectedMatch(){
@@ -99,20 +104,21 @@ class MatchesContainer extends React.Component {
       gedcomx
     } = this.props;
     return [
-      <div className="label">Tree Person</div>,
-      <PersonBoxTitle person={matchPerson} />,
-      saved ? 
-        <Name name={matchPerson.getPreferredName()} /> :
-        <EditableName   
-          nameParts={nameParts} 
-          attribution={matchPerson.getPreferredName().getAttribution()}
-          reason={nameReason}
-          modified={nameModified}
-          onChange={this.nameChangeHandler.bind(this)} />,
+      <div className="label right">Tree Person</div>,
+      <div className="box-title right"><PersonBoxTitle person={matchPerson} /></div>,
+      <div className="box-row right">{
+        saved ? 
+          <Name name={matchPerson.getPreferredName()} /> :
+          <EditableName   
+            nameParts={nameParts} 
+            attribution={matchPerson.getPreferredName().getAttribution()}
+            reason={nameReason}
+            modified={nameModified}
+            onChange={this.nameChangeHandler.bind(this)} />
+      }</div>,
       ...matchFacts.map(({fact, display, modified, originalAttribution}) => {
         return (
-          <div key={fact.getId()}>
-            <hr />
+          <div className="box-row right">
             { this.props.saved ?
               <Fact fact={fact} /> :
               (display ?
@@ -128,15 +134,17 @@ class MatchesContainer extends React.Component {
           </div>
         );
       }),
-      saved ? 
+      <div className="box-end right"></div>,
+      <div className="right"><Family gedcomx={gedcomx} personId={matchId} /></div>,
+      <div className="right">{saved ? 
         <button className="btn btn-lg disabled" disabled>Saved</button> :
         (
           <div className="toolbar">
             <button className="btn btn-orange btn-lg" onClick={() => dispatch({ type: 'REVIEW_UPDATES' })}>Save</button>
             <a href onClick={this.cancelMatch.bind(this)}>Cancel</a>
           </div>
-        ),
-      <Family gedcomx={gedcomx} personId={matchId} />
+        )
+      }</div>
     ];
   }
   
@@ -199,6 +207,7 @@ const mapStateToProps = state => {
   const currentPerson = currentPersonSelector(state),
         match = currentPerson.selectedMatch,
         {matchId, gedcomx, copyName, nameReason} = match;
+  console.log('MatchesContainer: mapStateToProps');
   return {
     record: state.record,
     person: currentPerson.gedcomx,

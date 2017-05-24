@@ -10,7 +10,11 @@ module.exports = function(state){
   const currentPerson = currentPersonSelector(state),
         {factOrder, facts} = currentPerson,
         match = currentPerson.selectedMatch,
-        {factMap, copiedDates, copiedPlaces, overrideDates, overridePlaces, factReasons} = match;
+        {factMap, copiedDates, copiedPlaces, overrideDates, overridePlaces} = match;
+        
+  if(!match.gedcomx){
+    return [];
+  }
         
   return factOrder.map(recordFactId => {
     

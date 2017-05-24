@@ -338,6 +338,15 @@
     display: grid;
     grid-template-columns: [left] 1fr [right] 1fr;
     grid-column-gap: $spacing;
+    grid-auto-flow: column dense;
+    
+    .left {
+      grid-column: left;
+    }
+    
+    .right {
+      grid-column: right;
+    }
   }
   
   .matches-list,
@@ -359,7 +368,7 @@
   }
   
   .box,
-  & > .box-title {
+  .matches-grid > .box-title {
     margin-top: $spacing;
   }
   
