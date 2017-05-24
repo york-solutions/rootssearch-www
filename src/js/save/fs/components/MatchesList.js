@@ -12,7 +12,11 @@ const possibleMatchesSelector = require('../selectors/possibleMatches');
 const MatchesList = function({ currentPerson, status, error, dispatch, manualId, entryIds = [], entries = {} }){
   
   if(status === 'LOADING'){
-    return <Loader message="Loading matches..." />;
+    return (
+      <div className="matches-list">
+        <Loader message="Loading matches..." />
+      </div>
+    );
   }
   
   return (

@@ -3,7 +3,6 @@ const connect = require('react-redux').connect;
 const StatusBar = require('./StatusBar');
 const ModalRouter = require('./modals/ModalRouter');
 const Loader = require('./Loader');
-const MatchContainer = require('./MatchContainer');
 const MatchesContainer = require('./MatchesContainer');
 const matchedSelector = require('../selectors/matched');
 
@@ -12,7 +11,7 @@ const App = function({ auth, busy, matched }) {
   return (
     <div>
       <StatusBar />
-      { matched ? <MatchContainer /> : <MatchesContainer /> }
+      <MatchesContainer />
       <ModalRouter />
       { busy && (
         <div className="modal-fade">

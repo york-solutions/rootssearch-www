@@ -28,6 +28,7 @@
     padding: 0;
     font-weight: normal;
     display: inline-block;
+    text-align: left;
   }
 
   .box {
@@ -329,6 +330,38 @@
   .react-autosuggest__suggestion--highlighted {
     background-color: $primaryColor;
     color: #fff;
+  }
+  
+  /* grid */
+  
+  .matches-grid {
+    display: grid;
+    grid-template-columns: [left] 1fr [right] 1fr;
+    grid-column-gap: $spacing;
+  
+    .matches-list,
+    .selected-match {
+      grid-column: right;
+      grid-row: 1 / 100;
+    }
+    
+    .box-row {
+      border-width: 0 1px 0 1px;
+      border-style: solid;
+      border-color: $borderColor;
+      background-color: #fff;
+      padding: $spacing;
+    }
+    
+    .box-end {
+      border-bottom: 1px solid $borderColor;
+    }
+    
+    .box,
+    & > .box-title {
+      margin-top: $spacing;
+    }
+    
   }
   
 }

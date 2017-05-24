@@ -20,7 +20,7 @@ class SelectedMatch extends React.Component {
 
   render(){
     return (
-      <div>
+      <div className="selected-match">
         <div className="person matched">
           <div className="label">Tree Person</div>
           <div className="box">
