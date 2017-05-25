@@ -22,7 +22,7 @@ class Match extends React.Component {
           };
     return (
       <div className="match box">
-        <PersonBoxTitle person={person} />
+        <div className="box-title"><PersonBoxTitle person={person} /></div>
         <div className="box-body">
           <Name name={person.getPreferredName()} />
           {birth ? <Fact fact={birth} /> : null}

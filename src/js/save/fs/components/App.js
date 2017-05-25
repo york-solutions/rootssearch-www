@@ -15,7 +15,7 @@ const App = function({ auth, busy, matched }) {
       <ModalRouter />
       { busy && (
         <div className="modal-fade">
-          <Loader message="Saving..." /> 
+          <Loader /> 
         </div>
       )}
     </div>

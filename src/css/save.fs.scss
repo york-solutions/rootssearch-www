@@ -108,49 +108,11 @@
     }
   }
   
-  .person {
-    
-    margin-bottom: $spacing;
-    
-    .box {
-      margin-top: $spacing;
-    }
-    
-    .fact-piece {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-  
-    .conclusion-line {
-      line-height: 33px;
-      
-      &:not(:first-child){
-        margin-top: $spacingQuarter;
-      }
-    }
-    
-  }
-  
   .record {
     .record-title {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-    }
-    
-    .box-body {
-    
-      .name-detail,
-      .fact-piece,
-      .label {
-        margin-left: $spacingDouble;
-      }
-      
-      .copy-box {
-        float: left;
-        margin-top: 10px;
-      }
     }
   }
   
@@ -186,10 +148,6 @@
   
   .review-updates-modal {
     min-width: 400px;
-  }
-  
-  .fact-placeholder {
-    height: 123px;
   }
   
   .person-gender,
@@ -369,6 +327,39 @@
   
   .box,
   .matches-grid > .box-title {
+    margin-top: $spacing;
+  }
+  
+  .left .conclusion {
+  
+    .name-detail,
+    .fact-piece,
+    .label {
+      margin-left: $spacingDouble;
+    }
+    
+    .copy-box {
+      float: left;
+      margin-top: 10px;
+    }
+    
+    .fact-piece {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  
+    .conclusion-line {
+      line-height: 33px;
+      
+      &:not(:first-child){
+        margin-top: $spacingQuarter;
+      }
+    }
+  
+  }
+  
+  .right.toolbar {
     margin-top: $spacing;
   }
   

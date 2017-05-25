@@ -1,6 +1,5 @@
 const React = require('react');
 const connect = require('react-redux').connect;
-const BoxTitle = require('./BoxTitle');
 const Fact = require('./Fact');
 const Name = require('./Name');
 const Family = require('./Family');
@@ -27,13 +26,13 @@ class MatchesContainer extends React.Component {
   }
   
   render(){
-    const { matched = false } = this.props;
+    const { matched = false, loadingMatch } = this.props;
 
     let rows = [
       ...this.renderRecordPerson()
     ];
     
-    if(matched){
+    if(matched && !loadingMatch){
       rows.push(...this.renderSelectedMatch());
     } else {
       rows.push(<MatchesList />);
@@ -60,7 +59,8 @@ class MatchesContainer extends React.Component {
         sourceDescription
       } = this.props,
       copyable = matched && !saved;
-    return [<div className="label left">Record Person</div>,
+    return [
+      <div className="label left">Record Person</div>,
       <div className="box-title left">
         <div className="person-name large">{person.getDisplayName(true)}</div>
         <div className="record-title">{sourceDescription.getTitles()[0].getValue()}</div>
@@ -86,9 +86,11 @@ class MatchesContainer extends React.Component {
         );
       })),
       <div className="box-end left"></div>,
+      <div className="left" />, // spacer that lines up with the button toolbar on the right
       <div className="left">
         <Family className="left" gedcomx={record} personId={person.getId()} />
-      </div>];
+      </div>
+    ];
   }
   
   renderSelectedMatch(){
@@ -135,16 +137,14 @@ class MatchesContainer extends React.Component {
         );
       }),
       <div className="box-end right"></div>,
-      <div className="right"><Family gedcomx={gedcomx} personId={matchId} /></div>,
-      <div className="right">{saved ? 
+      <div className="right toolbar">{saved ? 
         <button className="btn btn-lg disabled" disabled>Saved</button> :
-        (
-          <div className="toolbar">
-            <button className="btn btn-orange btn-lg" onClick={() => dispatch({ type: 'REVIEW_UPDATES' })}>Save</button>
-            <a href onClick={this.cancelMatch.bind(this)}>Cancel</a>
-          </div>
-        )
-      }</div>
+        [
+          <button className="btn btn-orange btn-lg" onClick={() => dispatch({ type: 'REVIEW_UPDATES' })}>Save</button>,
+          <a href onClick={this.cancelMatch.bind(this)}>Cancel</a>
+        ]
+      }</div>,
+      <div className="right"><Family gedcomx={gedcomx} personId={matchId} /></div>
     ];
   }
   
@@ -206,13 +206,13 @@ class MatchesContainer extends React.Component {
 const mapStateToProps = state => {
   const currentPerson = currentPersonSelector(state),
         match = currentPerson.selectedMatch,
-        {matchId, gedcomx, copyName, nameReason} = match;
-  console.log('MatchesContainer: mapStateToProps');
+        {matchId, gedcomx, copyName, nameReason, loading} = match;
   return {
     record: state.record,
     person: currentPerson.gedcomx,
     personId: state.currentPersonId,
     matched: matchedSelector(state),
+    loadingMatch: loading,
     saved: savedSelector(state),
     facts: currentPerson.facts,
     factOrder: currentPerson.factOrder,
