@@ -40,6 +40,8 @@ module.exports = function(personId, matchId){
             recordFacts = currentPerson.facts,
             recordFactsOrder = currentPerson.factOrder,
             matchPerson = response.gedcomx.getPersonById(matchId),
+            copiedDates = {},
+            copiedPlaces = {},
             factMap = recordFactsOrder.reduce(function(accumulator, recordFactId){
               const recordFact = recordFacts[recordFactId],
                     type = recordFact.getType();
@@ -72,6 +74,14 @@ module.exports = function(personId, matchId){
                 });
               }
               
+              // Automatically copy dates and places that are missing in the tree
+              if(!matchFact.getDate()){
+                copiedDates[recordFactId] = true;
+              }
+              if(!matchFact.getPlace()){
+                copiedPlaces[recordFactId] = true;
+              }
+              
               accumulator[recordFact.getId()] = matchFact;
               
               return accumulator;
@@ -82,7 +92,9 @@ module.exports = function(personId, matchId){
         type: 'LOADED_MATCH_PERSON',
         personId,
         gedcomx: response.gedcomx,
-        factMap: factMap
+        factMap,
+        copiedDates,
+        copiedPlaces
       });
     
     });

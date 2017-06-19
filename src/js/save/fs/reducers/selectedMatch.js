@@ -36,6 +36,12 @@ module.exports = function(state = {}, action){
         },
         factMap: {
           $set: action.factMap
+        },
+        copiedDates: {
+          $set: action.copiedDates
+        },
+        copiedPlaces: {
+          $set: action.copiedPlaces
         }
       });
       
