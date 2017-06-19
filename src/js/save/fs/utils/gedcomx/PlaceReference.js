@@ -12,3 +12,15 @@ GedcomX.PlaceReference.prototype.getDisplayString = function(){
     return this.getOriginal() || '';
   }
 };
+
+/**
+ * Check whether this place reference is equal to another place reference
+ * 
+ * @param {GedcomX.PlaceReference} other
+ * @returns {Boolean}
+ */
+GedcomX.PlaceReference.prototype.equals = function(other){
+  // TODO: compare normalized values?
+  
+  return this.getOriginal() === other.getOriginal();
+};

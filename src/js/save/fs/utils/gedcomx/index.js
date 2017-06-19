@@ -7,6 +7,7 @@
  */
 
 const uuid = require('../uuid');
+const FS = require('../fs');
 
 const GedcomX = require('gedcomx-js');
 GedcomX.enableRsExtensions();
@@ -76,9 +77,28 @@ function clean(gedx){
     // Make sure all their facts have IDs
     person.getFacts().forEach(ensureID);
     
+    // FS doesn't support all GEDCOM X spec types so here we convert unsupported
+    // types into custom types, or closely related types that are supported.
+    // We do this on load instead of on save so that we can accurately compare
+    // the record data to the tree data
+    person.getFacts().forEach(fact => {
+      const type = fact.getType();
+      
+      // Convert Census to Residence
+      if(type === 'http://gedcomx.org/Census'){
+        fact.setType('http://gedcomx.org/Residence');
+      }
+      
+      // Convert all other unsupported fact types to custom types
+      else if(FS.supportedFactTypes.indexOf(type) === -1){
+        fact.setType('data:,' + encodeURIComponent(type.replace('http://gedcomx.org/', '')));
+      }
+    });
+    
     // Make sure all their names have IDs
     person.getNames().forEach(ensureID);
   });
+  
 }
 
 module.exports = GedcomX;

@@ -57,7 +57,9 @@ module.exports = function(personId, matchId){
               // TODO: support fact values
               else {
                 matchPerson.getFactsByType(type).forEach(fact => {
-                  // 
+                  if(fact.equals(recordFact)){
+                    matchFact = fact;
+                  }
                 });
               }
               

@@ -53,3 +53,56 @@ GedcomX.Fact.prototype.isEmpty = function(){
 GedcomX.Fact.prototype.isVital = function(){
   return GedcomX.vitals.indexOf(this.getType()) !== -1;
 };
+
+/**
+ * Check whether this fact is equal to another fact
+ * 
+ * @param {GedcomX.Fact} other
+ * @returns {Boolean}
+ */
+GedcomX.Fact.prototype.equals = function(other){
+  
+  // Compare types
+  if(this.getType() !== other.getType()){
+    return false;
+  }
+  
+  // 
+  // Date
+  // 
+  
+  // Do we have dates to compare?
+  if(this.getDate() && other.getDate()){
+    
+    // We have dates and they don't match so return false
+    if(!this.getDate().equals(other.getDate())){
+      return false;
+    }
+  }
+  
+  // One or the other has a date but not both so return false
+  else if((this.getDate() && !other.getDate()) || (!this.getDate() && other.getDate())){
+    return false;
+  }
+  
+  //
+  // Place
+  //
+  
+  // Do we have places to compare?
+  if(this.getPlace() && other.getPlace()){
+    
+    // We have places and they don't match so return false
+    if(!this.getPlace().equals(other.getPlace())){
+      return false;
+    }
+  }
+  
+  // One or the other has a place but not both so return false
+  else if((this.getPlace() && !other.getPlace()) || (!this.getPlace() && other.getPlace())){
+    return false;
+  }
+  
+  // Everything looks good. Must have a match.
+  return true;
+};

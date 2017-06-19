@@ -183,24 +183,6 @@ function calculateFactUpdates(person){
     // Add to the update object
     return matchFact;
     
-  })
-  
-  // FS doesn't support all GEDCOM X spec types so here we convert unsupported
-  // types into custom types, or closely related types that are supported
-  .map(fact => {
-    const type = fact.getType();
-    
-    // Convert Census to Residence
-    if(type === 'http://gedcomx.org/Census'){
-      fact.setType('http://gedcomx.org/Residence');
-    }
-    
-    // Convert all other unsupported fact types to custom types
-    else if(FS.supportedFactTypes.indexOf(type) === -1){
-      fact.setType('data:,' + encodeURIComponent(type.replace('http://gedcomx.org/', '')));
-    }
-    
-    return fact;
   });
 }
 

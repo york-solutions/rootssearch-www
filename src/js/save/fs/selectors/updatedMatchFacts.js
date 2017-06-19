@@ -21,7 +21,9 @@ module.exports = function(state){
     // Copy so that we can make modifications; i.e. be immutable
     const fact = GedcomX.Fact(factMap[recordFactId].toJSON()),
           factId = fact.getId();
-    let display = fact.isVital(),
+    
+    // display is initialized to hide new facts
+    let display = factId.substr(0,4) !== 'NEW_',
         modified = false;
     
     // Make any adjustments based on the copied dates and places

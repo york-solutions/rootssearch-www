@@ -45,3 +45,21 @@ GedcomX.Date.prototype.getYear = function(){
   }
   return '';
 };
+
+/**
+ * Check whether this date is equal to another date
+ * 
+ * @param {GedcomX.Date} other
+ * @returns {Boolean}
+ */
+GedcomX.Date.prototype.equals = function(other){
+  if(this.getFormal() && other.getFormal()){
+    if(this.getFormatl() !== other.getFormal()){
+      return false;
+    }
+  }
+  
+  // TODO: compare normalized values?
+  
+  return this.getOriginal() === other.getOriginal();
+};
