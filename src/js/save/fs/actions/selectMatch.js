@@ -45,12 +45,20 @@ module.exports = function(personId, matchId){
                     type = recordFact.getType();
               let matchFact;
               
-              // Search for a matching vital
+              // Match vitals on type only since FS only supports on fact per vital
               if(GedcomX.vitals.indexOf(type) !== -1){
                 let fact = matchPerson.getFactsByType(type)[0];
                 if(fact && fact.getId()){
                   matchFact = fact;
                 }
+              }
+              
+              // Match non-vitals by type, date, and place
+              // TODO: support fact values
+              else {
+                matchPerson.getFactsByType(type).forEach(fact => {
+                  // 
+                });
               }
               
               // If we found no matching vital or if this isn't a vital, then we

@@ -12,6 +12,7 @@
     "start:debug": "DEBUG=rootssearch:* node-dev app.js",
     "start:dev": "node-dev app.js",
     "build:dev": "gulp",
+    "build:watch": "gulp watch",
     "build:prod": "gulp production",
     "heroku-postbuild": "npm run build:prod"
   },
