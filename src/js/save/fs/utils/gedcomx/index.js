@@ -7,7 +7,6 @@
  */
 
 const uuid = require('../uuid');
-const FS = require('../fs');
 
 const GedcomX = require('gedcomx-js');
 GedcomX.enableRsExtensions();
@@ -52,6 +51,35 @@ GedcomX.vitals = [
   'http://gedcomx.org/Death',
   'http://gedcomx.org/Burial'
 ];
+
+// See https://familysearch.org/developers/docs/guides/facts
+const FSSupportedFactTypes = [
+  'http://gedcomx.org/Birth',
+  'http://gedcomx.org/Christening',
+  'http://gedcomx.org/Death',
+  'http://gedcomx.org/Burial',
+  'http://gedcomx.org/Stillbirth',
+  'http://gedcomx.org/BarMitzvah',
+  'http://gedcomx.org/BatMitzvah',
+  'http://gedcomx.org/MilitaryService',
+  'http://gedcomx.org/Naturalization',
+  'http://gedcomx.org/Residence',
+  'http://gedcomx.org/Religion',
+  'http://gedcomx.org/Occupation',
+  'http://gedcomx.org/Cremation',
+  'http://gedcomx.org/Caste',
+  'http://gedcomx.org/Clan',
+  'http://gedcomx.org/NationalId',
+  'http://gedcomx.org/Nationality',
+  'http://gedcomx.org/PhysicalDescription',
+  'http://gedcomx.org/Ethnicity',
+  'http://familysearch.org/v1/Affiliation',
+  'http://familysearch.org/v1/BirthOrder',
+  'http://familysearch.org/v1/DiedBeforeEight',
+  'http://familysearch.org/v1/LifeSketch',
+  'http://familysearch.org/v1/TitleOfNobility',
+  'http://familysearch.org/v1/TribeName',
+];
   
 /**
  * Massage the GEDCOM X data so that
@@ -90,7 +118,7 @@ function clean(gedx){
       }
       
       // Convert all other unsupported fact types to custom types
-      else if(FS.supportedFactTypes.indexOf(type) === -1){
+      else if(FSSupportedFactTypes.indexOf(type) === -1){
         fact.setType('data:,' + encodeURIComponent(type.replace('http://gedcomx.org/', '')));
       }
     });

@@ -115,35 +115,6 @@ client.addResponseMiddleware(function(client, request, response, next){
   next();
 });
 
-// See https://familysearch.org/developers/docs/guides/facts
-client.supportedFactTypes = [
-  'http://gedcomx.org/Birth',
-  'http://gedcomx.org/Christening',
-  'http://gedcomx.org/Death',
-  'http://gedcomx.org/Burial',
-  'http://gedcomx.org/Stillbirth',
-  'http://gedcomx.org/BarMitzvah',
-  'http://gedcomx.org/BatMitzvah',
-  'http://gedcomx.org/MilitaryService',
-  'http://gedcomx.org/Naturalization',
-  'http://gedcomx.org/Residence',
-  'http://gedcomx.org/Religion',
-  'http://gedcomx.org/Occupation',
-  'http://gedcomx.org/Cremation',
-  'http://gedcomx.org/Caste',
-  'http://gedcomx.org/Clan',
-  'http://gedcomx.org/NationalId',
-  'http://gedcomx.org/Nationality',
-  'http://gedcomx.org/PhysicalDescription',
-  'http://gedcomx.org/Ethnicity',
-  'http://familysearch.org/v1/Affiliation',
-  'http://familysearch.org/v1/BirthOrder',
-  'http://familysearch.org/v1/DiedBeforeEight',
-  'http://familysearch.org/v1/LifeSketch',
-  'http://familysearch.org/v1/TitleOfNobility',
-  'http://familysearch.org/v1/TribeName',
-];
-
 /**
  * Calculate SDK client configuration parameters
  */
