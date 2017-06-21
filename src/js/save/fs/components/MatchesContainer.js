@@ -15,6 +15,8 @@ const updatedNamePartsSelector = require('../selectors/updatedNameParts');
 const matchFactsSelector = require('../selectors/updatedMatchFacts');
 const nameModifiedSelector = require('../selectors/nameModified');
 
+const reviewUpdatesAction = require('../actions/reviewUpdates');
+
 class MatchesContainer extends React.Component {
   
   constructor(props){
@@ -139,7 +141,7 @@ class MatchesContainer extends React.Component {
       <div className="right toolbar">{saved ? 
         <button className="btn btn-lg disabled" disabled>Saved</button> :
         [
-          <button className="btn btn-orange btn-lg" onClick={() => dispatch({ type: 'REVIEW_UPDATES' })}>Save</button>,
+          <button className="btn btn-orange btn-lg" onClick={() => dispatch(reviewUpdatesAction())}>Save</button>,
           <a href onClick={this.cancelMatch.bind(this)}>Cancel</a>
         ]
       }</div>,
