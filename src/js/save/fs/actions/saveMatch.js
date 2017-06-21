@@ -65,8 +65,14 @@ module.exports = function(personId){
         
         // Setup the source reference
         personUpdates.sources = [{
-          description: sourceDescriptionUrl
-          // TODO: tags, changeMessage
+          description: sourceDescriptionUrl,
+          // TODO: only add tags supported by the FS UI?
+          tags: personUpdates.facts.map(fact => {
+            return {
+              resource: fact.getType()
+            };
+          })
+          // TODO: changeMessage
         }];
       
         updatePerson(matchId, personUpdates, updateResponseHandler);
