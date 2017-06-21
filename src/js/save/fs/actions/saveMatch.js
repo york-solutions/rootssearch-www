@@ -6,7 +6,6 @@ const FS = require('../utils/fs');
 const GedcomX = require('../utils/gedcomx');
 const nextPersonAction = require('./nextPerson');
 const namePartsMap = require('../selectors/namePartsMap');
-const sourceDescriptionSelector = require('../selectors/sourceDescription');
 
 module.exports = function(personId){
   return function(dispatch, getState){
@@ -19,7 +18,8 @@ module.exports = function(personId){
     }
     
     const person = state.persons[personId],
-          matchId = person.selectedMatch.matchId;
+          matchId = person.selectedMatch.matchId,
+          gedcomx = person.selectedMatch.gedcomx;
     
     // Set the state to saving
     dispatch({
@@ -29,44 +29,68 @@ module.exports = function(personId){
     
     const personUpdates = calculatePersonUpdates(person);
     
-    // Create a source, if we haven't already created one
-    getSourceDescriptionUrl(state, function(error, sourceDescriptionUrl){
-      
+    // Do we need to create a soure? Not if the person already has this source
+    // attached to them.
+    const existingSource = recordAlreadyAttached(state.record, gedcomx, matchId);
+    
+    // Response handler for the person update request
+    const updateResponseHandler = (error, response) => {
       // TODO: error handling
-      
+            
+      // Save the person and set the state to loaded
       dispatch({
-        type: 'SOURCE_DESCRIPTION_URL',
-        url: sourceDescriptionUrl
+        type: 'MATCH_SAVED',
+        personId
       });
       
-      // Setup the source reference
-      personUpdates.sources = [{
-        description: sourceDescriptionUrl
-        // TODO: tags, changeMessage
-      }];
+      dispatch(nextPersonAction());
+    };
     
-      // Update the person
-      FS.post(`/platform/tree/persons/${matchId}`, {
-        body: {
-          persons: [ personUpdates ]
-        }
-      }, function(error, response){
+    // If the source is already attached then we skip creating an additional source description.
+    if(existingSource){
+      updatePerson(matchId, personUpdates, updateResponseHandler);
+    }
+    
+    // The source isn't already attached. Before attaching we check to see if
+    // we've previously already created a source description.
+    else {
+      getSourceDescriptionUrl(state, function(error, sourceDescriptionUrl){
         
         // TODO: error handling
-            
-        // Save the person and set the state to loaded
+        
         dispatch({
-          type: 'MATCH_SAVED',
-          personId
+          type: 'SOURCE_DESCRIPTION_URL',
+          url: sourceDescriptionUrl
         });
         
-        dispatch(nextPersonAction());
-            
+        // Setup the source reference
+        personUpdates.sources = [{
+          description: sourceDescriptionUrl
+          // TODO: tags, changeMessage
+        }];
+      
+        updatePerson(matchId, personUpdates, updateResponseHandler);
+      
       });
-    
-    });
+    }
   };
 };
+
+/**
+ * Update a person in the FS family tree
+ * 
+ * @param {String} personId
+ * @param {Object} personUpdates person data that is POSTed for updates
+ * @param {Function} callback function(error, response)
+ */
+function updatePerson(personId, personUpdates, callback){
+  // Update the person
+  FS.post(`/platform/tree/persons/${personId}`, {
+    body: {
+      persons: [ personUpdates ]
+    }
+  }, callback);
+}
 
 /**
  * Generate a list of changes to the person.
@@ -205,10 +229,44 @@ function getSourceDescriptionUrl(state, callback){
   else {
     FS.post('/platform/sources/descriptions', {
       body: {
-        sourceDescriptions: [ sourceDescriptionSelector(state) ]
+        sourceDescriptions: [ state.record.getRootSourceDescription() ]
       }
     }, function(error, response){
       callback(error, response ? response.headers.location : undefined);
     });
   }
+}
+
+/**
+ * Calculate whether the record is already attached to the person as a source
+ * 
+ * @param {GedcomX} record
+ * @param {GedcomX} tree the gedcomx document that contains the person and their sources
+ * @param {String} personId ID of the person who's sources we are checking
+ * @returns {Boolean}
+ */
+function recordAlreadyAttached(record, tree, personId){
+  
+  // Get the list of source references from the person
+  return !!tree.getPersonById(personId).getSources()
+    
+  // Map source references to source descriptions
+  .map(sourceReference => {
+    return tree.getSourceDescriptionById(sourceReference.getDescription().substring(1));
+  })
+  
+  // Filter out undefined value
+  .filter(sourceDescription => {
+    return !!sourceDescription;
+  })
+  
+  // Get a list of their URLs
+  .map(sourceDescription => {
+    return sourceDescription.getAbout();
+  })
+  
+  // Find one that matches, if any
+  .find(url => {
+    return url === record.getRootSourceDescription().getAbout();
+  });
 }

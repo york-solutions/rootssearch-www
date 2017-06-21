@@ -11,7 +11,6 @@ const EditableName = require('./EditableName');
 const matchedSelector = require('../selectors/matched');
 const savedSelector = require('../selectors/saved');
 const currentPersonSelector = require('../selectors/currentPerson');
-const sourceDescriptionSelector = require('../selectors/sourceDescription');
 const updatedNamePartsSelector = require('../selectors/updatedNameParts');
 const matchFactsSelector = require('../selectors/updatedMatchFacts');
 const nameModifiedSelector = require('../selectors/nameModified');
@@ -56,14 +55,14 @@ class MatchesContainer extends React.Component {
         nameCopied, 
         copiedDates, 
         copiedPlaces, 
-        sourceDescription
+        recordTitle
       } = this.props,
       copyable = matched && !saved;
     return [
       <div className="label left">Record Person</div>,
       <div className="box-title left">
         <div className="person-name large">{person.getDisplayName(true)}</div>
-        <div className="record-title">{sourceDescription.getTitles()[0].getValue()}</div>
+        <div className="record-title">{recordTitle}</div>
       </div>,
       <div className="box-row left">
         <Name 
@@ -219,7 +218,7 @@ const mapStateToProps = state => {
     nameCopied: match.copyName,
     copiedDates: match.copiedDates,
     copiedPlaces: match.copiedPlaces,
-    sourceDescription: sourceDescriptionSelector(state),
+    recordTitle: state.record.getRootSourceDescription().getTitles()[0].getValue(),
     matchId,
     matchPerson: gedcomx ? gedcomx.getPersonById(matchId) : null,
     gedcomx,

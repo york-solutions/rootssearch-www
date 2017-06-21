@@ -18,7 +18,7 @@ module.exports = function(personId, matchId){
     });
     
     // Fetch the person
-    FS.get(`/platform/tree/persons/${matchId}?relatives=true`, function(error, response){
+    FS.get(`/platform/tree/persons/${matchId}?relatives=true&sourceDescriptions=true`, function(error, response){
       
       // When we fail to load the person, cancel the match and show an error
       if(error || response.statusCode !== 200){
