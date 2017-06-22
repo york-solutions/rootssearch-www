@@ -23,6 +23,7 @@ require('./Fact');
 require('./Name');
 require('./Person');
 require('./PlaceReference');
+require('./Relationship');
 require('./ResourceReference');
 require('./Root');
 
@@ -127,6 +128,11 @@ function clean(gedx){
     person.getNames().forEach(ensureID);
   });
   
+  // Make sure all ResourceReferences in rels have both resource and resourceId (makes our life easy)
+  gedx.getRelationships().forEach(rel => {
+    rel.getPerson1().ensureResourceId();
+    rel.getPerson2().ensureResourceId();
+  });
 }
 
 module.exports = GedcomX;

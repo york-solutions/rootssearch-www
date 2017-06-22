@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/york-solutions/rootssearch-www",
   "dependencies": {
+    "async": "^2.4.1",
     "babel-core": "6.24.1",
     "babel-loader": "7.0.0-beta.1",
     "babel-preset-env": "1.3.3",

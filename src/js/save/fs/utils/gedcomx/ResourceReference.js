@@ -25,3 +25,15 @@ GedcomX.ResourceReference.prototype.matches = function(resource){
   
   return this.getResourceId() === id;
 };
+
+/**
+ * Make sure the resourceId is set, when possible. We can't set it if resource
+ * is a full URI, only if it's a local doc ref that starts with #. When a full
+ * URI is present we don't know how to parse out the ID.
+ */
+GedcomX.ResourceReference.prototype.ensureResourceId = function(){
+  const resource = this.getResource();
+  if(!this.getResourceId() && typeof resource === 'string' && resource.indexOf(0) === '#'){
+    this.setResourceId(resource.substring(1));
+  }
+};
