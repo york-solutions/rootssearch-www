@@ -141,6 +141,8 @@ function getNewRelationships(state, recordPersonId, treePersonId){
     // The method works for cases of both 1 and 2 ParentChild rels by allowing
     // the second to be undefined.
     // TODO: handle more than two ParentChild rels.
+    // TODO: account for the possibility that the two parents shouldn't be in
+    // the same ChildAndParents rel
     const capr = createChildAndParents(childRels[0], childRels[1]);
     
     // Here we verify that we have at least one of the parents set. This is
