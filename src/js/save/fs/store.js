@@ -48,7 +48,7 @@ const store = Redux.createStore(
       
       accumulated[personId] = {
         
-        // GedcomX.Person object
+        // GedcomX.Person object from the record
         gedcomx: person,
         
         // List of fact IDs

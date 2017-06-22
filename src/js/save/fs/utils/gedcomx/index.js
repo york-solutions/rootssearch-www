@@ -18,6 +18,7 @@ GedcomX.addExtensions(require('gedcomx-fs-js'));
  * Custom extensions
  */
 
+require('./ChildAndParentsRelationship');
 require('./Date');
 require('./Fact');
 require('./Name');
@@ -128,11 +129,6 @@ function clean(gedx){
     person.getNames().forEach(ensureID);
   });
   
-  // Make sure all ResourceReferences in rels have both resource and resourceId (makes our life easy)
-  gedx.getRelationships().forEach(rel => {
-    rel.getPerson1().ensureResourceId();
-    rel.getPerson2().ensureResourceId();
-  });
 }
 
 module.exports = GedcomX;
