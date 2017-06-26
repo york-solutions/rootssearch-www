@@ -27,11 +27,11 @@ module.exports = function(state){
         modified = false;
     
     // Make any adjustments based on the copied dates and places
-    if(copiedDates[recordFactId]){
+    if(copiedDates[recordFactId] && facts[recordFactId].getDate()){
       fact.setDate(facts[recordFactId].getDate().toJSON());
       modified = display = true;
     }
-    if(copiedPlaces[recordFactId]){
+    if(copiedPlaces[recordFactId] && facts[recordFactId].getPlace()){
       fact.setPlace(facts[recordFactId].getPlace().toJSON());
       modified = display = true;
     }

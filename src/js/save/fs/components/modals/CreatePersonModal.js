@@ -134,7 +134,7 @@ const mapStateToProps = state => {
   const person = currentPersonSelector(state).gedcomx;
   return {
     nameParts: namePartsMap(person.getPreferredName()),
-    gender: person.getGender().getType(),
+    gender: person.getGender() ? person.getGender().getType() : '',
     living: person.getFact('http://gedcomx.org/Death') ? true : null,
     personId: state.currentPersonId
   };

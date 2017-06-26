@@ -43,13 +43,17 @@ function createMatchesQuery(state, personId){
   
   const gedcomx = state.record,
         person = gedcomx.getPersonById(personId),
+        gender = person.getGender(),
         birth = person.getFact('http://gedcomx.org/Birth'),
         death = person.getFact('http://gedcomx.org/Death');
   
   const params = {
-    name: person.getDisplayName(true),
-    gender: person.getGender().getType() === 'http://gedcomx.org/Female' ? 'female' : 'male'
+    name: person.getDisplayName(true)
   };
+  
+  if(gender){
+    params.gender = gender.getType() === 'http://gedcomx.org/Female' ? 'female' : 'male';
+  }
   
   if(birth){
     params.birthDate = birth.getDateDisplayString();
@@ -97,6 +101,7 @@ function createMatchesQuery(state, personId){
   // Turn the params object into a valid match query string
   // https://familysearch.org/developers/docs/api/tree/Person_Matches_Query_resource
   return 'q=' + Object.keys(params)
+    .filter(k => params[k]) // removed undefined values
     .map(k => `${k}:"${encodeURIComponent(params[k])}"`)
     .join(' ');
 }

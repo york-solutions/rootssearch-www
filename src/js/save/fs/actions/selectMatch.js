@@ -75,10 +75,10 @@ module.exports = function(personId, matchId){
               }
               
               // Automatically copy dates and places that are missing in the tree
-              if(!matchFact.getDate()){
+              if(recordFact.getDate() && !matchFact.getDate()){
                 copiedDates[recordFactId] = true;
               }
-              if(!matchFact.getPlace()){
+              if(recordFact.getPlace() && !matchFact.getPlace()){
                 copiedPlaces[recordFactId] = true;
               }
               

@@ -178,6 +178,9 @@
   .modal-container {
     border: 1px solid $primaryColor;
     background-color: #fff;
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
   }
   
   .modal-title {
@@ -189,6 +192,7 @@
   
   .modal-body {
     padding: $spacing;
+    overflow: auto;
   }
   
   .fs-auth-modal {
