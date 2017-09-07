@@ -86,13 +86,17 @@ gulp.task('clean:img', function(){
 // String them all together
 //
 
-gulp.task('build', ['js', 'css', 'img']);
+gulp.task('clean:manifest', function(){
+  return del('assets/manifest*');
+});
+
+gulp.task('build', ['clean:manifest', 'js', 'css', 'img']);
 gulp.task('watch', ['js:watch', 'css:watch', 'img']);
 gulp.task('default', ['build']);
 
 // Load all files from the build directory, hash them, then write to the assets directory
 gulp.task('production', ['build'], function(){
-  return gulp.src('assets/**/*')
+  return gulp.src('assets/**/!(*.map)')
     .pipe(rev())
     .pipe(revcss())
     .pipe(revdel())
