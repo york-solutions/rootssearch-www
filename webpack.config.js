@@ -40,6 +40,7 @@ const config = {
 };
 
 if(process.env.NODE_ENV === 'production'){
+  config.devtool = 'source-map';
   config.plugins.push(new webpack.optimize.UglifyJsPlugin({
     sourceMap: true
   }));
