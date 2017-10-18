@@ -31,11 +31,16 @@
         },
         checkIgnore: function(isUncaught, args, payload) {
           if(payload && payload.body && payload.body.trace) {
-            // Ignore Firefox iOS errors 
-            // https://bugzilla.mozilla.org/show_bug.cgi?id=1394296
-            if(payload.body.trace.exception && payload.body.trace.exception.message && 
-               payload.body.trace.exception.message.indexOf('__firefox__') !== -1) {
-              return true;
+            if(payload.body.trace.exception && payload.body.trace.exception.message) { 
+              // Ignore Firefox iOS errors 
+              // https://bugzilla.mozilla.org/show_bug.cgi?id=1394296
+              if(payload.body.trace.exception.message.indexOf('__firefox__') !== -1) {
+                return true;
+              }
+              // Ignore errors from honey
+              if(payload.body.trace.exception.message.indexOf('honey._native') !== -1) {
+                return true;
+              }
             }
             // Ignore errors from data:application/javascript;base64 URIs
             // https://rollbar.com/rootssearch/Website/items/149/
