@@ -13,7 +13,7 @@ app.use('/assets', express.static(path.join(__dirname, 'assets')));
 app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ 
   extended: true,
-  limit: '500kb'
+  limit: '5mb'
 }));
 
 // Routes
