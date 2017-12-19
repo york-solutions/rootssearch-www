@@ -42,11 +42,16 @@
                 return true;
               }
             }
-            // Ignore errors from data:application/javascript;base64 URIs
-            // https://rollbar.com/rootssearch/Website/items/149/
-            if(payload.body.trace.frames && payload.body.trace.frames[0] &&
-              payload.body.trace.frames[0] && payload.body.trace.frames[0].filename.indexOf('data:application/javascript') === 0) {
-              return true;
+            if(payload.body.trace.frames && payload.body.trace.frames[0] && payload.body.trace.frames[0].filename) {
+              // Ignore errors from data:application/javascript;base64 URIs
+              // https://rollbar.com/rootssearch/Website/items/149/
+              if(payload.body.trace.frames[0].filename.indexOf('data:application/javascript') === 0) {
+                return true;
+              }
+              // Ignore errors from anonymous scripts (likely a CORS restriction and therefore 3rd party)
+              if(payload.body.trace.frames[0].filename.indexOf('anonymous') !== -1) {
+                return true;
+              }
             }
           }
           return false;
