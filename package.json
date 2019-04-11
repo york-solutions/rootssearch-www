@@ -32,7 +32,7 @@
     "ejs": "2.5.6",
     "express": "4.15.2",
     "gedcomx-js": "2.7.0",
-    "gensearch": "2.4.0",
+    "gensearch": "2.4.2",
     "gensites": "0.1.1",
     "gulp": "^3.9.1",
     "gulp-cli": "1.2.2",
